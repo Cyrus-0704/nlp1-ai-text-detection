@@ -165,7 +165,7 @@ def main():
         with (out/'training_curves.csv').open('w',encoding='utf-8',newline='') as f:
             writer=csv.DictWriter(f,fieldnames=list(curves[0]))
             writer.writeheader(); writer.writerows(curves)
-    fig,axs=plt.subplots(1,len(names),figsize=(3.8*len(names),3.7),layout='constrained',squeeze=False)
+    fig,axs=plt.subplots(1,len(names),figsize=(max(5,3.8*len(names)),4),layout='constrained',squeeze=False)
     for ax,(name,r) in zip(axs[0],runs.items()):
         cm=np.array(r['metrics']['confusion_matrix'])
         ax.imshow(cm,cmap='Blues',vmin=0,vmax=max(sum(y==0),sum(y==1)))
@@ -174,7 +174,7 @@ def main():
                 ax.text(j,i,f'{cm[i,j]}\n({cm[i,j]/cm[i].sum():.1%})',ha='center',va='center',fontsize=15,color='white' if cm[i,j]>.5*max(sum(y==0),sum(y==1)) else 'black')
         ax.set(xticks=[0,1],yticks=[0,1],xticklabels=['human','machine'],yticklabels=['human','machine'],
                xlabel='Predicted',ylabel='True',title=name)
-    fig.suptitle('Internal dev confusion matrices (counts); threshold 0.5',fontsize=12)
+    fig.suptitle('Internal dev confusion matrices; threshold 0.5\nCounts and row percentages; true labels in rows',fontsize=11)
     fig.savefig(out/'confusion.png'); fig.savefig(out/'confusion.pdf'); plt.close(fig)
     fig, axes = plt.subplots(2, 2, figsize=(11.6, 8.2), layout='constrained')
     ax = axes[0, 0]
