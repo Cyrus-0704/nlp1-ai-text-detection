@@ -20,14 +20,18 @@ python main_model/download_model.py --output-dir models/xlm-roberta-base --revis
 收到A的manifest、六字段真实内部train/dev及统一评估说明后，从仓库根目录运行。以下路径按A实际版本调整，输出目录必须是新的。
 
 ```powershell
-python main_model/train.py --train-file data/processed/v1/smoke_train.jsonl --dev-file data/processed/v1/smoke_dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_real_smoke_50 --data-kind a-internal --seed 42 --max-steps 50 --max-length 256 --batch-size 1 --gradient-accumulation 16 --learning-rate 2e-5
+python main_model/train.py --train-file data/processed/v1/smoke_train.jsonl --dev-file data/processed/v1/smoke_dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_real_smoke_50 --data-kind a-internal --data-manifest data/processed/v1/manifest.json --evaluation-script data_tools/evaluate.py --seed 42 --max-steps 50 --max-length 256 --batch-size 1 --gradient-accumulation 16 --learning-rate 2e-5
 python main_model/predict.py --model-dir runs/b_real_smoke_50/checkpoint --input data/processed/v1/smoke_dev.jsonl --output runs/b_real_smoke_50/dev_predictions_independent.csv --precision fp32 --batch-size 1
+python data_tools/evaluate.py --gold data/processed/v1/smoke_dev.jsonl --pred runs/b_real_smoke_50/dev_predictions.csv --threshold 0.5 --short-by word --short-threshold 100 --save-report runs/b_real_smoke_50/a_evaluation_repeat.txt
+python main_model/package_checkpoint.py --checkpoint runs/b_real_smoke_50/checkpoint
 python main_model/check_contracts.py
 ```
 
 train/dev支持UTF-8 JSONL/CSV，需sample_id,group_id,text,label,generator,domain，两类均有，human=0/machine=1。预测仅需sample_id,text；CSV编号按字符串读取并保留前导零，输出sample_id,p_machine保持顺序。
 
 入口拒绝train/dev中的编号、分组、空白规范化原文重叠。只用A内部划分训练调参，不传官方验证集。模型分类头随机初始化是正常情况。
+
+`--data-manifest` 校验输入文件大小与 SHA-256 并保存版本来源；`--evaluation-script` 在严格核验独立进程预测后调用 A 的脚本，显式按空白词数少于100的临时口径和0.5阈值评估。保存前后对比、训练速度、峰值显存、代码commit和实际序列长度记录于 `run_summary.json`；A报告为 `a_evaluation_report.txt`。推理入口只输出概率，不计算标签分布或指标。
 
 当前小样配置：256 token、batch1、梯度累积16、lr2e-5、weight_decay0.01、seed42、FP16、梯度检查点、num_workers0、恒定学习率。50步指实际优化器更新，GradScaler跳步单独记录。推理默认FP32；保存前后对比使用同一精度和batch。
 
