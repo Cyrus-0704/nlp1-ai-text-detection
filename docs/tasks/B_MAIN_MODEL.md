@@ -62,9 +62,17 @@ git push
 
 ## 下一步与交接记录
 
-下一步：A 的 `772a59bd6f9b2ff0ba31b04fc33cbbef097f1ed9` 已在远端 `work/a-data`，尚未合并到 `main`；等待 A 补交真实小样并完成 H01。接收已验收版本后按 manifest 核验数据，再完成 B04；本次仅查看交付，没有生成划分、启动训练或评估内部 test。等待期间可准备 B05。
+下一步：A 的 `e760e63a1f797eb4562d56be059c099c97597cd8` 已补齐 1000/200 真实小样，B 已下载并通过小样数据契约验收，详见下节；仍待 A 的 PR 合并 `main`，再按约定将已验收版本同步到 B 分支，开始 B04 的 50 步训练。无需再次要求 A 交小样。本次没有启动训练、生成划分或读取内部 test。
 
-### 2026-10-15：A internal-v1 接收预检查（B04 尚未通过）
+### 2026-10-15：小样补交核验（最新状态）
+
+- A commit：`e760e63a1f797eb4562d56be059c099c97597cd8`，版本 `internal-v1`；仅拉取 `smoke_train.jsonl` / `smoke_dev.jsonl` 两个 LFS 对象，数据只在被忽略的本机接收快照中，不把 A 分支直接合入 B。
+- 真实训练小样 1000 条（human 366 / machine 634、975 组），真实调参小样 200 条（human 73 / machine 127、187 组）。文件大小与 SHA-256 均匹配 A 的 manifest；六字段、非空正文、唯一字符串编号、合法标签、两类齐全、人类 generator=human 均通过。
+- 两小样之间的 sample_id、group_id、空白规范化正文交集均为 0；额外检查忽略大小写后的规范化正文交集也为 0。未重建完整划分，因此完整集合来源归属及全量隔离仍以 A 审计为依据，尚未独立复核。
+- 验收摘要：`handoffs/B/internal-v1_smoke_acceptance/acceptance.json`。本机未访问官方验证集、未读取内部 test、未运行训练或评估。
+- `origin/main` 当前仍为 `f3758d2`，尚不包含 A 的交付。数据契约验收已通过；B04 的真实训练尚未开始，复选框保持未完成。待 PR 合并后从原始 XLM-R checkpoint 开始 50 步，A 评估命令显式使用 `--gold .../smoke_dev.jsonl --short-by word --threshold 0.5`（临时空白计词规则）。
+
+### 2026-10-15：A internal-v1 接收预检查（历史记录，缺小样状态已由上节更新）
 
 - 当前本地分支为 `work/b-model`，工作区原先干净；已 fetch 远端，仅只读检查 `origin/work/a-data`，没有合并该分支或改动 A 文件。`origin/main` 仍为 `f3758d2`，不能视为主干已收到 A 的交付。
 - 已找到 `handoffs/A/v1/README.md`、`data/processed/v1/manifest.json`、`cleaning_audit.md` 和 `data_tools/preprocess.py` / `evaluate.py`。manifest 声明 train/dev/test 为 119727/14998/15170 条，但远端 Git 树中没有这三个数据文件；A 的说明明确要求接收方运行其固定脚本复现并校验。约 1000/200 的 `smoke_train.jsonl` / `smoke_dev.jsonl` 明确尚未生成，B 尚未进行真实样本字段、哈希或防泄漏验收。
