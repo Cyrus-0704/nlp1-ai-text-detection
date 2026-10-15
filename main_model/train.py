@@ -26,6 +26,8 @@ def main():
     p.add_argument('--output-dir', required=True)
     p.add_argument('--data-kind', choices=['synthetic', 'a-internal'], required=True,
                    help='Explicit provenance; never pass official validation as dev')
+    p.add_argument('--data-manifest', help='A manifest; input hashes must match its declared files')
+    p.add_argument('--evaluation-script', help='A internal-dev evaluator; invoked after strict prediction checks')
     p.add_argument('--seed', type=int, default=42)
     p.add_argument('--max-steps', type=int, default=50)
     p.add_argument('--max-length', type=int, default=256)
@@ -45,6 +47,19 @@ def main():
     train = read_rows(args.train_file, labeled=True)
     dev = read_rows(args.dev_file, labeled=True)
     validate_splits(train, dev)
+    provenance = None
+    if args.data_manifest:
+        manifest = json.loads(Path(args.data_manifest).read_text(encoding='utf-8-sig'))
+        declared = list(manifest.get('splits', {}).values()) + list(manifest.get('smoke', {}).get('files', {}).values())
+        for path in (args.train_file, args.dev_file):
+            digest = sha256(path)
+            if not any(item['sha256'] == digest and item['bytes'] == Path(path).stat().st_size for item in declared):
+                raise ValueError('Input does not match A manifest')
+        provenance = dict(version=manifest['version'], manifest_sha256=sha256(args.data_manifest))
+        shutil.copy2(args.data_manifest, out/'data_manifest.json')
+    repo = Path(__file__).resolve().parent.parent
+    code_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
+    code_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain', '--', 'main_model'], cwd=repo, text=True).strip())
     source = Path(args.model_dir)/'source_manifest.json'
     if not source.exists():
         raise ValueError('Source model requires source_manifest.json from download_model.py')
@@ -72,6 +87,7 @@ def main():
     torch.cuda.synchronize()
     start = time.perf_counter()
     total_loss, updates, attempts, seen, gpu_batches = 0., 0, 0, 0, 0
+    max_observed_length, observed_tokens = 0, 0
     with (out/'training_log.jsonl').open('w', encoding='utf-8', buffering=1) as log:
         while updates < args.max_steps:
             model.train()
@@ -82,6 +98,8 @@ def main():
                 except StopIteration:
                     iterator = iter(loader)
                     batch = next(iterator)
+                max_observed_length = max(max_observed_length, batch['input_ids'].shape[1])
+                observed_tokens += int(batch['attention_mask'].sum())
                 batch = {k: v.to('cuda', non_blocking=True) for k, v in batch.items()}
                 if batch['input_ids'].device.type != 'cuda' or next(model.parameters()).device.type != 'cuda':
                     raise RuntimeError('GPU placement failed')
@@ -115,12 +133,14 @@ def main():
     torch.cuda.synchronize()
     elapsed = time.perf_counter()-start
     stats = dict(status='TRAINED_PENDING_RELOAD_CHECK', data_kind=args.data_kind,
-                 competition_performance_claim=False if args.data_kind == 'synthetic' else None,
+                 competition_performance_claim=False, evaluation_scope='internal-development-only',
+                 code_commit=code_commit, main_model_code_dirty=code_dirty, data_provenance=provenance,
                  train_rows=len(train), dev_rows=len(dev), optimizer_updates=updates,
                  attempted_updates=attempts, fp16_skipped_updates=attempts-updates,
                  training_loss=total_loss/updates, training_seconds=elapsed,
                  optimizer_updates_per_second=updates/elapsed, samples_per_second=seen/elapsed,
                  processed_samples=seen, gpu_batches=gpu_batches, gpu=torch.cuda.get_device_name(0),
+                 max_observed_sequence_length=max_observed_length, processed_nonpadding_tokens=observed_tokens,
                  peak_allocated_mib=torch.cuda.max_memory_allocated()/2**20,
                  peak_reserved_mib=torch.cuda.max_memory_reserved()/2**20,
                  fp16=True, gradient_checkpointing=model.is_gradient_checkpointing,
@@ -145,6 +165,8 @@ def main():
     tokenizer.save_pretrained(checkpoint)
     shutil.copy2(out/'source_manifest.json', checkpoint/'source_manifest.json')
     shutil.copy2(out/'arguments.json', checkpoint/'training_arguments.json')
+    if args.data_manifest:
+        shutil.copy2(out/'data_manifest.json', checkpoint/'data_manifest.json')
     del model
     gc.collect()
     torch.cuda.empty_cache()
@@ -165,12 +187,22 @@ def main():
     y = np.array([r['label'] for r in dev])
     pred = (actual >= 0.5).astype(int)
     mask = np.array([len(r['text'].split()) < 100 for r in dev])
-    metrics = dict(evaluator='B temporary fallback; A evaluator not delivered', data_kind=args.data_kind,
-                   competition_performance_claim=args.data_kind != 'synthetic', threshold=0.5,
+    metrics = dict(evaluator='B auxiliary sklearn calculation; A evaluation reported separately when supplied', data_kind=args.data_kind,
+                   competition_performance_claim=False, evaluation_scope='internal-development-only', threshold=0.5,
                    macro_f1_all=float(f1_score(y, pred, labels=[0,1], average='macro', zero_division=0)),
                    short_text_rule=stats['short_text_rule'], official_score=None)
     metrics['macro_f1_short_TEMPORARY'] = float(f1_score(y[mask], pred[mask], labels=[0,1], average='macro', zero_division=0)) if mask.any() else None
     write_json(out/'internal_dev_metrics.json', metrics)
+    if args.evaluation_script:
+        eval_command = [sys.executable, str(Path(args.evaluation_script).resolve()),
+                        '--gold', str(Path(args.dev_file).resolve()), '--pred', str(out/'dev_predictions.csv'),
+                        '--threshold', '0.5', '--short-by', 'word', '--short-threshold', '100',
+                        '--save-report', str(out/'a_evaluation_report.txt')]
+        with (out/'a_evaluation.log').open('w', encoding='utf-8') as log:
+            subprocess.run(eval_command, stdout=log, stderr=subprocess.STDOUT, check=True)
+        stats['a_evaluation'] = dict(script_sha256=sha256(args.evaluation_script),
+                                    report='a_evaluation_report.txt', short_by='word', threshold=0.5,
+                                    short_threshold=100, rule_status='temporary; not official')
     stats.update(status='PASS', reload_check='independent subprocess; FP32, batch=1, rtol=1e-5, atol=1e-6',
                  reload_max_abs_probability_difference=float(np.max(np.abs(actual-np.array(expected)))),
                  prediction_rows=len(actual), ordered_ids_verified=True, probability_direction='softmax(logits)[:,1]; machine=1',
