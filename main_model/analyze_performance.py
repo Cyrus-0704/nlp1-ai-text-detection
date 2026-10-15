@@ -10,12 +10,28 @@ from sklearn.metrics import (roc_auc_score, average_precision_score, log_loss,
                             brier_score_loss, roc_curve, precision_recall_curve)
 from common import read_rows, validate_probabilities, sha256, write_json
 
+def export_figure(fig, out, name, panel_auditor=None):
+    """Export report figures, optionally checking rendered axes before export."""
+    if panel_auditor:
+        spec = importlib.util.spec_from_file_location('panel_auditor', panel_auditor)
+        auditor = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = auditor
+        spec.loader.exec_module(auditor)
+        auditor.require_matplotlib_panel_alignment(
+            fig, json_out=out/(name+'.alignment.json'), strict=True)
+        # Keep measured axes fixed across PNG, editable SVG and PDF exports.
+        fig.set_layout_engine('none')
+    fig.savefig(out/(name+'.png'), dpi=300)
+    fig.savefig(out/(name+'.svg'))
+    fig.savefig(out/(name+'.pdf'))
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--gold-internal-dev',required=True)
     p.add_argument('--run',action='append',required=True,help='NAME=run_directory; all runs must use the same dev hash')
     p.add_argument('--output-dir',required=True)
     p.add_argument('--bootstrap-repetitions',type=int,default=1000)
+    p.add_argument('--panel-auditor', help='Optional trusted Python panel alignment auditor module')
     p.add_argument('--prefix-run',action='append',default=[],
                    help='Run whose training curve is a prefix of another run; metrics still shown')
     args=p.parse_args()
@@ -122,8 +138,9 @@ def main():
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    plt.rcParams.update({'font.family':'DejaVu Sans','font.size':10,'axes.spines.top':False,
-                         'axes.spines.right':False,'pdf.fonttype':42,'savefig.dpi':180})
+    plt.rcParams.update({'font.family':'sans-serif','font.sans-serif':['DejaVu Sans'],
+                         'font.size':10,'axes.spines.top':False,'svg.fonttype':'none',
+                         'axes.spines.right':False,'pdf.fonttype':42,'savefig.dpi':300})
     colors=['#0072B2','#D55E00','#009E73','#CC79A7']
     fig,axes=plt.subplots(2,2,figsize=(11.6,8.2),layout='constrained')
     ax=axes[0,0]
@@ -174,7 +191,7 @@ def main():
     ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss (10-update mean)')
     ax.legend(fontsize=8)
     fig.suptitle(f'Internal dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); {seed_note}; exploratory',fontsize=11)
-    fig.savefig(out/'performance.png'); fig.savefig(out/'performance.pdf'); plt.close(fig)
+    export_figure(fig,out,'performance',args.panel_auditor); plt.close(fig)
     if curves:
         with (out/'training_curves.csv').open('w',encoding='utf-8',newline='') as f:
             writer=csv.DictWriter(f,fieldnames=list(curves[0]))
@@ -189,7 +206,7 @@ def main():
         ax.set(xticks=[0,1],yticks=[0,1],xticklabels=['human','machine'],yticklabels=['human','machine'],
                xlabel='Predicted',ylabel='True',title=name)
     fig.suptitle('Internal dev confusion matrices; threshold 0.5\nCounts and row percentages; true labels in rows',fontsize=11)
-    fig.savefig(out/'confusion.png'); fig.savefig(out/'confusion.pdf'); plt.close(fig)
+    export_figure(fig,out,'confusion',args.panel_auditor); plt.close(fig)
     fig, axes = plt.subplots(2, 2, figsize=(11.6, 8.2), layout='constrained')
     ax = axes[0, 0]
     for j, (key, label) in enumerate([('human_recall', 'Human recall'), ('machine_recall', 'Machine recall')]):
@@ -198,7 +215,7 @@ def main():
         ax.bar_label(bars, fmt='%.3f', padding=3, fontsize=9)
     ax.set(xticks=x, xticklabels=names, ylim=(0, 1.16), ylabel='Recall',
            title='A  Which class improves at threshold 0.5?')
-    ax.legend(loc='upper left', fontsize=8)
+    ax.legend(loc='upper left', fontsize=8, ncol=2)
     ax = axes[0, 1]
     for i, (name, r) in enumerate(runs.items()):
         precision, recall, _ = precision_recall_curve(y, r['prob'])
@@ -243,7 +260,7 @@ def main():
            ylabel='All macro F1', title='D  95% dev-group bootstrap intervals')
     fig.suptitle(f'Internal dev diagnostics: {len(rows)} samples; {seed_note}; exploratory\n'
                  'Intervals condition on fitted models; not training-seed uncertainty', fontsize=12)
-    fig.savefig(out/'error_analysis.png'); fig.savefig(out/'error_analysis.pdf'); plt.close(fig)
+    export_figure(fig,out,'error_analysis',args.panel_auditor); plt.close(fig)
     print(json.dumps(report,indent=2),flush=True)
 
 if __name__=='__main__':

@@ -101,7 +101,7 @@ python main_model/analyze_performance.py --gold-internal-dev data/processed/v2/d
 python main_model/profile_lengths.py --data-manifest data/processed/v2/manifest.json --model-dir models/xlm-roberta-base --output-dir runs/b_v2_length_profile_repeat
 ```
 
-性能/ROC/概率/训练曲线为performance，混淆矩阵为confusion，召回/PR/固定10箱可靠性/宏F1组bootstrap区间为error_analysis，均提供PNG/PDF。可靠性曲线只作诊断，不拟合校准器或搜索阈值。长度入口只读manifest声明的train/dev并核验哈希，统计完整token长度（含特殊token），不读test、不导出文本或改写划分。
+性能/ROC/概率/训练曲线为performance，混淆矩阵为confusion，召回/PR/固定10箱可靠性/宏F1组bootstrap区间为error_analysis，均提供300dpi PNG及可编辑PDF/SVG。可靠性曲线只作诊断，不拟合校准器或搜索阈值。长度入口只读manifest声明的train/dev并核验哈希，统计完整token长度（含特殊token），不读test、不导出文本或改写划分。
 
 ## 延长训练与第二seed图表
 
@@ -112,3 +112,5 @@ python main_model/analyze_performance.py --gold-internal-dev data/processed/v2/d
 ```
 
 图表自动读取各run的arguments.json标注实际训练seed，性能柱图展示全体宏F1/临时短文本宏F1/临时S，AUC在ROC图例中展示。`--prefix-run`只省略重复的训练曲线，保留该模型的全部评估结果；本轮会另核验CE500确属seed42恢复轨迹前缀。两个seed只提供初步稳定性证据，不把dev组bootstrap区间解释成seed置信区间。
+
+可选 `--panel-auditor <可信审计模块.py>` 在导出前调用该模块的 `require_matplotlib_panel_alignment`，保存各图的alignment.json，并固定最终布局后导出三个格式。模块仅在显式指定时加载，常规复画无需额外审计依赖；不能指定不可信的Python文件。本轮交接另保留实际PDF字形、碰撞检查和逐面板人工复核记录。

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "candidate": "CE2000_s43",
+  "prediction_rows": 200,
+  "precision": "fp32",
+  "batch_size": 8,
+  "input": "A frozen internal-v2 smoke_dev, exact subset of full dev",
+  "ordered_ids_verified": true,
+  "finite_probability_range_verified": true,
+  "reference": "full-dev independent reload predictions by sample_id",
+  "max_abs_probability_difference": 0.0,
+  "rtol": 1e-05,
+  "atol": 1e-06
+}
