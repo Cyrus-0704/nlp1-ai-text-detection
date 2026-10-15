@@ -1,0 +1,15 @@
+{
+  "train_file": "data/processed/v1/smoke_train.jsonl",
+  "dev_file": "data/processed/v1/smoke_dev.jsonl",
+  "model_dir": "models/xlm-roberta-base",
+  "output_dir": "runs/b_real_smoke_50",
+  "data_kind": "a-internal",
+  "data_manifest": "data/processed/v1/manifest.json",
+  "evaluation_script": "data_tools/evaluate.py",
+  "seed": 42,
+  "max_steps": 50,
+  "max_length": 256,
+  "batch_size": 1,
+  "gradient_accumulation": 16,
+  "learning_rate": 2e-05
+}

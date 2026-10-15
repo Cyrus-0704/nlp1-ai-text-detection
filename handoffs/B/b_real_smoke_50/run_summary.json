@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "data_kind": "a-internal",
+  "competition_performance_claim": false,
+  "evaluation_scope": "internal-development-only",
+  "code_commit": "05ca4900b5b9612e51016e9554fd59cda7621e65",
+  "main_model_code_dirty": false,
+  "data_provenance": {
+    "version": "internal-v1",
+    "manifest_sha256": "62832e8698ce22dbf7419e1868f8b3f4bc8a4057ea3bb9f3aeaee00c13a7be5f"
+  },
+  "train_rows": 1000,
+  "dev_rows": 200,
+  "optimizer_updates": 50,
+  "attempted_updates": 50,
+  "fp16_skipped_updates": 0,
+  "training_loss": 0.6838018035888672,
+  "training_seconds": 51.622027300007176,
+  "optimizer_updates_per_second": 0.9685787756730169,
+  "samples_per_second": 15.49726041076827,
+  "processed_samples": 800,
+  "gpu_batches": 800,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "max_observed_sequence_length": 256,
+  "processed_nonpadding_tokens": 188328,
+  "peak_allocated_mib": 5724.44921875,
+  "peak_reserved_mib": 5906.0,
+  "fp16": true,
+  "gradient_checkpointing": true,
+  "dataloader_num_workers": 0,
+  "inference_precision": "fp32",
+  "inference_batch_size": 1,
+  "threshold": 0.5,
+  "short_text_rule": "TEMPORARY ONLY: len(text.split()) < 100; not official multilingual word counting",
+  "split_overlap_checks": [
+    "sample_id",
+    "group_id",
+    "whitespace-normalized exact text"
+  ],
+  "input_files": {
+    "train": {
+      "path": "data/processed/v1/smoke_train.jsonl",
+      "sha256": "862abf14341297c5a90d13ffd173ec834877fb991488dd219be5e26519c6f3a1"
+    },
+    "dev": {
+      "path": "data/processed/v1/smoke_dev.jsonl",
+      "sha256": "cc57e00857422e08add6292d98be245c026ef494e71e3b8468ac5ed45edffaf4"
+    }
+  },
+  "python": "3.11.17",
+  "packages": {
+    "torch": "2.13.0+cu126",
+    "transformers": "4.57.6",
+    "accelerate": "1.15.0",
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1"
+  },
+  "created_at_utc": "2026-10-15T10:08:36.743298+00:00",
+  "a_evaluation": {
+    "script_sha256": "ead97832dfbf7f8f48017b5bc0b933bafc29e98a2c833fc68fd982de5607a31e",
+    "report": "a_evaluation_report.txt",
+    "short_by": "word",
+    "threshold": 0.5,
+    "short_threshold": 100,
+    "rule_status": "temporary; not official"
+  },
+  "reload_check": "independent subprocess; FP32, batch=1, rtol=1e-5, atol=1e-6",
+  "reload_max_abs_probability_difference": 0.0,
+  "prediction_rows": 200,
+  "ordered_ids_verified": true,
+  "probability_direction": "softmax(logits)[:,1]; machine=1",
+  "finite_loss_verified": true,
+  "finite_probability_range_verified": true
+}

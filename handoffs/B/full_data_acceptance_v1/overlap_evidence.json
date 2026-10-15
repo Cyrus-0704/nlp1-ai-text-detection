@@ -1,0 +1,60 @@
+{
+  "contains_raw_text": false,
+  "per_check_key_limit": 100,
+  "evidence": [
+    {
+      "check": "whitespace_text",
+      "fingerprint_sha256": "158ee5cf78d7ae06291690700cd0791cd11e9ec914b1d9facb567545c8187b72",
+      "train_sample_ids": [
+        "s_00008703",
+        "s_00014173",
+        "s_00051956",
+        "s_00079321"
+      ],
+      "dev_sample_ids": [
+        "s_00062606"
+      ],
+      "train_group_ids": [
+        "g_0073953",
+        "g_0075099",
+        "g_0081882"
+      ],
+      "dev_group_ids": [
+        "g_0069233"
+      ],
+      "train_labels": [
+        0
+      ],
+      "dev_labels": [
+        0
+      ]
+    },
+    {
+      "check": "casefold_whitespace_text",
+      "fingerprint_sha256": "ac5ab0a0835f7af5754631aedf65a8a284cac269f4ac3b9a2a7ce440ed7181e9",
+      "train_sample_ids": [
+        "s_00008703",
+        "s_00014173",
+        "s_00051956",
+        "s_00079321"
+      ],
+      "dev_sample_ids": [
+        "s_00062606"
+      ],
+      "train_group_ids": [
+        "g_0073953",
+        "g_0075099",
+        "g_0081882"
+      ],
+      "dev_group_ids": [
+        "g_0069233"
+      ],
+      "train_labels": [
+        0
+      ],
+      "dev_labels": [
+        0
+      ]
+    }
+  ]
+}

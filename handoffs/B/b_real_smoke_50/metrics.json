@@ -1,0 +1,26 @@
+{
+  "data_version": "internal-v1",
+  "scope": "smoke_dev only; not full dev, test, or official validation",
+  "evaluator": "data_tools/evaluate.py",
+  "evaluator_sha256": "ead97832dfbf7f8f48017b5bc0b933bafc29e98a2c833fc68fd982de5607a31e",
+  "threshold": 0.5,
+  "short_rule": "TEMPORARY: len(text.split()) < 100; official multilingual rule unconfirmed",
+  "evaluated_samples": 200,
+  "short_samples": 30,
+  "macro_f1_all": 0.38837920489296635,
+  "macro_f1_short_temporary": 0.4,
+  "weighted_score_temporary": 0.3918654434250764,
+  "confusion_matrix": [
+    [
+      0,
+      73
+    ],
+    [
+      0,
+      127
+    ]
+  ],
+  "predicted_machine": 200,
+  "official_score": null,
+  "limitation": "50 updates; all 200 samples classified as machine at threshold 0.5; not an effective final detector."
+}

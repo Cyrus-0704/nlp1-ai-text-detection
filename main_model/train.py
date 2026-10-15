@@ -4,6 +4,7 @@ import gc
 import importlib.metadata
 import json
 import math
+import os
 import platform
 import shutil
 import subprocess
@@ -17,6 +18,7 @@ from torch.utils.data import DataLoader
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, set_seed
 from common import (LABEL2ID, ID2LABEL, read_rows, validate_splits, write_json,
                     sha256, probabilities, write_predictions, load_tokenizer)
+from training_engine import train_updates
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
@@ -26,13 +28,26 @@ def main():
     p.add_argument('--output-dir', required=True)
     p.add_argument('--data-kind', choices=['synthetic', 'a-internal'], required=True,
                    help='Explicit provenance; never pass official validation as dev')
+    p.add_argument('--data-manifest', help='A manifest; input hashes must match its declared files')
+    p.add_argument('--evaluation-script', help='A internal-dev evaluator; invoked after strict prediction checks')
     p.add_argument('--seed', type=int, default=42)
     p.add_argument('--max-steps', type=int, default=50)
     p.add_argument('--max-length', type=int, default=256)
     p.add_argument('--batch-size', type=int, default=1)
     p.add_argument('--gradient-accumulation', type=int, default=16)
     p.add_argument('--learning-rate', type=float, default=2e-5)
+    p.add_argument('--class-weighting', choices=['none','balanced'], default='none')
+    p.add_argument('--save-steps', type=int, default=100)
+    p.add_argument('--keep-checkpoints', type=int, default=2)
+    p.add_argument('--resume-from', help='Trusted local resumable checkpoint; output-dir must be new')
+    p.add_argument('--stop-after-steps', type=int, help='Controlled optimizer-boundary interruption for resume verification')
+    p.add_argument('--deterministic', action='store_true', help='Require deterministic CUDA operations on this environment')
     args = p.parse_args()
+    if args.save_steps < 1 or args.keep_checkpoints < 1 or (args.stop_after_steps is not None and args.stop_after_steps < 1):
+        raise ValueError('Invalid checkpoint/stop settings')
+    if args.deterministic:
+        os.environ['CUBLAS_WORKSPACE_CONFIG'] = ':4096:8'
+        torch.use_deterministic_algorithms(True)
     if min(args.max_steps, args.batch_size, args.gradient_accumulation) < 1 or not 1 <= args.max_length <= 512 or args.learning_rate <= 0:
         raise ValueError('Invalid training hyperparameters')
     out = Path(args.output_dir).resolve()
@@ -45,84 +60,37 @@ def main():
     train = read_rows(args.train_file, labeled=True)
     dev = read_rows(args.dev_file, labeled=True)
     validate_splits(train, dev)
+    provenance = None
+    if args.data_manifest:
+        manifest = json.loads(Path(args.data_manifest).read_text(encoding='utf-8-sig'))
+        declared = list(manifest.get('splits', {}).values()) + list(manifest.get('smoke', {}).get('files', {}).values())
+        for path in (args.train_file, args.dev_file):
+            digest = sha256(path)
+            if not any(item['sha256'] == digest and item['bytes'] == Path(path).stat().st_size for item in declared):
+                raise ValueError('Input does not match A manifest')
+        provenance = dict(version=manifest['version'], manifest_sha256=sha256(args.data_manifest))
+        shutil.copy2(args.data_manifest, out/'data_manifest.json')
+    repo = Path(__file__).resolve().parent.parent
+    code_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
+    code_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain', '--', 'main_model'], cwd=repo, text=True).strip())
     source = Path(args.model_dir)/'source_manifest.json'
     if not source.exists():
         raise ValueError('Source model requires source_manifest.json from download_model.py')
     shutil.copy2(source, out/'source_manifest.json')
-    tokenizer = load_tokenizer(args.model_dir)
+    load_path = args.resume_from or args.model_dir
+    tokenizer = load_tokenizer(load_path)
     model = AutoModelForSequenceClassification.from_pretrained(
-        args.model_dir, local_files_only=True, num_labels=2, label2id=LABEL2ID,
+        load_path, local_files_only=True, num_labels=2, label2id=LABEL2ID,
         id2label=ID2LABEL, attn_implementation='sdpa').to('cuda')
     model.config.detection_max_length = args.max_length
     model.config.detection_inference_precision = 'fp32'
     model.config.use_cache = False
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant': False})
-    def collate(rows):
-        inputs = tokenizer([r['text'] for r in rows], truncation=True,
-                           max_length=args.max_length, padding=True, return_tensors='pt')
-        inputs['labels'] = torch.tensor([r['label'] for r in rows], dtype=torch.long)
-        return inputs
-    loader = DataLoader(train, batch_size=args.batch_size, shuffle=True, collate_fn=collate,
-                        num_workers=0, pin_memory=True)
-    iterator = iter(loader)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=0.01, foreach=False)
-    scaler = torch.amp.GradScaler('cuda')
-    optimizer.zero_grad(set_to_none=True)
-    torch.cuda.reset_peak_memory_stats()
-    torch.cuda.synchronize()
-    start = time.perf_counter()
-    total_loss, updates, attempts, seen, gpu_batches = 0., 0, 0, 0, 0
-    with (out/'training_log.jsonl').open('w', encoding='utf-8', buffering=1) as log:
-        while updates < args.max_steps:
-            model.train()
-            losses = []
-            for _ in range(args.gradient_accumulation):
-                try:
-                    batch = next(iterator)
-                except StopIteration:
-                    iterator = iter(loader)
-                    batch = next(iterator)
-                batch = {k: v.to('cuda', non_blocking=True) for k, v in batch.items()}
-                if batch['input_ids'].device.type != 'cuda' or next(model.parameters()).device.type != 'cuda':
-                    raise RuntimeError('GPU placement failed')
-                gpu_batches += 1
-                seen += len(batch['labels'])
-                with torch.autocast('cuda', dtype=torch.float16):
-                    loss = model(**batch).loss
-                value = float(loss.detach())
-                if not math.isfinite(value):
-                    raise RuntimeError('Nonfinite loss')
-                losses.append(value)
-                scaler.scale(loss / args.gradient_accumulation).backward()
-            scaler.unscale_(optimizer)
-            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            scale_before = scaler.get_scale()
-            scaler.step(optimizer)
-            scaler.update()
-            optimizer.zero_grad(set_to_none=True)
-            attempts += 1
-            skipped = scaler.get_scale() < scale_before
-            if not skipped:
-                updates += 1
-                total_loss += float(np.mean(losses))
-            if attempts > args.max_steps + 30:
-                raise RuntimeError('Too many FP16 skipped updates')
-            entry = dict(optimizer_step=updates, attempt=attempts, loss=float(np.mean(losses)),
-                         skipped=skipped, grad_norm=float(grad_norm) if torch.isfinite(grad_norm) else None,
-                         elapsed_seconds=time.perf_counter()-start, scaler_scale=scaler.get_scale())
-            log.write(json.dumps(entry, allow_nan=False)+'\n')
-            print(json.dumps(entry, allow_nan=False), flush=True)
-    torch.cuda.synchronize()
-    elapsed = time.perf_counter()-start
+    training_stats = train_updates(model, tokenizer, train, args, out)
     stats = dict(status='TRAINED_PENDING_RELOAD_CHECK', data_kind=args.data_kind,
-                 competition_performance_claim=False if args.data_kind == 'synthetic' else None,
-                 train_rows=len(train), dev_rows=len(dev), optimizer_updates=updates,
-                 attempted_updates=attempts, fp16_skipped_updates=attempts-updates,
-                 training_loss=total_loss/updates, training_seconds=elapsed,
-                 optimizer_updates_per_second=updates/elapsed, samples_per_second=seen/elapsed,
-                 processed_samples=seen, gpu_batches=gpu_batches, gpu=torch.cuda.get_device_name(0),
-                 peak_allocated_mib=torch.cuda.max_memory_allocated()/2**20,
-                 peak_reserved_mib=torch.cuda.max_memory_reserved()/2**20,
+                 competition_performance_claim=False, evaluation_scope='internal-development-only',
+                 code_commit=code_commit, main_model_code_dirty=code_dirty, data_provenance=provenance,
+                 train_rows=len(train), dev_rows=len(dev), **training_stats,
                  fp16=True, gradient_checkpointing=model.is_gradient_checkpointing,
                  dataloader_num_workers=0, inference_precision='fp32', inference_batch_size=1,
                  threshold=0.5, short_text_rule='TEMPORARY ONLY: len(text.split()) < 100; not official multilingual word counting',
@@ -132,9 +100,13 @@ def main():
                  python=platform.python_version(), packages={k: importlib.metadata.version(k)
                  for k in ['torch','transformers','accelerate','numpy','scikit-learn']},
                  created_at_utc=datetime.now(timezone.utc).isoformat())
+    if not training_stats['completed']:
+        stats['status'] = 'STOPPED_AT_CHECKPOINT'
+        write_json(out/'run_summary.json', stats)
+        print(json.dumps(stats, indent=2), flush=True)
+        return
     write_json(out/'run_summary.json', stats)
     # Release optimizer state before FP32 inference. No second GPU model is held concurrently.
-    del optimizer, scaler, batch, loss
     gc.collect()
     torch.cuda.empty_cache()
     model.gradient_checkpointing_disable()
@@ -145,6 +117,8 @@ def main():
     tokenizer.save_pretrained(checkpoint)
     shutil.copy2(out/'source_manifest.json', checkpoint/'source_manifest.json')
     shutil.copy2(out/'arguments.json', checkpoint/'training_arguments.json')
+    if args.data_manifest:
+        shutil.copy2(out/'data_manifest.json', checkpoint/'data_manifest.json')
     del model
     gc.collect()
     torch.cuda.empty_cache()
@@ -165,12 +139,22 @@ def main():
     y = np.array([r['label'] for r in dev])
     pred = (actual >= 0.5).astype(int)
     mask = np.array([len(r['text'].split()) < 100 for r in dev])
-    metrics = dict(evaluator='B temporary fallback; A evaluator not delivered', data_kind=args.data_kind,
-                   competition_performance_claim=args.data_kind != 'synthetic', threshold=0.5,
+    metrics = dict(evaluator='B auxiliary sklearn calculation; A evaluation reported separately when supplied', data_kind=args.data_kind,
+                   competition_performance_claim=False, evaluation_scope='internal-development-only', threshold=0.5,
                    macro_f1_all=float(f1_score(y, pred, labels=[0,1], average='macro', zero_division=0)),
                    short_text_rule=stats['short_text_rule'], official_score=None)
     metrics['macro_f1_short_TEMPORARY'] = float(f1_score(y[mask], pred[mask], labels=[0,1], average='macro', zero_division=0)) if mask.any() else None
     write_json(out/'internal_dev_metrics.json', metrics)
+    if args.evaluation_script:
+        eval_command = [sys.executable, str(Path(args.evaluation_script).resolve()),
+                        '--gold', str(Path(args.dev_file).resolve()), '--pred', str(out/'dev_predictions.csv'),
+                        '--threshold', '0.5', '--short-by', 'word', '--short-threshold', '100',
+                        '--save-report', str(out/'a_evaluation_report.txt')]
+        with (out/'a_evaluation.log').open('w', encoding='utf-8') as log:
+            subprocess.run(eval_command, stdout=log, stderr=subprocess.STDOUT, check=True)
+        stats['a_evaluation'] = dict(script_sha256=sha256(args.evaluation_script),
+                                    report='a_evaluation_report.txt', short_by='word', threshold=0.5,
+                                    short_threshold=100, rule_status='temporary; not official')
     stats.update(status='PASS', reload_check='independent subprocess; FP32, batch=1, rtol=1e-5, atol=1e-6',
                  reload_max_abs_probability_difference=float(np.max(np.abs(actual-np.array(expected)))),
                  prediction_rows=len(actual), ordered_ids_verified=True, probability_direction='softmax(logits)[:,1]; machine=1',

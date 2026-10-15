@@ -1,0 +1,28 @@
+{
+  "train": {
+    "rows": 1000,
+    "tokens_q": [
+      33,
+      258,
+      374,
+      499,
+      10116
+    ],
+    "fraction_over_256": 0.757,
+    "fraction_over_512": 0.231,
+    "whitespace_short_rows": 118
+  },
+  "dev": {
+    "rows": 200,
+    "tokens_q": [
+      48,
+      247,
+      370,
+      525,
+      3969
+    ],
+    "fraction_over_256": 0.73,
+    "fraction_over_512": 0.27,
+    "whitespace_short_rows": 30
+  }
+}

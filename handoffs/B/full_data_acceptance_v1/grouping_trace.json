@@ -1,0 +1,248 @@
+{
+  "contains_raw_text": false,
+  "scope": "Known internal train/dev duplicate only",
+  "matched_raw_records": 24,
+  "matches": [
+    {
+      "raw_line_1based": 3978,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 6479,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 17609,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 17869,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 26336,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 32597,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 34561,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 35063,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 36724,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 38165,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 41952,
+      "matching_fields": [
+        "human_reviews",
+        "human_reviews"
+      ],
+      "grouping_representative_field": "abstract",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 43068,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 47587,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 54042,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 57482,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 58494,
+      "matching_fields": [
+        "human_reviews",
+        "human_reviews"
+      ],
+      "grouping_representative_field": "abstract",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 65349,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 67715,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 69195,
+      "matching_fields": [
+        "human_reviews",
+        "human_reviews"
+      ],
+      "grouping_representative_field": "abstract",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 69238,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 70225,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 73959,
+      "matching_fields": [
+        "human_reviews",
+        "human_reviews"
+      ],
+      "grouping_representative_field": "abstract",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 75105,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    },
+    {
+      "raw_line_1based": 81888,
+      "matching_fields": [
+        "human_text",
+        "human_text"
+      ],
+      "grouping_representative_field": "human_text",
+      "overlap_used_as_grouping_representative": false,
+      "domain": "PeerRead/iclr_2017/"
+    }
+  ],
+  "inference": "A groups using one representative human text per raw record, while export expands additional texts; matches below show whether this known duplicate was represented in the grouping pass."
+}

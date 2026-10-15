@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "ordered_rows": 200,
+  "finite_range_verified": true,
+  "packaged_inference_csv_exact_match": true,
+  "saved_vs_reloaded_max_abs_probability_difference": 0.0,
+  "fp32": true,
+  "batch_size": 1,
+  "predictions_sha256": "785709464a2587304f9c3906af40a93cd711fac9709173392170cc8f41f4ff0d"
+}

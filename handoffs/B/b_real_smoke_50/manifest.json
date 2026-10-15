@@ -1,0 +1,52 @@
+{
+  "owner": "B",
+  "intended_recipients": [
+    "A",
+    "C"
+  ],
+  "delivery_state": "pushed to work/b-model; draft PR #2 open; not merged into main",
+  "run_id": "b_real_smoke_50",
+  "data_version": "internal-v1",
+  "a_data_commit": "e760e63a1f797eb4562d56be059c099c97597cd8",
+  "accepted_main_commit": "28e6f52ab74baf99d961243663fa90e54f0f5e81",
+  "training_code_commit": "05ca4900b5b9612e51016e9554fd59cda7621e65",
+  "local_checkpoint": "runs/b_real_smoke_50/checkpoint",
+  "official_validation_read": false,
+  "internal_test_read": false,
+  "files": {
+    "a_evaluation_report.txt": {
+      "bytes": 1745,
+      "sha256": "b082ed32f162640aa754272d356b895acbcf73f4acb3d167d97dda25cb8d06c9"
+    },
+    "dev_predictions.csv": {
+      "bytes": 6200,
+      "sha256": "785709464a2587304f9c3906af40a93cd711fac9709173392170cc8f41f4ff0d"
+    },
+    "metrics.json": {
+      "bytes": 793,
+      "sha256": "0a1951dcc1b426cd25bf4e8309c693acfe40639a408d185ee8bc9926741e5d08"
+    },
+    "packaged_inference_check.json": {
+      "bytes": 310,
+      "sha256": "cd661814bc5d5e3173b65ef458704e8372b9ebd34d79693326ee8ae832731c26"
+    },
+    "pretrained_source_manifest.json": {
+      "bytes": 1076,
+      "sha256": "9a5912fa35e2d897710a88a7a60ebcf43cf9290c21eb9fda62982a94c61c33d6"
+    },
+    "README.md": {
+      "bytes": 4634,
+      "sha256": "d48ff93d0a79a85b26fd9dd4a14ad3d63c5a7c512ac96a78748d39a2b56c6568"
+    },
+    "run_summary.json": {
+      "bytes": 2481,
+      "sha256": "5c9ccdeecc7737866caabfdaeaf090dbbc2778868d64b8d8425b16fe8aab68f6"
+    },
+    "training_arguments.json": {
+      "bytes": 452,
+      "sha256": "fc41c6e7b9095487720603814bbfda8310a59d89a1e71c724876aac716c47013"
+    }
+  },
+  "pull_request": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/2",
+  "handoff_commit": "25ad6e98060df396dc47d8c34a8dd1f3c86412c5"
+}
