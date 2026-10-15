@@ -92,3 +92,12 @@ python main_model/train.py --train-file data/processed/v2/train.jsonl --dev-file
 ```
 
 完整划分按A脚本本地生成并校验，不上传副本。新增 `--inference-batch-size` 默认1；完整dev使用8，保存前与新进程加载后使用同一FP32精度、同一batch和顺序严格比较；不改变训练batch与有效batch。运行摘要记录两段推理耗时。图表标签同时适用于小样dev和完整dev。
+
+完整dev对照结束后生成评估图及不含正文的诊断数据：
+
+```powershell
+python main_model/analyze_performance.py --gold-internal-dev data/processed/v2/dev.jsonl --run CE500=runs/b_v2_full_ce500 --run Balanced500=runs/b_v2_full_balanced500 --output-dir runs/b_v2_full_pilot_analysis
+python main_model/profile_lengths.py --data-manifest data/processed/v2/manifest.json --model-dir models/xlm-roberta-base --output-dir runs/b_v2_length_profile_repeat
+```
+
+性能/ROC/概率/训练曲线为performance，混淆矩阵为confusion，召回/PR/固定10箱可靠性/宏F1组bootstrap区间为error_analysis，均提供PNG/PDF。可靠性曲线只作诊断，不拟合校准器或搜索阈值。长度入口只读manifest声明的train/dev并核验哈希，统计完整token长度（含特殊token），不读test、不导出文本或改写划分。

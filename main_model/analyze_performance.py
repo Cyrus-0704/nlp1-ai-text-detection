@@ -6,7 +6,8 @@ import json
 from pathlib import Path
 import sys
 import numpy as np
-from sklearn.metrics import roc_auc_score, average_precision_score, log_loss, brier_score_loss, roc_curve
+from sklearn.metrics import (roc_auc_score, average_precision_score, log_loss,
+                            brier_score_loss, roc_curve, precision_recall_curve)
 from common import read_rows, validate_probabilities, sha256, write_json
 
 def main():
@@ -166,6 +167,60 @@ def main():
                xlabel='Predicted',ylabel='True',title=name)
     fig.suptitle('Internal dev confusion matrices (counts); threshold 0.5',fontsize=12)
     fig.savefig(out/'confusion.png'); fig.savefig(out/'confusion.pdf'); plt.close(fig)
+    fig, axes = plt.subplots(2, 2, figsize=(11.6, 8.2), layout='constrained')
+    ax = axes[0, 0]
+    for j, (key, label) in enumerate([('human_recall', 'Human recall'), ('machine_recall', 'Machine recall')]):
+        bars = ax.bar(x+(j-.5)*.32, [runs[n]['metrics'][key] for n in names], .32,
+                      color=colors[j], label=label)
+        ax.bar_label(bars, fmt='%.3f', padding=3, fontsize=9)
+    ax.set(xticks=x, xticklabels=names, ylim=(0, 1.16), ylabel='Recall',
+           title='A  Which class improves at threshold 0.5?')
+    ax.legend(loc='upper left', fontsize=8)
+    ax = axes[0, 1]
+    for i, (name, r) in enumerate(runs.items()):
+        precision, recall, _ = precision_recall_curve(y, r['prob'])
+        ax.plot(recall, precision, color=colors[i], label=f"{name}: AP={r['metrics']['average_precision']:.3f}")
+    ax.axhline(y.mean(), color='.65', ls='--', lw=1, label=f'Machine prevalence {y.mean():.3f}')
+    ax.set(xlabel='Machine recall', ylabel='Machine precision', xlim=(0, 1),
+           ylim=(0, 1.03), title='B  Precision-recall trade-off (no threshold tuning)')
+    ax.legend(fontsize=8, loc='lower left')
+    ax = axes[1, 0]
+    calibration = []
+    for i, (name, r) in enumerate(runs.items()):
+        bins = np.minimum((r['prob']*10).astype(int), 9)
+        points = []
+        for b in range(10):
+            mask = bins == b
+            if not mask.any():
+                continue
+            item = dict(run=name, bin_low=b/10, bin_high=(b+1)/10, samples=int(mask.sum()),
+                        mean_p_machine=float(r['prob'][mask].mean()),
+                        observed_machine_fraction=float(y[mask].mean()))
+            calibration.append(item)
+            points.append(item)
+        ax.plot([p['mean_p_machine'] for p in points], [p['observed_machine_fraction'] for p in points],
+                '-o', ms=4, color=colors[i], label=name)
+    ax.plot([0, 1], [0, 1], color='.65', ls='--', lw=1)
+    ax.set(xlabel='Mean p_machine (10 fixed bins)', ylabel='Observed machine fraction',
+           xlim=(0, 1), ylim=(0, 1), title='C  Reliability diagnostic; no calibration fitted')
+    ax.legend(fontsize=8)
+    with (out/'calibration.csv').open('w', encoding='utf-8', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=list(calibration[0]))
+        writer.writeheader(); writer.writerows(calibration)
+    ax = axes[1, 1]
+    values = np.array([runs[n]['metrics']['macro_f1_all'] for n in names])
+    intervals = np.array([runs[n]['metrics']['macro_f1_group_bootstrap_ci95'] for n in names])
+    for i, name in enumerate(names):
+        ax.vlines(i, intervals[i, 0], intervals[i, 1], color=colors[i], lw=2)
+        ax.plot(i, values[i], 'o', color=colors[i])
+        ax.annotate(f'{values[i]:.3f}\n[{intervals[i,0]:.3f}, {intervals[i,1]:.3f}]',
+                    (i, intervals[i, 1]), xytext=(0, 8), textcoords='offset points',
+                    ha='center', fontsize=9)
+    ax.set(xticks=x, xticklabels=names, xlim=(-.5, len(names)-.5), ylim=(0, 1.12),
+           ylabel='All macro F1', title='D  95% dev-group bootstrap intervals')
+    fig.suptitle(f'Internal dev diagnostics: {len(rows)} samples; one seed; exploratory\n'
+                 'Intervals condition on fitted models; not training-seed uncertainty', fontsize=12)
+    fig.savefig(out/'error_analysis.png'); fig.savefig(out/'error_analysis.pdf'); plt.close(fig)
     print(json.dumps(report,indent=2),flush=True)
 
 if __name__=='__main__':

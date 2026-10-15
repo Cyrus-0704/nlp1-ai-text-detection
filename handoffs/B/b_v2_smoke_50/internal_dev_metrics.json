@@ -1,0 +1,11 @@
+{
+  "evaluator": "B auxiliary sklearn calculation; A evaluation reported separately when supplied",
+  "data_kind": "a-internal",
+  "competition_performance_claim": false,
+  "evaluation_scope": "internal-development-only",
+  "threshold": 0.5,
+  "macro_f1_all": 0.4715879963720967,
+  "short_text_rule": "TEMPORARY ONLY: len(text.split()) < 100; not official multilingual word counting",
+  "official_score": null,
+  "macro_f1_short_TEMPORARY": 0.475
+}
