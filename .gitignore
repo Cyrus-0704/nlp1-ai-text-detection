@@ -58,3 +58,17 @@ id_ed25519*
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# --- A: 本地原始数据副本与临时产物(禁止入库) ---
+# 原始数据正式文件即仓库根 data.jsonl(由 LFS 管理), 不再上传第二份副本。
+data/data.jsonl
+data.7z
+# 划分数据副本(约352MB, 走 LFS); 本轮不上传, 只提交脚本/manifest/审计。
+# 数据由接收方按 manifest 的 generation.command 本地生成并用 sha256 核对。
+/train.jsonl
+/dev.jsonl
+/test.jsonl
+data/processed/**/*.jsonl
+# 本机探索/清洗日志, 不作为交付物。
+explore_output.txt
+preprocess_log.txt
