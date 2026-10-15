@@ -1,64 +1,84 @@
-# A → B/C 交接说明（数据版本 internal-v1）
+# A → B/C 交接说明（数据版本 internal-v1 / H01）
 
 ## 1. 基本信息
 
 | 项 | 内容 |
 | --- | --- |
 | 交付人 | A（数据、评估与交付验收） |
-| 用途 | 向 B/C 提供同一套可信、可复现的内部训练/调参/内部测试数据与统一评估口径 |
+| 用途 | H01：向 B/C 提供同一套可信、可复现的内部训练/调参/内部测试数据、真实小样与统一评估口径 |
 | 接收人 | B（主模型）、C（基线/融合） |
 | 数据版本 | `internal-v1` |
 | 分支 | `work/a-data` |
-| 代码 commit | 本文件所在 commit（即本次交付 commit）；基线 `f3758d2`（origin/main） |
 | 原始数据 | 仓库根 `data.jsonl`（Git LFS，`raw-v1`，不可变，见 `data/manifest.raw.json`） |
 
-本轮只上传**脚本 / manifest / 清洗审计**；完整划分文件约 352MB 且 `*.jsonl` 走 Git LFS，为不占满团队 LFS 配额暂不入库，接收方按第 3 节命令本地生成并用 SHA-256 核对。
+完整划分（train/dev/test 合计约 352MB，走 Git LFS）本轮**不入库**，接收方按第 4 节命令本地生成并用 SHA-256 核对；**smoke 真实小样已入库**，可直接拉取使用。
 
-## 2. 文件清单
+## 2. 包含文件
 
-| 相对路径 | SHA-256 | 格式 | 说明 |
+正式交付物（已入库）：
+
+| 相对路径 | 说明 | 样本量 | SHA-256 |
 | --- | --- | --- | --- |
-| `data/processed/v1/manifest.json` | `27696dc3a81cad9c0b45f5e866b0cf1852ad520ddf58d05412d424b9ecea622c` | JSON | 版本/字段/分组/划分/评估/已知限制的权威清单 |
-| `data/processed/v1/cleaning_audit.md` | 见文件内 | Markdown | 清洗与过滤统计、去重与分组决策、划分完整性校验 |
-| `data_tools/preprocess.py` | `fba43fe349f56b2bfc8f8f1f67285f02d7cd6c6bbf5362a769a0c46e053fd9e3` | Python | 生成 `internal-v1` 的处理与划分脚本（20867 B） |
-| `data_tools/evaluate.py` | `f6a3c702b92ac395aeca43781df929d130858a4508cada6d5c610e218b16a209` | Python | 统一评估脚本，零 sklearn 依赖（13229 B） |
+| `data/processed/v1/smoke_train.jsonl` | 训练小样（抽自 train） | 200（human 73 / machine 127） | `f8ca7a70b775f9f58fba2decb9b2dbc2cf80a1fcf4b34724cf193ccf62a8974b` |
+| `data/processed/v1/smoke_dev.jsonl` | 调参小样（抽自 dev） | 100（human 36 / machine 64） | `975f1f7c27388e5e4e5789585cb3024999ba591552bf4dc3f5afd1671cc064a4` |
+| `data/processed/v1/manifest.json` | 权威机器可读清单（版本/字段/分组/划分/评估/限制） | — | 见 git |
+| `data/processed/v1/cleaning_audit.md` | 清洗与划分审计报告 | — | 见 git |
+| `data_tools/preprocess.py` | 生成 internal-v1 的处理与划分脚本 | — | 见 git |
+| `data_tools/make_smoke.py` | smoke 小样分层抽样脚本 | — | 见 git |
+| `data_tools/evaluate.py` | 统一评估脚本（零 sklearn 依赖） | — | 见 git |
 
-划分文件（**本轮未上传**，由接收方本地生成；尺寸与哈希见 `manifest.json` 的 `splits`）：
+完整划分（**未入库**，接收方本地生成后核对）：
 
-| 相对路径 | 样本量 | human | machine | bytes | SHA-256 |
-| --- | --- | --- | --- | --- | --- |
-| `data/processed/v1/train.jsonl` | 119727 | 43870 | 75857 | 281186299 | `ebf52482625cc69d73ea1a7b2f2fd3557acc944718f3f3b0c36eb1de9d6a2b6d` |
-| `data/processed/v1/dev.jsonl` | 14998 | 5444 | 9554 | 35049138 | `4790283a83857538b7c799d143db9dfb4870449b5d20dd38bf66d2864ff4e14a` |
-| `data/processed/v1/test.jsonl` | 15170 | 5594 | 9576 | 35785495 | `737a728de70e70bb7c17940e1bba59ae2f34aa864d1b32035dee33b32cc6850b` |
+| 相对路径 | 样本量 | human | machine | SHA-256 |
+| --- | --- | --- | --- | --- |
+| `data/processed/v1/train.jsonl` | 119727 | 43870 | 75857 | `ebf52482625cc69d73ea1a7b2f2fd3557acc944718f3f3b0c36eb1de9d6a2b6d` |
+| `data/processed/v1/dev.jsonl` | 14998 | 5444 | 9554 | `4790283a83857538b7c799d143db9dfb4870449b5d20dd38bf66d2864ff4e14a` |
+| `data/processed/v1/test.jsonl` | 15170 | 5594 | 9576 | `737a728de70e70bb7c17940e1bba59ae2f34aa864d1b32035dee33b32cc6850b` |
 
-合计 149895 样本（human 54908 / machine 94987），分组 33199 个。六字段：`sample_id,group_id,text,label,generator,domain`，约定 `human=0`、`machine=1`。
+合计 149895 样本，33199 个分组；`group_id` 跨集合交集为 0。
 
-## 3. 接收方可复制的命令
+## 3. 数据集规范（务必遵守）
 
-生成划分（在仓库根目录执行，需先有原始 `data.jsonl`）：
+- **六字段**：每行一个 JSON 对象，字段严格为 `sample_id, group_id, text, label, generator, domain`。
+- **label 含义**：`human = 0`，`machine = 1`；人类 `generator` 统一为 `human`，机器保留原始模型名。
+- **预测 CSV 格式**：必须包含 `sample_id` 和 `p_machine` 两列；`p_machine` 为 **machine（label=1）方向的预测概率**，取值 `[0,1]`，每个编号一条，顺序与输入一致。`evaluate.py` 对概率列名有容错（`p_machine/prob/score` 等均可），但请优先使用 `p_machine`。
+- **评测阈值**：默认 `p_machine >= 0.5` 判为 machine（可用 `--threshold` 调整）。
+- **短文本定义**：团队临时口径为「文本长度 **< 100 词**」（空白分词）；当前 `evaluate.py` 默认按「**字符数 < 100**」（`--short-by char --short-threshold 100`）实现，属临时口径，待官方核实后用 `--short-by word` 切换并在报告中标注。
+- **综合得分**：`S = 0.7 × 全体MacroF1 + 0.3 × 短文本MacroF1`；脚本同时输出混淆矩阵、各类别召回率、短文本数量与占比。
+
+## 4. 可复制命令
+
+生成完整划分（需先拉取原始数据）：
 
 ```bash
 git lfs pull --include="data.jsonl"
 python data_tools/preprocess.py --data data.jsonl --out-dir data/processed/v1 --seed 42 --min-len 20
 ```
 
-统一评估（`predictions.csv` 由 B/C 产出）：
+复现 smoke 小样（可选，已入库）：
 
 ```bash
-python data_tools/evaluate.py --gold data/processed/v1/test.jsonl --pred predictions.csv --threshold 0.5
+python data_tools/make_smoke.py --train data/processed/v1/train.jsonl --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 --n-train 200 --n-dev 100 --seed 42
 ```
 
-- **概率方向**：`p_machine` 表示 machine（`label=1`）的概率，取值 `[0,1]`，`p_machine >= 0.5` 判为 machine。CSV 列 `sample_id,p_machine`，顺序与输入一致，每个编号一条。
-- **评估口径**：`S = 0.7 × 全体MacroF1 + 0.3 × 短文本MacroF1`；额外输出混淆矩阵、各类别召回率、短文本数量与占比。
-- **短文本口径**：团队临时口径为「<100 **词**」；`evaluate.py` 默认按「字符 < 100」（`--short-by char`），需按官方核实结果用 `--short-by word` 切换，并在报告中标注为临时口径。
+本地评测（以 smoke_dev 为例，test 同理换成 `--gold data/processed/v1/test.jsonl`）：
 
-## 4. 验收检查与调试产物
+```bash
+python data_tools/evaluate.py --gold data/processed/v1/smoke_dev.jsonl --pred predictions.csv --threshold 0.5 --save-report report.txt
+```
 
-接收方请执行以下检查：
+## 5. 验收检查
 
-1. 生成文件与 `manifest.json` 的 `splits` 中 `sha256` / `bytes` / 样本数一致。
-2. 文本非空、`label ∈ {0,1}`、`sample_id` 全局唯一、train/dev/test 两类均有。
-3. 同一 `group_id` 不跨集合；空白规范化后的重复正文不跨集合（`manifest.json` 记录 `cross_split_group_leakage=false`）。
+1. 生成/拉取的文件与 `manifest.json` 中 SHA-256、bytes、样本数一致。
+2. 文本非空、`label ∈ {0,1}`、`sample_id` 全局唯一、各集合两类均有。
+3. 同一 `group_id` 不跨集合；空白规范化后的重复正文不跨集合。
 4. 模型入口按 `TEAM_WORKPLAN.md` 检查 `sample_id`/`group_id`/正文重叠，不关闭检查绕过泄漏。
 
-仅本机调试产物（不入库、不作为验收依据）：本机生成的 `train/dev/test.jsonl` 副本、`preprocess_log.txt`、`explore_output.txt`。正式审计以 `data/processed/v1/cleaning_audit.md` 为准。
+## 6. 已知限制
+
+1. 短文本口径待官方核实（当前为字符 <100 的临时口径）。
+2. `generator` 未做家族归一化（`davinci`/`text-davinci-003` 等仍分列）。
+3. 类别不均衡：machine 约占 63%，训练时建议类别加权或调阈值。
+4. `domain` 取自 `source`，缺失记为 `unknown`。
+
+仅本机调试产物（不入库）：`preprocess_log.txt`、`explore_output.txt`、完整划分本地副本。

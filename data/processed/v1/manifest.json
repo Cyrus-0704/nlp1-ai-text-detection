@@ -64,6 +64,33 @@
       "sha256": "737a728de70e70bb7c17940e1bba59ae2f34aa864d1b32035dee33b32cc6850b"
     }
   },
+  "smoke": {
+    "description": "从正式 train/dev 分层抽样的真实小样(保持原类别比例, 两类均有), 供 B/C 首轮快速验收; 与正式划分同源, 天然满足组隔离",
+    "script": "data_tools/make_smoke.py",
+    "command": "python data_tools/make_smoke.py --train data/processed/v1/train.jsonl --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 --n-train 200 --n-dev 100 --seed 42",
+    "seed": 42,
+    "files": {
+      "smoke_train": {
+        "path": "smoke_train.jsonl",
+        "samples": 200,
+        "human": 73,
+        "machine": 127,
+        "bytes": 433630,
+        "sha256": "f8ca7a70b775f9f58fba2decb9b2dbc2cf80a1fcf4b34724cf193ccf62a8974b",
+        "sampled_from": "train.jsonl"
+      },
+      "smoke_dev": {
+        "path": "smoke_dev.jsonl",
+        "samples": 100,
+        "human": 36,
+        "machine": 64,
+        "bytes": 253169,
+        "sha256": "975f1f7c27388e5e4e5789585cb3024999ba591552bf4dc3f5afd1671cc064a4",
+        "sampled_from": "dev.jsonl"
+      }
+    },
+    "verified": "六字段齐全, sample_id 唯一且为正式集子集, 两类均有, 文本非空, 两小样无重叠"
+  },
   "evaluation": {
     "script": "data_tools/evaluate.py",
     "command": "python data_tools/evaluate.py --gold data/processed/v1/test.jsonl --pred predictions.csv --threshold 0.5",
@@ -77,14 +104,14 @@
   },
   "storage_in_repo": {
     "split_files_uploaded": false,
-    "reason": "train/dev/test 合计约 352MB 且 *.jsonl 走 Git LFS; 为不占满团队 LFS 配额, 本轮只上传脚本/清单/manifest/审计, 数据由接收方按 generation.command 本地生成并用 sha256 核对",
-    "note": ".gitattributes 已为 *.jsonl 配置 LFS; 后续如需正式发布完整划分, 直接 git add train.jsonl dev.jsonl test.jsonl 并推送"
+    "smoke_files_uploaded": true,
+    "reason": "train/dev/test 合计约 352MB 且 *.jsonl 走 Git LFS; 为不占满团队 LFS 配额, 完整划分暂不入库, 由接收方按 generation.command 本地生成并用 sha256 核对; smoke 小样体积小, 已入库直接交付",
+    "note": ".gitattributes 已为 *.jsonl 配置 LFS; 后续如需正式发布完整划分, 直接 git add data/processed/v1/train.jsonl dev.jsonl test.jsonl 并推送"
   },
   "known_limitations": [
     "短文本口径: 团队临时口径为 <100 词; data_tools/evaluate.py 默认按字符<100(--short-by char), 需按官方核实结果切换并明确标注为临时口径",
     "generator 保留原始 model 名称, 未做家族归一化(cohere / cohere-xlarge-nightly / davinci / text-davinci-003 等仍分列)",
     "domain 直接取自 source, 空字符串或缺失统一记为 unknown",
-    "类别不均衡: machine 约占 63%",
-    "本轮未生成 smoke_train / smoke_dev 真实小样(A02 待补)"
+    "类别不均衡: machine 约占 63%"
   ]
 }

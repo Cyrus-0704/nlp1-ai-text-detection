@@ -14,7 +14,7 @@
 ## 任务清单
 
 - [x] **A01 清洗与正文提取**：兼容实际字段和列表；展开人类/机器评审；区分论文摘要与评审正文；确认前缀匹配才剥离提示词；单侧为空不丢弃另一侧；记录过滤、重复和异常数量。保持原始文件不变。当前状态：完成。`data_tools/preprocess.py` 已全量跑通 95889 条记录，统计见 `data/processed/v1/cleaning_audit.md`（过滤 human 7101 / machine 93，提示词剥离 219，人类去重 72136，机器去重 14074），原始 `data.jsonl` SHA-256 与 `data/manifest.raw.json` 一致（未修改）。
-- [ ] **A02 固定划分与小样本**：按同原文/主题及重复正文关联分组，约80/10/10，seed=42；human=0、machine=1；给每个样本分配唯一字符串编号。交付完整train/dev/test及约1000/200真实小样，小样从对应集合抽取，两类均有，保持隔离。当前状态：完整划分已产出（train 119727 / dev 14998 / test 15170，分组 33199，跨集合 group_id 交集为 0），见 `data/processed/v1/manifest.json`；**约1000/200真实小样 `smoke_train.jsonl` / `smoke_dev.jsonl` 待补**。
+- [x] **A02 固定划分与小样本**：按同原文/主题及重复正文关联分组，约80/10/10，seed=42；human=0、machine=1；给每个样本分配唯一字符串编号。交付完整train/dev/test及约1000/200真实小样，小样从对应集合抽取，两类均有，保持隔离。当前状态：完成。完整划分已产出（train 119727 / dev 14998 / test 15170，分组 33199，跨集合 group_id 交集为 0）；真实小样 `data/processed/v1/smoke_train.jsonl`（200 条，human 73 / machine 127）、`smoke_dev.jsonl`（100 条，human 36 / machine 64）由 `data_tools/make_smoke.py` 分层抽取（seed=42，两类均有，为正式集子集），已随 v1 入库，详见 `data/processed/v1/manifest.json` 的 `smoke` 节。
 - [ ] **A03 统一评估与官方口径**：交付全体宏F1、短文本宏F1、综合S及分项统计脚本；暂用0.5阈值，临时计词明确标注。核实官方阈值、计词、CSV编号/列名/概率方向、预训练资源规则及真实截止时间。当前状态：脚本 `data_tools/evaluate.py` 已交付（零 sklearn 依赖，输出全体/短文本宏F1、综合S、混淆矩阵、各类别召回率、短文本数量与占比，阈值默认 0.5，CSV 列名容错）；**官方阈值、计词口径、CSV 编号/列名/方向仍待核实**，当前短文本按字符<100 为临时口径。
 - [ ] **A04 统一验收预测**：收到B/C同一数据版本预测后检查编号、顺序、数量与概率；使用统一脚本出结果表。完成报告的数据处理与评测章节。
 - [ ] **A05 独立复现与最终验收**：收到B冻结模型包后按说明在干净环境加载推理；问题回传B。方案冻结后执行官方最终推理并核验提交CSV；整理承诺书，检查匿名材料。
@@ -43,8 +43,9 @@ manifest.json / cleaning_audit.md
 
 ## 下一步与交接记录
 
-下一步：在 `work/a-data` 提交脚本、manifest、清洗审计与交接说明后提 PR 到 main；补 `smoke_train.jsonl` / `smoke_dev.jsonl` 真实小样（A02）；核实官方短文本计词、阈值与预测 CSV 口径（A03）；随后向 B/C 发出 H01 验收通知。
+下一步：提交 smoke 小样与更新后的交接文档并推送到 `work/a-data`，向 main 提 PR；核实官方短文本计词、阈值与预测 CSV 口径（A03）；PR 合并后向 B/C 发出 H01 验收通知（数据版本 internal-v1）。
 
 | 日期 | 任务编号 | 状态/产物与commit | 验收结果 | 已交给谁/下一步 |
 | --- | --- | --- | --- | --- |
-| 2026-10-15 | A01—A03 | 交付 `data_tools/preprocess.py`、`data_tools/evaluate.py`、`data/processed/v1/manifest.json`、`data/processed/v1/cleaning_audit.md`、`handoffs/A/v1/README.md`（分支 `work/a-data`）；完整划分未入库，接收方可本地生成 | 待B/C验收 | 待PR合并到main后通知B/C走H01；小样与官方口径待补 |
+| 2026-10-15 | A01—A03 | 交付 `data_tools/preprocess.py`、`data_tools/evaluate.py`、`data/processed/v1/manifest.json`、`data/processed/v1/cleaning_audit.md`、`handoffs/A/v1/README.md`（分支 `work/a-data`，首个交付 PR 已提）；完整划分未入库，接收方可本地生成 | 待B/C验收 | PR 合并后通知B/C走H01 |
+| 2026-10-15 | A02 | 补交 `data_tools/make_smoke.py` 与真实小样 `data/processed/v1/smoke_train.jsonl`（200条）/ `smoke_dev.jsonl`（100条），已校验为正式集子集且两类均有 | 待B/C验收 | 随本次提交推送后并入同一 PR 或新 PR |

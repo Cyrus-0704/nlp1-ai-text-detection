@@ -69,6 +69,8 @@ data.7z
 /dev.jsonl
 /test.jsonl
 data/processed/**/*.jsonl
+# 但 smoke 真实小样体积小, 是 A02 正式交付物, 需要入库。
+!data/processed/**/smoke_*.jsonl
 # 本机探索/清洗日志, 不作为交付物。
 explore_output.txt
 preprocess_log.txt
