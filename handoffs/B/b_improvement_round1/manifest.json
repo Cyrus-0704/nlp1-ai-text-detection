@@ -1,0 +1,109 @@
+{
+  "owner": "B",
+  "data_version": "internal-v1",
+  "scope": "smoke training 1000/dev200, seed42, temporary word count; no test or official validation",
+  "delivery_state": "B branch; PR #2; not merged main",
+  "pull_request": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/2",
+  "local_checkpoints": [
+    "runs/b_ce200/checkpoint",
+    "runs/b_balanced200/checkpoint"
+  ],
+  "files": {
+    "Balanced200_a_evaluation.txt": {
+      "bytes": 1743,
+      "sha256": "27bd13f6f2095ff8081fd035ae29d41f62c6826b07c100f51847690ff612fff8"
+    },
+    "Balanced200_arguments.json": {
+      "bytes": 606,
+      "sha256": "453d3a94939dd57dab352d8ee33de37a08852d2b4126d63eb7272e9507993770"
+    },
+    "Balanced200_dev_predictions.csv": {
+      "bytes": 6277,
+      "sha256": "933f84e5bb7b79db5da18aa7f761d3113328e11997640957f9ff16c42be92b06"
+    },
+    "Balanced200_summary.json": {
+      "bytes": 3056,
+      "sha256": "64451aa222a4f96699525adc4fb5260ddb03822767861e751c9594a829d436e0"
+    },
+    "CE200_a_evaluation.txt": {
+      "bytes": 1737,
+      "sha256": "e9078debadefd3fb7fe8928e6b0edd0bc6969976a9c350b5a90768b35bdc02a3"
+    },
+    "CE200_arguments.json": {
+      "bytes": 596,
+      "sha256": "8bafaa9851d4d1ba7f85abc77e55522e01a8d07a2e47a25e5c8947957c7e8b00"
+    },
+    "CE200_dev_predictions.csv": {
+      "bytes": 6225,
+      "sha256": "c56f351865a2ff349fd9ba9475031011162f34ff8eb7868d4da2d013b98d8b7f"
+    },
+    "CE200_summary.json": {
+      "bytes": 3023,
+      "sha256": "fb0470b35ac9ea7b02abf96f818bea8ad2465bfbebdd2309284980419b636a79"
+    },
+    "CE50_a_evaluation.txt": {
+      "bytes": 1744,
+      "sha256": "8f9a7dd3dedc3a3d53b1890deb8e631cf817be821a13be769d5303605c7af82f"
+    },
+    "CE50_dev_predictions.csv": {
+      "bytes": 6199,
+      "sha256": "fee655276998c682049f39a7ad162f7b327a8199be869f6594ed67f3117e8a31"
+    },
+    "CE50_summary.json": {
+      "bytes": 2808,
+      "sha256": "1550de9b7d43e8f0c0bd31cb7151d54f507c3220ecbf5f99f7346846173de676"
+    },
+    "confusion.pdf": {
+      "bytes": 15289,
+      "sha256": "cb8ea877b405408fc358e964f12294befdef5ea41ca013022d84d17e57bd323d"
+    },
+    "confusion.png": {
+      "bytes": 50945,
+      "sha256": "c9a0fef7df843245c9434a794991448d0e15b936e2f6d90f6b77a74e138a673d"
+    },
+    "data_profile.json": {
+      "bytes": 422,
+      "sha256": "8849ccbc509c7ced1d5539e643e9cf6d9a975f465fce1a5962d1625337641a8b"
+    },
+    "diagnostics.json": {
+      "bytes": 4183,
+      "sha256": "d841192247afd6717012d199e2ab4b081f8a68dc34d070883c65c1d66d69cc80"
+    },
+    "draw_order_check.json": {
+      "bytes": 297,
+      "sha256": "2cb81c4b168a529faf6c195b9ab84bfda39905ca7c13329f400d52b5d823d757"
+    },
+    "metrics.csv": {
+      "bytes": 605,
+      "sha256": "2291387b7b0ff0d61a1312aae40c84027900a227ef380059ae8184560c8f2e53"
+    },
+    "packaged_inference_check.json": {
+      "bytes": 222,
+      "sha256": "e11fe5f20f8673a35165fa7836e752d715a0fb2b400d3ff0d4e388eb0b4cc512"
+    },
+    "performance.pdf": {
+      "bytes": 28585,
+      "sha256": "475a3841bc5e44c4b4deb3caad2cb7cece0dc2d03ebd1e3917e1ccac1a3ee6ed"
+    },
+    "performance.png": {
+      "bytes": 258460,
+      "sha256": "9d25e43b395cda0f64b66bbe5f62dfd2ad74e5209a088bcfe0758b3b56ba9de7"
+    },
+    "README.md": {
+      "bytes": 7326,
+      "sha256": "b8f882951d0afb2bdfdf41c283136676974b6878d62e9d0fad4321acb7ea08e5"
+    },
+    "resume_verification.json": {
+      "bytes": 543,
+      "sha256": "4d9dd90c4c0fdc93dc27dcceb5319b1b8fe66f50628349fb738025f9408b4d3f"
+    },
+    "slices.csv": {
+      "bytes": 6844,
+      "sha256": "8384c857d25f5abaf55dbbb2b543be8f9235f0f2657f41974dca0b66884cc10d"
+    },
+    "smoothed_training_curves.csv": {
+      "bytes": 13637,
+      "sha256": "0ae2e04eda4982efde10c3e8feb8af93be6726df60b0f6a595d17a9b43499855"
+    }
+  }
+}

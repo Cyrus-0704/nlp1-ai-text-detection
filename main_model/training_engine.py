@@ -208,6 +208,6 @@ def train_updates(model, tokenizer, rows, args, out):
                  resumed_from=str(args.resume_from) if args.resume_from else None,resumed_start_step=start_step,
                  class_weighting=args.class_weighting,class_weights=weights_list,loss_reduction='mean(per_example_CE * class_weight)',
                  sampler='seeded-per-epoch cursor',sampler_state=cursor.state_dict(),sample_order_hash=counters['sample_order_hash'],
-                 last_resumable_checkpoint=str(last_checkpoint.relative_to(out)),constant_learning_rate=True,
+                 last_resumable_checkpoint=last_checkpoint.relative_to(out).as_posix(),constant_learning_rate=True,
                  completed=counters['updates'] == args.max_steps)
     return stats

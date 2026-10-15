@@ -138,10 +138,12 @@ def main():
             parts['boxes'][0].set(facecolor=colors[c],alpha=.65)
     ax.axhline(.5,color='.35',ls='--',lw=1,label='Threshold 0.5')
     from matplotlib.patches import Patch
-    ax.legend(handles=[Patch(color=colors[0],label='True human'),Patch(color=colors[1],label='True machine')],fontsize=8,loc='lower right')
+    ax.legend(handles=[Patch(color=colors[0],label='True human'),Patch(color=colors[1],label='True machine')],fontsize=8,loc='upper left')
     ax.set(xticks=x,xticklabels=names,ylim=(0,1),ylabel='p_machine',title='C  Class-wise probability distributions')
     ax=axes[1,1]
     for i,(name,r) in enumerate(runs.items()):
+        if r['summary'].get('inference_source','').startswith('50-step prefix'):
+            continue
         path=r['folder']/'training_log.jsonl'
         if not path.exists():
             continue
@@ -149,7 +151,7 @@ def main():
         values=np.array([entry.get('unweighted_loss',entry['loss']) for entry in log if not entry['skipped']])
         if len(values)>=10:
             ax.plot(np.arange(10,len(values)+1),np.convolve(values,np.ones(10)/10,mode='valid'),color=colors[i],label=name)
-    ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss; same scale')
+    ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss; prefix traces omitted')
     ax.legend(fontsize=8)
     fig.suptitle(f'Internal smoke_dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); one seed; exploratory results',fontsize=12)
     fig.savefig(out/'performance.png'); fig.savefig(out/'performance.pdf'); plt.close(fig)

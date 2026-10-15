@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "fp32": true,
+  "batch_size": 1,
+  "rows": 200,
+  "packaged_predictions_sha256": "933f84e5bb7b79db5da18aa7f761d3113328e11997640957f9ff16c42be92b06",
+  "packaged_vs_standalone_csv_identical": true
+}

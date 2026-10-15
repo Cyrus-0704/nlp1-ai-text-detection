@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checks": {
+    "signature": true,
+    "optimizer": true,
+    "scaler": true,
+    "cursor": true,
+    "rng": true,
+    "sample_order_hash": true,
+    "losses": true,
+    "model_tensors_bit_identical": true,
+    "predictions_csv_identical": true
+  },
+  "scope": "Same machine, software, seed, deterministic CUDA; real XLM-R; 4 updates vs 2+2 fresh-process resume",
+  "model_sha256": "1c98f76ca99db882562ee0683fea03302c793680a950c4cdf0ec0830d81a8734",
+  "internal_test_read": false,
+  "official_validation_read": false
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "same_attempt_draw_order_prefix": true,
+  "checked_attempts": 202,
+  "ce200_attempts": 203,
+  "balanced200_attempts": 202,
+  "note": "Same seeded draw order; actual processed samples may differ because FP16 skipped updates do not count toward the 200 optimizer updates."
+}

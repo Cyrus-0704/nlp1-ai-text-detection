@@ -1,0 +1,158 @@
+{
+  "scope": "Exploratory internal smoke_dev; not official validation or final test",
+  "gold_sha256": "cc57e00857422e08add6292d98be245c026ef494e71e3b8468ac5ed45edffaf4",
+  "rows": 200,
+  "groups": 187,
+  "short_rows": 30,
+  "threshold": 0.5,
+  "short_rule": "TEMPORARY len(text.split())<100",
+  "uncertainty": "95% percentile bootstrap of dev groups; conditional on these fitted models; not seed/training uncertainty",
+  "bootstrap_repetitions": 1000,
+  "seed": 42,
+  "runs": {
+    "CE50": {
+      "macro_f1_all": 0.41520467836257313,
+      "macro_f1_short_temporary": 0.4,
+      "weighted_score_temporary": 0.41064327485380114,
+      "roc_auc": 0.7477079063747168,
+      "average_precision": 0.840395376632715,
+      "log_loss": 0.6257916215269359,
+      "brier": 0.217610079551834,
+      "human_recall": 0.0273972602739726,
+      "machine_recall": 0.9921259842519685,
+      "predicted_machine": 197,
+      "confusion_matrix": [
+        [
+          2,
+          71
+        ],
+        [
+          1,
+          126
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.48655545711517334,
+          0.5866917371749878,
+          0.6048730611801147,
+          0.624207079410553,
+          0.681506335735321
+        ],
+        "1": [
+          0.4947783946990967,
+          0.6114383339881897,
+          0.6423523426055908,
+          0.665011465549469,
+          0.7099546790122986
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.37462212266048095,
+        0.46641699913207774
+      ]
+    },
+    "CE200": {
+      "macro_f1_all": 0.7104882221344914,
+      "macro_f1_short_temporary": 0.6563011456628478,
+      "weighted_score_temporary": 0.6942320991929982,
+      "roc_auc": 0.9043253154999461,
+      "average_precision": 0.9341525035089769,
+      "log_loss": 0.6209139338796859,
+      "brier": 0.17442255503471046,
+      "human_recall": 0.3972602739726027,
+      "machine_recall": 1.0,
+      "predicted_machine": 171,
+      "confusion_matrix": [
+        [
+          29,
+          44
+        ],
+        [
+          0,
+          127
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.005414885003119707,
+          0.10955362021923065,
+          0.6817691922187805,
+          0.9603866934776306,
+          0.9920422434806824
+        ],
+        "1": [
+          0.7633098363876343,
+          0.9767109751701355,
+          0.987260103225708,
+          0.9924191534519196,
+          0.9950704574584961
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.6363606408232089,
+        0.7856889079391067
+      ]
+    },
+    "Balanced200": {
+      "macro_f1_all": 0.8461538461538463,
+      "macro_f1_short_temporary": 0.8295454545454545,
+      "weighted_score_temporary": 0.8411713286713287,
+      "roc_auc": 0.9424010354870025,
+      "average_precision": 0.9662329652803544,
+      "log_loss": 0.30181869488904733,
+      "brier": 0.09356781163111716,
+      "human_recall": 0.7671232876712328,
+      "machine_recall": 0.9133858267716536,
+      "predicted_machine": 133,
+      "confusion_matrix": [
+        [
+          56,
+          17
+        ],
+        [
+          11,
+          116
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.00814034417271614,
+          0.02517625503242016,
+          0.12979266047477722,
+          0.3855975568294525,
+          0.9044609665870667
+        ],
+        "1": [
+          0.10757917165756226,
+          0.7448306977748871,
+          0.88218092918396,
+          0.9534020125865936,
+          0.9928619265556335
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.7929211551034464,
+        0.8951115030151326
+      ]
+    }
+  },
+  "paired_differences": {
+    "CE200 minus CE50": {
+      "macro_f1_difference": 0.29528354377191823,
+      "paired_group_bootstrap_ci95": [
+        0.21493962883348267,
+        0.36816656817785437
+      ]
+    },
+    "Balanced200 minus CE200": {
+      "macro_f1_difference": 0.1356656240193549,
+      "paired_group_bootstrap_ci95": [
+        0.061816009952951424,
+        0.21056219056914752
+      ]
+    }
+  },
+  "official_score": null,
+  "threshold_selected": false
+}
