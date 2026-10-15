@@ -88,9 +88,12 @@ def main():
                 mask=np.array([row[field]==value for row in rows])
                 n=int(mask.sum())
                 cm=a.confusion_matrix(y[mask],r['pred'][mask])
+                n_human,n_machine=int(sum(y[mask]==0)),int(sum(y[mask]==1))
                 records.append(dict(run=name,field=field,value=value,samples=n,human=int(sum(y[mask]==0)),
                                     machine=int(sum(y[mask]==1)),errors=int(sum(y[mask]!=r['pred'][mask])),
-                                    macro_f1=a.macro_f1(y[mask],r['pred'][mask]),
+                                    macro_f1=a.macro_f1(y[mask],r['pred'][mask]) if n_human and n_machine else None,
+                                    human_recall=float(cm[0,0]/n_human) if n_human else None,
+                                    machine_recall=float(cm[1,1]/n_machine) if n_machine else None,
                                     warning='small_n_or_one_class' if n<20 or len(set(y[mask]))<2 else ''))
     with (out/'slices.csv').open('w',encoding='utf-8',newline='') as f:
         writer=csv.DictWriter(f,fieldnames=list(records[0]))
