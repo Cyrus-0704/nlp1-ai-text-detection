@@ -36,5 +36,11 @@
       "resume_from": null,
       "output_dir": "runs/b_v2_ce2000_seed43"
     }
-  ]
+  ],
+  "comparison_criterion": "Temporary S=0.7*all macroF1+0.3*short macroF1 at fixed threshold .5; include CE500 reference",
+  "planned_comparisons": [
+    "CE2000_s42 minus CE500 (extended same trajectory)",
+    "CE2000_s43 minus CE2000_s42 (seed changes initialization, draw order and seen subset)"
+  ],
+  "training_epoch_note": "2000 updates cover about 27% of the frozen training rows, not a full epoch"
 }
