@@ -2,6 +2,23 @@
 
 维护人：B（本仓库发起人）。最后核对：2026-10-15。B只更新本清单及本人的代码/交接结果。运行环境、盘符和日志保存在本机，不作为全队共享要求。
 
+## 工作分支与提交方式
+
+个人工作分支为 **`work/b-model`**，跟踪远端同名分支。开始工作先用 `git branch --show-current` 核对；主模型开发、任务进度和交接结果提交到该分支，交付节点再提PR合并到`main`。
+
+```powershell
+git switch work/b-model
+git pull --ff-only
+git status --short
+# 修改本人代码/清单后，按实际文件选择暂存路径
+git add docs/tasks/B_MAIN_MODEL.md
+git diff --cached --stat
+git commit -m "B: update main-model progress"
+git push
+```
+
+在新克隆电脑首次使用时，运行 `git fetch origin` 后 `git switch --track origin/work/b-model`。主干接收了A/C新交付后，在本地改动已提交或妥善保留的前提下，用 `git fetch origin`、`git merge origin/main` 同步到B分支，再运行依赖这些交付的实验。
+
 ## 当前目标和前置条件
 
 目标：接入A真实数据，完成可信的主模型实验，并交付可独立加载的模型包。
@@ -51,3 +68,4 @@
 | --- | --- | --- | --- | --- |
 | 2026-10-15 | B01—B03 | 本机环境、正式模型、`main_model/`和本地合成验证记录已核对 | 流程PASS；非比赛性能 | 等A真实小样，补B05；无需重复安装下载 |
 | 2026-10-15 | 协作基础 | 已建立公开GitHub仓库，原始data.jsonl通过LFS共享；三人清单拆分，本机目录已忽略 | 首次代码与980MB数据推送成功；环境/缓存/个人runs不入库 | 本人后续只更新B清单，真实交接产物按需放handoffs/B |
+| 2026-10-15 | 分支协作 | 明确B工作分支为work/b-model，主干说明补充三人分支与PR交接规则 | 个人进度与开发留B分支，验收交付合并main | 后续窗口先核对当前分支，完成任务更新本清单并推送B分支 |

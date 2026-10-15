@@ -4,13 +4,15 @@
 
 ## 每人维护自己的文档
 
-| 成员 | 个人清单（本人维护） | 主要职责 |
-| --- | --- | --- |
-| A | [A_DATA_EVALUATION.md](docs/tasks/A_DATA_EVALUATION.md) | 数据、固定划分、统一评估、最终验收 |
-| B（用户） | [B_MAIN_MODEL.md](docs/tasks/B_MAIN_MODEL.md) | 主模型、训练预测、模型包 |
-| C | [C_BASELINE_REPORT.md](docs/tasks/C_BASELINE_REPORT.md) | 轻量基线、融合、报告 |
+| 成员 | 工作分支 | 个人清单（本人维护） | 主要职责 |
+| --- | --- | --- | --- |
+| A | `work/a-data` | [A_DATA_EVALUATION.md](docs/tasks/A_DATA_EVALUATION.md) | 数据、固定划分、统一评估、最终验收 |
+| B（用户） | `work/b-model` | [B_MAIN_MODEL.md](docs/tasks/B_MAIN_MODEL.md) | 主模型、训练预测、模型包 |
+| C | `work/c-baseline` | [C_BASELINE_REPORT.md](docs/tasks/C_BASELINE_REPORT.md) | 轻量基线、融合、报告 |
 
 开始窗口：先读本文和本人清单，检查实际文件与交付，再执行下一项。结束窗口：只更新本人的清单/记录和自己的代码；跨人接口确需调整时才协同修改本文。其他成员进度未经核实不能代为勾选。
+
+个人工作和进行中的任务清单提交各自分支；交付时提PR合并到`main`，接收方从`main`拉取已验收版本。B分支已建立，A/C分支由本人首次工作时创建；不要仅把成果留在个人分支却声称全队主干已收到。共享说明由所有者集中维护，个人开发不直接推送`main`。具体命令见README的“日常协作”。
 
 ## 共享内容与本机内容
 

@@ -41,12 +41,33 @@ git lfs pull --include="data.jsonl"
 
 ## 日常协作
 
-已获写权限的队员使用自己的工作分支，例如 `work/a-data`、`work/b-model`、`work/c-baseline`。首次创建：
+分支约定如下；`main` 是全队接收已验收交付的入口，个人开发和任务进度提交到各自分支。
+
+| 分支 | 维护人 | 使用方式 |
+| --- | --- | --- |
+| `main` | 仓库所有者/交付审核者 | 接收个人分支PR，保存可供全队使用的版本；共同说明可由所有者集中维护 |
+| `work/a-data` | A | 数据清洗、评估代码、A任务清单和正式数据交付；由A首次工作时创建 |
+| `work/b-model` | B | 主模型代码、B任务清单和必要交接结果；已建立，B后续在此开发 |
+| `work/c-baseline` | C | 轻量基线、融合、报告和C任务清单；由C首次工作时创建 |
+
+已获写权限的队员首次创建尚不存在的个人分支，以A为例：
 
 ```powershell
 git switch main
 git pull --ff-only
 git switch -c work/a-data
+```
+
+**B分支已存在，不要重复创建。** 本机直接切换；在新克隆的电脑首次使用时先建立本地跟踪分支：
+
+```powershell
+# 已有本地B分支的电脑
+git switch work/b-model
+git pull --ff-only
+
+# 新克隆的电脑首次使用B分支（与上面二选一）
+git fetch origin
+git switch --track origin/work/b-model
 ```
 
 以 A 为例，完成一段工作后只暂存本人的交付路径，并先检查文件清单：
@@ -60,6 +81,8 @@ git push -u origin work/a-data
 ```
 
 按实际已存在的文件调整 `git add` 参数；不要直接套用不存在的目录。通过 Pull Request 合并到 main，接收方再拉取 main 和需要的 LFS 文件。未合并分支的结果不会自动出现在 main。不要 force-push 覆盖别人的提交。
+
+进行中的任务清单也先提交个人分支。到了交付节点，对`main`提PR，写明数据版本、接收人、产物和验收结果；合并后其他成员才从`main`接收。要把新的主干交付同步到自己的分支，先提交或妥善保留本地改动，再运行 `git fetch origin`、`git merge origin/main`；有冲突时核对双方修改，不覆盖他人的任务记录。
 
 尚无写权限的队员可先Fork到自己的GitHub账号，在自己的副本建分支、推送，再向本仓库main提PR。若需直接推送团队分支，提供GitHub用户名，由仓库所有者添加协作者；仅把仓库公开不会自动赋予写权限。
 
