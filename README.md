@@ -1,6 +1,6 @@
 # NLP-1 大模型生成文本检测
 
-三人协作的初赛项目。职责与共享接口见 [TEAM_WORKPLAN.md](TEAM_WORKPLAN.md)。每人只更新自己的任务清单和工作代码，不必共同维护一份进度表。
+三人协作的初赛项目。仓库按发起人要求公开，任何人都能查看和下载；公开不代表任何人都有推送权限。职责与共享接口见 [TEAM_WORKPLAN.md](TEAM_WORKPLAN.md)。每人只更新自己的任务清单和工作代码，不必共同维护一份进度表。
 
 | 人员 | 任务文档 | 主要交付 |
 | --- | --- | --- |
@@ -17,17 +17,18 @@ cd nlp1-ai-text-detection
 git lfs pull
 ```
 
-原始 `data.jsonl` 约980 MB，使用 Git LFS。访问私有仓库需要已被授权的 GitHub 账号。若已经从官方获取同一数据，或暂时只要代码，可先跳过大文件下载：
+原始 `data.jsonl` 约980 MB，使用 Git LFS。公开仓库可直接克隆。若已经从官方获取同一数据，或暂时只要代码，可先跳过大文件下载：
 
 ```powershell
 $env:GIT_LFS_SKIP_SMUDGE = '1'
 git clone https://github.com/Cyrus-0704/nlp1-ai-text-detection.git
 Remove-Item Env:\GIT_LFS_SKIP_SMUDGE
 cd nlp1-ai-text-detection
+git lfs install --local --skip-smudge
 git lfs pull --include="data.jsonl"
 ```
 
-最后一行只在需要原始数据时运行；后续按需获取 A 的版本目录，例如 `git lfs pull --include="data/processed/v1/**"`。数据版本和校验方式见 [data/README.md](data/README.md)。
+最后一行只在需要原始数据时运行；skip-smudge让日常拉取先更新指针，不自动下载所有大文件。后续按需获取 A 的版本目录，例如 `git lfs pull --include="data/processed/v1/**"`。数据版本和校验方式见 [data/README.md](data/README.md)。
 
 ## 本机环境独立管理
 
@@ -40,7 +41,7 @@ git lfs pull --include="data.jsonl"
 
 ## 日常协作
 
-每人使用自己的工作分支，例如 `work/a-data`、`work/b-model`、`work/c-baseline`。首次创建：
+已获写权限的队员使用自己的工作分支，例如 `work/a-data`、`work/b-model`、`work/c-baseline`。首次创建：
 
 ```powershell
 git switch main
@@ -59,6 +60,8 @@ git push -u origin work/a-data
 ```
 
 按实际已存在的文件调整 `git add` 参数；不要直接套用不存在的目录。通过 Pull Request 合并到 main，接收方再拉取 main 和需要的 LFS 文件。未合并分支的结果不会自动出现在 main。不要 force-push 覆盖别人的提交。
+
+尚无写权限的队员可先Fork到自己的GitHub账号，在自己的副本建分支、推送，再向本仓库main提PR。若需直接推送团队分支，提供GitHub用户名，由仓库所有者添加协作者；仅把仓库公开不会自动赋予写权限。
 
 ## 什么该上传
 
