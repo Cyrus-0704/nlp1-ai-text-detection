@@ -34,6 +34,8 @@ def main():
     p.add_argument('--max-steps', type=int, default=50)
     p.add_argument('--max-length', type=int, default=256)
     p.add_argument('--batch-size', type=int, default=1)
+    p.add_argument('--inference-batch-size', type=int, default=1,
+                   help='Same FP32 batch size before saving and in the independent reload process')
     p.add_argument('--gradient-accumulation', type=int, default=16)
     p.add_argument('--learning-rate', type=float, default=2e-5)
     p.add_argument('--class-weighting', choices=['none','balanced'], default='none')
@@ -48,7 +50,7 @@ def main():
     if args.deterministic:
         os.environ['CUBLAS_WORKSPACE_CONFIG'] = ':4096:8'
         torch.use_deterministic_algorithms(True)
-    if min(args.max_steps, args.batch_size, args.gradient_accumulation) < 1 or not 1 <= args.max_length <= 512 or args.learning_rate <= 0:
+    if min(args.max_steps, args.batch_size, args.inference_batch_size, args.gradient_accumulation) < 1 or not 1 <= args.max_length <= 512 or args.learning_rate <= 0:
         raise ValueError('Invalid training hyperparameters')
     out = Path(args.output_dir).resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -92,7 +94,7 @@ def main():
                  code_commit=code_commit, main_model_code_dirty=code_dirty, data_provenance=provenance,
                  train_rows=len(train), dev_rows=len(dev), **training_stats,
                  fp16=True, gradient_checkpointing=model.is_gradient_checkpointing,
-                 dataloader_num_workers=0, inference_precision='fp32', inference_batch_size=1,
+                 dataloader_num_workers=0, inference_precision='fp32', inference_batch_size=args.inference_batch_size,
                  threshold=0.5, short_text_rule='TEMPORARY ONLY: len(text.split()) < 100; not official multilingual word counting',
                  split_overlap_checks=['sample_id', 'group_id', 'whitespace-normalized exact text'],
                  input_files={k: dict(path=str(Path(v).resolve()), sha256=sha256(v))
@@ -110,7 +112,9 @@ def main():
     gc.collect()
     torch.cuda.empty_cache()
     model.gradient_checkpointing_disable()
-    expected = probabilities(model, tokenizer, dev, args.max_length, 1, 'fp32')
+    inference_start = time.perf_counter()
+    expected = probabilities(model, tokenizer, dev, args.max_length, args.inference_batch_size, 'fp32')
+    stats['before_save_inference_seconds'] = time.perf_counter()-inference_start
     write_predictions(out/'dev_before_save.csv', dev, expected)
     checkpoint = out/'checkpoint'
     model.save_pretrained(checkpoint, safe_serialization=True)
@@ -124,9 +128,11 @@ def main():
     torch.cuda.empty_cache()
     command = [sys.executable, str(Path(__file__).with_name('predict.py')), '--model-dir', str(checkpoint),
                '--input', str(Path(args.dev_file).resolve()), '--output', str(out/'dev_predictions.csv'),
-               '--precision', 'fp32', '--batch-size', '1']
+               '--precision', 'fp32', '--batch-size', str(args.inference_batch_size)]
+    reload_start = time.perf_counter()
     with (out/'reload_prediction.log').open('w', encoding='utf-8') as log:
         subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=True)
+    stats['independent_reload_and_inference_seconds'] = time.perf_counter()-reload_start
     # Evaluate internal dev only, never called from the final inference entry point.
     import csv
     from sklearn.metrics import f1_score
@@ -155,7 +161,7 @@ def main():
         stats['a_evaluation'] = dict(script_sha256=sha256(args.evaluation_script),
                                     report='a_evaluation_report.txt', short_by='word', threshold=0.5,
                                     short_threshold=100, rule_status='temporary; not official')
-    stats.update(status='PASS', reload_check='independent subprocess; FP32, batch=1, rtol=1e-5, atol=1e-6',
+    stats.update(status='PASS', reload_check=f'independent subprocess; FP32, batch={args.inference_batch_size}, rtol=1e-5, atol=1e-6',
                  reload_max_abs_probability_difference=float(np.max(np.abs(actual-np.array(expected)))),
                  prediction_rows=len(actual), ordered_ids_verified=True, probability_direction='softmax(logits)[:,1]; machine=1',
                  finite_loss_verified=True, finite_probability_range_verified=True)

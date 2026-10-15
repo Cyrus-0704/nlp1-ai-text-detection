@@ -81,3 +81,14 @@ python main_model/verify_data_delivery.py --manifest data/processed/v2/manifest.
 ```
 
 验收只解析train/dev；内部test只核验不透明字节。合并前只读检查可用 `--preprocess-script` 指定A交付的原样脚本快照，并用 `--delivery-commit` 记录其准确提交；manifest和小样必须来自该提交，不能改哈希绕过门槛。
+
+## internal-v2完整数据先导实验
+
+PR #3已合并main `7231172`，B已同步；数据独立复现通过。先导预算固定为每项500次优化器更新，单seed42，分别从原始预训练模型开始。该预算只覆盖约8000条训练抽取，不是完整epoch，不称为最终模型。完整dev仅评估冻结步数的预测，不用内部test选参数。
+
+```powershell
+python main_model/train.py --train-file data/processed/v2/train.jsonl --dev-file data/processed/v2/dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_v2_full_ce500 --data-kind a-internal --data-manifest data/processed/v2/manifest.json --evaluation-script data_tools/evaluate.py --seed 42 --max-steps 500 --max-length 256 --batch-size 1 --gradient-accumulation 16 --learning-rate 2e-5 --class-weighting none --save-steps 250 --keep-checkpoints 2 --deterministic --inference-batch-size 8
+python main_model/train.py --train-file data/processed/v2/train.jsonl --dev-file data/processed/v2/dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_v2_full_balanced500 --data-kind a-internal --data-manifest data/processed/v2/manifest.json --evaluation-script data_tools/evaluate.py --seed 42 --max-steps 500 --max-length 256 --batch-size 1 --gradient-accumulation 16 --learning-rate 2e-5 --class-weighting balanced --save-steps 250 --keep-checkpoints 2 --deterministic --inference-batch-size 8
+```
+
+完整划分按A脚本本地生成并校验，不上传副本。新增 `--inference-batch-size` 默认1；完整dev使用8，保存前与新进程加载后使用同一FP32精度、同一batch和顺序严格比较；不改变训练batch与有效batch。运行摘要记录两段推理耗时。图表标签同时适用于小样dev和完整dev。

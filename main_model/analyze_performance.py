@@ -72,7 +72,7 @@ def main():
         differences[current+' minus '+previous]=dict(
             macro_f1_difference=runs[current]['metrics']['macro_f1_all']-runs[previous]['metrics']['macro_f1_all'],
             paired_group_bootstrap_ci95=np.quantile(np.array(samples[current])-np.array(samples[previous]),[.025,.975]).tolist())
-    report=dict(scope='Exploratory internal smoke_dev; not official validation or final test',
+    report=dict(scope='Exploratory internal dev; not official validation or final test',
                 gold_sha256=sha256(args.gold_internal_dev),rows=len(rows),groups=len(groups),short_rows=int(short.sum()),
                 threshold=.5,short_rule='TEMPORARY len(text.split())<100',
                 uncertainty='95% percentile bootstrap of dev groups; conditional on these fitted models; not seed/training uncertainty',
@@ -153,7 +153,7 @@ def main():
             ax.plot(np.arange(10,len(values)+1),np.convolve(values,np.ones(10)/10,mode='valid'),color=colors[i],label=name)
     ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss; prefix traces omitted')
     ax.legend(fontsize=8)
-    fig.suptitle(f'Internal smoke_dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); one seed; exploratory results',fontsize=12)
+    fig.suptitle(f'Internal dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); one seed; exploratory results',fontsize=12)
     fig.savefig(out/'performance.png'); fig.savefig(out/'performance.pdf'); plt.close(fig)
     fig,axs=plt.subplots(1,len(names),figsize=(3.8*len(names),3.7),layout='constrained',squeeze=False)
     for ax,(name,r) in zip(axs[0],runs.items()):
@@ -161,10 +161,10 @@ def main():
         ax.imshow(cm,cmap='Blues',vmin=0,vmax=max(sum(y==0),sum(y==1)))
         for i in range(2):
             for j in range(2):
-                ax.text(j,i,str(cm[i,j]),ha='center',va='center',fontsize=18,color='white' if cm[i,j]>70 else 'black')
+                ax.text(j,i,str(cm[i,j]),ha='center',va='center',fontsize=18,color='white' if cm[i,j]>.5*max(sum(y==0),sum(y==1)) else 'black')
         ax.set(xticks=[0,1],yticks=[0,1],xticklabels=['human','machine'],yticklabels=['human','machine'],
                xlabel='Predicted',ylabel='True',title=name)
-    fig.suptitle('Internal smoke_dev confusion matrices (counts); threshold 0.5',fontsize=12)
+    fig.suptitle('Internal dev confusion matrices (counts); threshold 0.5',fontsize=12)
     fig.savefig(out/'confusion.png'); fig.savefig(out/'confusion.pdf'); plt.close(fig)
     print(json.dumps(report,indent=2),flush=True)
 
