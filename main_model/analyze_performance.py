@@ -167,6 +167,10 @@ def main():
             ax.plot(steps,smoothed,color=colors[i],label=name)
             curves.extend(dict(run=name,optimizer_step=int(step),unweighted_ce_mean10=float(value))
                           for step,value in zip(steps,smoothed))
+    for prefix_name in args.prefix_run:
+        endpoint=runs[prefix_name]['summary']['optimizer_updates']
+        ax.axvline(endpoint,color=colors[names.index(prefix_name)],ls=':',lw=1,
+                   label=f'{prefix_name} endpoint')
     ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss (10-update mean)')
     ax.legend(fontsize=8)
     fig.suptitle(f'Internal dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); {seed_note}; exploratory',fontsize=11)
