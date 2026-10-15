@@ -16,6 +16,8 @@ def main():
     p.add_argument('--run',action='append',required=True,help='NAME=run_directory; all runs must use the same dev hash')
     p.add_argument('--output-dir',required=True)
     p.add_argument('--bootstrap-repetitions',type=int,default=1000)
+    p.add_argument('--prefix-run',action='append',default=[],
+                   help='Run whose training curve is a prefix of another run; metrics still shown')
     args=p.parse_args()
     root=Path(__file__).resolve().parent.parent
     out=Path(args.output_dir)
@@ -51,8 +53,15 @@ def main():
                      human_recall=float(cm[0,0]/sum(y==0)),machine_recall=float(cm[1,1]/sum(y==1)),
                      predicted_machine=int(pred.sum()),confusion_matrix=cm.tolist(),
                      probability_quantiles_by_label={str(c):np.quantile(prob[y==c],[0,.25,.5,.75,1]).tolist() for c in (0,1)})
-        runs[name]=dict(folder=folder,summary=summary,prob=prob,pred=pred,metrics=metrics)
+        arguments_path=folder/'arguments.json'
+        arguments=json.loads(arguments_path.read_text(encoding='utf-8')) if arguments_path.exists() else {}
+        runs[name]=dict(folder=folder,summary=summary,prob=prob,pred=pred,metrics=metrics,
+                       training_seed=arguments.get('seed'))
         # Only labels, probabilities, and summaries enter figures; never export raw text.
+    if not set(args.prefix_run).issubset(runs):
+        raise ValueError('Unknown prefix run')
+    training_seeds=sorted({r['training_seed'] for r in runs.values() if r['training_seed'] is not None})
+    seed_note='training seeds '+','.join(map(str,training_seeds)) if training_seeds else 'training seeds unspecified'
     groups={}
     for i,r in enumerate(rows):
         groups.setdefault(r['group_id'],[]).append(i)
@@ -79,6 +88,7 @@ def main():
                 uncertainty='95% percentile bootstrap of dev groups; conditional on these fitted models; not seed/training uncertainty',
                 bootstrap_repetitions=args.bootstrap_repetitions,seed=42,
                 runs={name:r['metrics'] for name,r in runs.items()},paired_differences=differences,
+                training_seeds=training_seeds,omitted_prefix_curves=args.prefix_run,
                 official_score=None,threshold_selected=False)
     write_json(out/'diagnostics.json',report)
     records=[]
@@ -118,7 +128,7 @@ def main():
     fig,axes=plt.subplots(2,2,figsize=(11.6,8.2),layout='constrained')
     ax=axes[0,0]
     x=np.arange(len(names)); width=.24
-    for j,(key,label) in enumerate([('macro_f1_all','All macro F1'),('macro_f1_short_temporary','Short macro F1*'),('roc_auc','ROC-AUC')]):
+    for j,(key,label) in enumerate([('macro_f1_all','All macro F1'),('macro_f1_short_temporary','Short macro F1*'),('weighted_score_temporary','Temporary S*')]):
         bars=ax.bar(x+(j-1)*width,[runs[n]['metrics'][key] for n in names],width,label=label,color=colors[j])
         ax.bar_label(bars,fmt='%.3f',fontsize=8,padding=3)
     ax.set(xticks=x,xticklabels=names,ylim=(0,1.15),title='A  Fixed-threshold performance',ylabel='Score')
@@ -144,7 +154,7 @@ def main():
     ax=axes[1,1]
     curves = []
     for i,(name,r) in enumerate(runs.items()):
-        if r['summary'].get('inference_source','').startswith('50-step prefix'):
+        if name in args.prefix_run or r['summary'].get('inference_source','').startswith('50-step prefix'):
             continue
         path=r['folder']/'training_log.jsonl'
         if not path.exists():
@@ -159,7 +169,7 @@ def main():
                           for step,value in zip(steps,smoothed))
     ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss (10-update mean)')
     ax.legend(fontsize=8)
-    fig.suptitle(f'Internal dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); one seed; exploratory results',fontsize=12)
+    fig.suptitle(f'Internal dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); {seed_note}; exploratory',fontsize=11)
     fig.savefig(out/'performance.png'); fig.savefig(out/'performance.pdf'); plt.close(fig)
     if curves:
         with (out/'training_curves.csv').open('w',encoding='utf-8',newline='') as f:
@@ -227,7 +237,7 @@ def main():
                     ha='center', fontsize=9)
     ax.set(xticks=x, xticklabels=names, xlim=(-.5, len(names)-.5), ylim=(0, 1.12),
            ylabel='All macro F1', title='D  95% dev-group bootstrap intervals')
-    fig.suptitle(f'Internal dev diagnostics: {len(rows)} samples; one seed; exploratory\n'
+    fig.suptitle(f'Internal dev diagnostics: {len(rows)} samples; {seed_note}; exploratory\n'
                  'Intervals condition on fitted models; not training-seed uncertainty', fontsize=12)
     fig.savefig(out/'error_analysis.png'); fig.savefig(out/'error_analysis.pdf'); plt.close(fig)
     print(json.dumps(report,indent=2),flush=True)
