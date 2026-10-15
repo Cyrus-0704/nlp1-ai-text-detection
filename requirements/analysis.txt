@@ -1,0 +1,3 @@
+-r base.txt
+# Diagnostic figures; not needed by prediction or the model package.
+matplotlib==3.11.2
