@@ -71,3 +71,13 @@ python main_model/analyze_performance.py --gold-internal-dev data/processed/v1/s
 runs/和models/保持本地。把A/C需要的真实dev预测、参数、数据版本/哈希、commit与指标摘要整理到handoffs/B/<实验编号>/。需要全队加载的最终模型放handoffs/shared_models/<版本>/，使用LFS；不上传环境、缓存、全部日志或每个中间checkpoint。
 
 正式冻结推理与官方CSV导出由B提供入口、A运行验收，融合方案若保留须把C的完整规则集成到入口。详细责任和前置条件见B个人清单。
+
+## 修复数据的合并前验收
+
+A的internal-v2已通过B独立复现，报告见 `handoffs/B/full_data_acceptance_v2/`。PR #3合入main并同步后才能作为主干交付使用；v1命令仅保留历史示例，新实验改用v2输入及新输出目录。
+
+```powershell
+python main_model/verify_data_delivery.py --manifest data/processed/v2/manifest.json --raw-file data.jsonl --split-dir .local/internal-v2-repeat --output-dir runs/b_acceptance_v2_repeat --reproduce
+```
+
+验收只解析train/dev；内部test只核验不透明字节。合并前只读检查可用 `--preprocess-script` 指定A交付的原样脚本快照，并用 `--delivery-commit` 记录其准确提交；manifest和小样必须来自该提交，不能改哈希绕过门槛。

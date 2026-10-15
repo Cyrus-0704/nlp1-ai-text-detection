@@ -1,0 +1,79 @@
+{
+  "data_version": "internal-v2",
+  "status": "PASS_TRAIN_DEV_ACCEPTANCE",
+  "a_manifest_sha256": "fc8c0b909e132ab8380c6dcb420c4adffc0eee4016c252e41895bc99136f2a1e",
+  "code_commit": "cefb6e6781b762767842fbb466f71dd32f759b03",
+  "official_validation_read": false,
+  "internal_test_performance_evaluated": false,
+  "internal_test_access": "opaque byte count and SHA-256 only; generated log not inspected",
+  "raw_file_verified": true,
+  "files": {
+    "train": {
+      "bytes": 282022850,
+      "sha256": "5a5dca9db706e0faadc5c89cbcadc77dc585ce302f5e73b11b82213f40ab7ff6",
+      "matches_a_manifest": true,
+      "rows": 119842,
+      "human": 43922,
+      "machine": 75920,
+      "unique_groups": 26408,
+      "six_fields_verified": true
+    },
+    "dev": {
+      "bytes": 34861480,
+      "sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+      "matches_a_manifest": true,
+      "rows": 15086,
+      "human": 5495,
+      "machine": 9591,
+      "unique_groups": 3303,
+      "six_fields_verified": true
+    },
+    "test": {
+      "bytes": 35136755,
+      "sha256": "49a0525da0f6a918f5bea2d722339f0eac13182bca581a6a84a0e234e8967378",
+      "matches_a_manifest": true
+    }
+  },
+  "overlap": {
+    "sample_id": {
+      "shared_keys": 0,
+      "affected_train_rows": 0,
+      "affected_dev_rows": 0
+    },
+    "group_id": {
+      "shared_keys": 0,
+      "affected_train_rows": 0,
+      "affected_dev_rows": 0
+    },
+    "whitespace_text": {
+      "shared_keys": 0,
+      "affected_train_rows": 0,
+      "affected_dev_rows": 0
+    },
+    "casefold_whitespace_text": {
+      "shared_keys": 0,
+      "affected_train_rows": 0,
+      "affected_dev_rows": 0
+    }
+  },
+  "smoke_membership": {
+    "train": {
+      "smoke_rows": 1000,
+      "exact_matches": 1000,
+      "matches_a_manifest": true,
+      "counts_match": true,
+      "passed": true
+    },
+    "dev": {
+      "smoke_rows": 200,
+      "exact_matches": 200,
+      "matches_a_manifest": true,
+      "counts_match": true,
+      "passed": true
+    }
+  },
+  "delivery_commit": "574eed6079d2f1b31012f45b74c2f4e72c4d6ed5",
+  "a_preprocess_script_sha256": "0e8e15236112f164e5b77865e465dd50fb3775c9646c57a0ab991c5e3313c31e",
+  "training_gate_passed": true,
+  "failed_checks": []
+}

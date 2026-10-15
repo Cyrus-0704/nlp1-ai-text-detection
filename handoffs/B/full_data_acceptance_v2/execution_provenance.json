@@ -1,0 +1,15 @@
+{
+  "a_delivery_commit": "574eed6079d2f1b31012f45b74c2f4e72c4d6ed5",
+  "a_pr": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/3",
+  "a_pr_state_at_acceptance": "OPEN",
+  "main_at_acceptance": "ab34e8e1a325945a16b1501649de877c20ec9434",
+  "checker_head": "cefb6e6781b762767842fbb466f71dd32f759b03",
+  "checker_modified_at_execution": true,
+  "checker_sha256": "fa8360be16708825ecc80c20e8eb28be5dbc23ae64b5504ddab25f1ba3914307",
+  "python": "3.11.17",
+  "data_generation": "Unmodified A script from delivery commit, seed=42, min_len=20",
+  "official_validation_read": false,
+  "internal_test_access": "opaque bytes size and SHA256 only",
+  "private_preprocess_logs_read": false,
+  "new_gpu_training_started": false
+}
