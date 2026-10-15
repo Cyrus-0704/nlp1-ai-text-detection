@@ -53,10 +53,9 @@ def main():
         actual['matches_a_manifest'] = actual['bytes']==expected['bytes'] and actual['sha256']==expected['sha256']
         report['files'][name] = actual
     write_json(out/'data_acceptance.json',report)
-    if not all(item['matches_a_manifest'] for item in report['files'].values()):
-        report['status']='FAIL_FILE_REPRODUCTION'
-        write_json(out/'data_acceptance.json',report)
-        raise ValueError('Reproduced file bytes differ from A manifest; do not train')
+    reproduction_matches = all(item['matches_a_manifest'] for item in report['files'].values())
+    # Hash failure remains a hard training gate. Continue read-only train/dev
+    # diagnostics to give A actionable evidence without altering the frozen split.
     rows = {name:read_rows(splits/manifest['splits'][name]['path'],labeled=True) for name in ('train','dev')}
     for name,items in rows.items():
         counts = Counter(r['label'] for r in items)
@@ -100,8 +99,13 @@ def main():
         matched=sum(by_id.get(r['sample_id'])==r for r in smoke)
         report['smoke_membership'][name]=dict(smoke_rows=len(smoke),exact_matches=matched,passed=matched==len(smoke))
     write_json(out/'overlap_evidence.json',dict(contains_raw_text=False,per_check_key_limit=100,evidence=evidence))
-    passed=all(v['shared_keys']==0 for v in report['overlap'].values()) and all(v['passed'] for v in report['smoke_membership'].values())
-    report['status']='PASS_TRAIN_DEV_ACCEPTANCE' if passed else 'FAIL_TRAIN_DEV_ISOLATION_OR_MEMBERSHIP'
+    isolation_passed=all(v['shared_keys']==0 for v in report['overlap'].values())
+    membership_passed=all(v['passed'] for v in report['smoke_membership'].values())
+    passed=reproduction_matches and isolation_passed and membership_passed
+    report['training_gate_passed']=passed
+    report['failed_checks']=([name for name,ok in [('file_reproduction',reproduction_matches),
+                             ('train_dev_isolation',isolation_passed),('smoke_membership',membership_passed)] if not ok])
+    report['status']='PASS_TRAIN_DEV_ACCEPTANCE' if passed else 'FAIL_TRAIN_DEV_ACCEPTANCE'
     write_json(out/'data_acceptance.json',report)
     print(json.dumps(report,ensure_ascii=False,indent=2),flush=True)
     if not passed:

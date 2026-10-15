@@ -1,0 +1,29 @@
+{
+  "owner": "B",
+  "data_version": "internal-v1",
+  "status": "FAIL_TRAIN_DEV_ACCEPTANCE",
+  "training_gate_passed": false,
+  "delivery": "work/b-model; draft PR #2; not merged main",
+  "files": {
+    "data_acceptance.json": {
+      "bytes": 2120,
+      "sha256": "e27b9278b4f23a5cc9140bb4a253cb04651c22df75724c9f2ad844d1a8b61b2f"
+    },
+    "execution_provenance.json": {
+      "bytes": 468,
+      "sha256": "603b588041b1d52ad6f9d605d7c1135e45e82830a227bb409a7502ac10dc3ee2"
+    },
+    "grouping_trace.json": {
+      "bytes": 6857,
+      "sha256": "24faa3db8fd3defba55a1572d42a7e344061332222e1a713b481fbee27d665d3"
+    },
+    "overlap_evidence.json": {
+      "bytes": 1208,
+      "sha256": "77bb4c4431379c84cf906d5b1b9003ede4bce67f9f6c0c9841522d3e864fa3db"
+    },
+    "README.md": {
+      "bytes": 4860,
+      "sha256": "413eb46acbe429ea6dd0afe2e875472566a045c24c001edd527f7c2b558bce47"
+    }
+  }
+}

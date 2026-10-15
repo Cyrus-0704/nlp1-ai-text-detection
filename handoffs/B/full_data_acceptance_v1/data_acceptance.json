@@ -1,0 +1,77 @@
+{
+  "data_version": "internal-v1",
+  "status": "FAIL_TRAIN_DEV_ACCEPTANCE",
+  "a_manifest_sha256": "62832e8698ce22dbf7419e1868f8b3f4bc8a4057ea3bb9f3aeaee00c13a7be5f",
+  "code_commit": "97d09c7cb612792728e78b8e4fbe96c22da71755",
+  "official_validation_read": false,
+  "internal_test_performance_evaluated": false,
+  "internal_test_access": "opaque byte count and SHA-256 only; generated log not inspected",
+  "raw_file_verified": true,
+  "files": {
+    "train": {
+      "bytes": 281186446,
+      "sha256": "8a719bb85fb1e8d205d205ec61a6113b36c88e2612628a6995cde3b8da470075",
+      "matches_a_manifest": false,
+      "rows": 119727,
+      "human": 43870,
+      "machine": 75857,
+      "unique_groups": 26508,
+      "six_fields_verified": true
+    },
+    "dev": {
+      "bytes": 35049138,
+      "sha256": "4790283a83857538b7c799d143db9dfb4870449b5d20dd38bf66d2864ff4e14a",
+      "matches_a_manifest": true,
+      "rows": 14998,
+      "human": 5444,
+      "machine": 9554,
+      "unique_groups": 3274,
+      "six_fields_verified": true
+    },
+    "test": {
+      "bytes": 35785501,
+      "sha256": "8aa1dfca7d268c79c70e96e73ba798abfaed4469f54fd952847de2fc50e35297",
+      "matches_a_manifest": false
+    }
+  },
+  "overlap": {
+    "sample_id": {
+      "shared_keys": 0,
+      "affected_train_rows": 0,
+      "affected_dev_rows": 0
+    },
+    "group_id": {
+      "shared_keys": 0,
+      "affected_train_rows": 0,
+      "affected_dev_rows": 0
+    },
+    "whitespace_text": {
+      "shared_keys": 1,
+      "affected_train_rows": 4,
+      "affected_dev_rows": 1
+    },
+    "casefold_whitespace_text": {
+      "shared_keys": 1,
+      "affected_train_rows": 4,
+      "affected_dev_rows": 1
+    }
+  },
+  "smoke_membership": {
+    "train": {
+      "smoke_rows": 1000,
+      "exact_matches": 1000,
+      "passed": true
+    },
+    "dev": {
+      "smoke_rows": 200,
+      "exact_matches": 200,
+      "passed": true
+    }
+  },
+  "a_preprocess_script_sha256": "f44c90ee2a866ee0e85a3dc72cdce01dc0f4eb96b7d8841b883a2173527b5bbf",
+  "training_gate_passed": false,
+  "failed_checks": [
+    "file_reproduction",
+    "train_dev_isolation"
+  ]
+}

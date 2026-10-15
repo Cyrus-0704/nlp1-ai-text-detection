@@ -1,0 +1,12 @@
+{
+  "python": "3.11.17",
+  "unicode_database": "14.0.0",
+  "python_hash_seed": "not set",
+  "head_at_execution": "97d09c7cb612792728e78b8e4fbe96c22da71755",
+  "verifier_modified_before_diagnostic_run": true,
+  "verifier_sha256": "fc6ba5c364879a2acb96de606703b3587f87fd523bb480ff088e72638992f384",
+  "a_preprocess_unmodified": true,
+  "new_gpu_training_started": false,
+  "known_overlap_in_previous_smoke_train": false,
+  "known_overlap_in_previous_smoke_dev": false
+}
