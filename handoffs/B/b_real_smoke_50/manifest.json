@@ -4,7 +4,7 @@
     "A",
     "C"
   ],
-  "delivery_state": "prepared on B branch; not merged into main",
+  "delivery_state": "pushed to work/b-model; draft PR #2 open; not merged into main",
   "run_id": "b_real_smoke_50",
   "data_version": "internal-v1",
   "a_data_commit": "e760e63a1f797eb4562d56be059c099c97597cd8",
@@ -35,8 +35,8 @@
       "sha256": "9a5912fa35e2d897710a88a7a60ebcf43cf9290c21eb9fda62982a94c61c33d6"
     },
     "README.md": {
-      "bytes": 4523,
-      "sha256": "6b73ac4c07f231a26f86e98a756fb6412da7cf91f480c8787d538af46468d605"
+      "bytes": 4634,
+      "sha256": "d48ff93d0a79a85b26fd9dd4a14ad3d63c5a7c512ac96a78748d39a2b56c6568"
     },
     "run_summary.json": {
       "bytes": 2481,
@@ -46,5 +46,7 @@
       "bytes": 452,
       "sha256": "fc41c6e7b9095487720603814bbfda8310a59d89a1e71c724876aac716c47013"
     }
-  }
+  },
+  "pull_request": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/2",
+  "handoff_commit": "25ad6e98060df396dc47d8c34a8dd1f3c86412c5"
 }
