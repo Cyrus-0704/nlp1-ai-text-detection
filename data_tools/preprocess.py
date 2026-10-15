@@ -11,7 +11,9 @@ preprocess.py —— "大模型生成文本检测与生成器归因" 竞赛 数�
    - 机器文本仅在 "确实以对应提示词模板开头" 时剥离该模板, 绝不按固定长度截断
 2. 清洗: 过滤空/过短文本; 单侧为空时保留有效侧; 人类样本按来源 ID 与正文双重去重;
    缺失 ID 时用 "正文指纹" 兜底, 再退化为行索引; 机器样本按 (生成器, 正文) 去重
-3. 分组 (Group-based): 同一原文 / 来源 ID / 重复正文归入同一 group_id, 保证不跨集合泄露
+3. 分组 (Group-based): 同一原文 / 来源 ID 归入同一 group_id; 且每条记录所有将
+   被导出的规范化正文(含评审等列表展开项)全部注册正文指纹并入组, 任何两条
+   记录共享任一最终正文即并入同组, 保证重复正文绝不跨集合泄露
 4. 划分: 按 group 做 80/10/10 的 train/dev/test 划分, 固定随机种子 (默认 42)
 5. 输出: train.jsonl / dev.jsonl / test.jsonl + 清洗与统计日志
 6. 原始保护: 全程只读 data.jsonl, 绝不写入或覆盖
@@ -120,15 +122,6 @@ def pick_id(d):
                 return f, v.strip()
         elif isinstance(v, (int, float)) and not isinstance(v, bool):
             return f, str(v)
-    return None, None
-
-
-def pick_human_for_hash(d):
-    """挑选用于分组的人类代表文本 (优先级同人类文本规则)"""
-    for f in HUMAN_FIELDS:
-        for t in iter_texts(d.get(f)):
-            if t.strip():
-                return f, t
     return None, None
 
 
@@ -322,23 +315,26 @@ def process(opts, log):
                 else:
                     id_map[key] = i
 
-            # (b) 正文指纹分组 (缺 ID 时兜底; 同时防止重复正文跨集合)
-            _, human_txt = pick_human_for_hash(d)
-            if human_txt is not None:
-                hk = fp(norm_text(human_txt))
+            # (b) 正文指纹分组: 该记录"所有将被导出的规范化正文"(人类正文、评审
+            #     列表逐项、机器文本; 与 Pass 2 完全相同的剥离/过滤口径)全部注册
+            #     指纹并入组。任何两条记录只要共享任一最终正文, 必被并入同组,
+            #     保证重复正文绝不跨 train/dev/test 分散。
+            cands = build_prompt_candidates(d)
+            cnt = 0
+            for t, lab, _g, _f in collect_raw_samples(d):
+                tt = strip_prompt(t, cands)[0] if lab == 1 else t
+                tt = tt.strip()
+                if len(tt) < opts.min_len:
+                    continue
+                cnt += 1
+                hk = fp(norm_text(tt))
                 if hk in hash_map:
                     if dsu.union(i, hash_map[hk]):
                         n_merged += 1
                 else:
                     hash_map[hk] = i
 
-            # (c) 预估有效样本数
-            cands = build_prompt_candidates(d)
-            cnt = 0
-            for t, lab, _g, _f in collect_raw_samples(d):
-                tt = strip_prompt(t, cands)[0] if lab == 1 else t
-                if len(tt.strip()) >= opts.min_len:
-                    cnt += 1
+            # (c) 预估有效样本数 (cnt 与上方循环同口径, 直接复用)
             est_counts.append(cnt)
 
     log.append("[规模]")
@@ -390,6 +386,10 @@ def process(opts, log):
              for s in SPLITS}
     examples = {s: [] for s in SPLITS}
     sample_seq = 0
+
+    # 完整性自检: 记录各集合的正文指纹与 group_id 归属, 写出后做交叉核验
+    split_fps = {s: set() for s in SPLITS}
+    group_where = {}
 
     rec_idx = 0          # 与 Pass 1 对齐的记录索引(仅成功解析的记录计数)
     try:
@@ -457,6 +457,10 @@ def process(opts, log):
                     sample_seq += 1
                     writers[split].write(json.dumps(rec, ensure_ascii=False) + "\n")
 
+                    split_fps[split].add(fp(nt))
+                    prev = group_where.setdefault(gid, split)
+                    assert prev == split, "同一 group_id 被写入多个集合: %s" % gid
+
                     field_use[fld] += 1
                     st = stats[split]
                     st["total"] += 1
@@ -496,7 +500,20 @@ def process(opts, log):
 
     log.append("")
     log.append("[划分完整性校验]")
-    log.append("  分组是否跨集合泄露 : 否 (每个 group_id 只出现在一个集合中)")
+    # 实测核验: 任两个集合的规范化正文指纹交集必须为 0 (不再仅凭分组推断)
+    leak_pairs = []
+    for a in range(len(SPLITS)):
+        for b in range(a + 1, len(SPLITS)):
+            sa, sb = SPLITS[a], SPLITS[b]
+            inter = split_fps[sa] & split_fps[sb]
+            if inter:
+                leak_pairs.append((sa, sb, len(inter)))
+    if leak_pairs:
+        for sa, sb, n in leak_pairs:
+            log.append("  [失败] %s ∩ %s 存在 %d 条重复规范化正文!" % (sa, sb, n))
+        raise SystemExit("[错误] 划分完整性校验失败, 存在跨集合重复正文, 已终止")
+    log.append("  分组是否跨集合泄露 : 否 (每个 group_id 只出现在一个集合中, 已逐条断言)")
+    log.append("  正文是否跨集合重复 : 否 (train/dev/test 两两规范化正文指纹交集均为 0, 实测)")
     log.append("  原始数据是否被修改 : 否 (data.jsonl 全程只读)")
 
     log.append("")
