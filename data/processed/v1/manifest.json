@@ -67,25 +67,25 @@
   "smoke": {
     "description": "从正式 train/dev 分层抽样的真实小样(保持原类别比例, 两类均有), 供 B/C 首轮快速验收; 与正式划分同源, 天然满足组隔离",
     "script": "data_tools/make_smoke.py",
-    "command": "python data_tools/make_smoke.py --train data/processed/v1/train.jsonl --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 --n-train 200 --n-dev 100 --seed 42",
+    "command": "python data_tools/make_smoke.py --train data/processed/v1/train.jsonl --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 --n-train 1000 --n-dev 200 --seed 42",
     "seed": 42,
     "files": {
       "smoke_train": {
         "path": "smoke_train.jsonl",
-        "samples": 200,
-        "human": 73,
-        "machine": 127,
-        "bytes": 433630,
-        "sha256": "f8ca7a70b775f9f58fba2decb9b2dbc2cf80a1fcf4b34724cf193ccf62a8974b",
+        "samples": 1000,
+        "human": 366,
+        "machine": 634,
+        "bytes": 2388548,
+        "sha256": "862abf14341297c5a90d13ffd173ec834877fb991488dd219be5e26519c6f3a1",
         "sampled_from": "train.jsonl"
       },
       "smoke_dev": {
         "path": "smoke_dev.jsonl",
-        "samples": 100,
-        "human": 36,
-        "machine": 64,
-        "bytes": 253169,
-        "sha256": "975f1f7c27388e5e4e5789585cb3024999ba591552bf4dc3f5afd1671cc064a4",
+        "samples": 200,
+        "human": 73,
+        "machine": 127,
+        "bytes": 481666,
+        "sha256": "cc57e00857422e08add6292d98be245c026ef494e71e3b8468ac5ed45edffaf4",
         "sampled_from": "dev.jsonl"
       }
     },

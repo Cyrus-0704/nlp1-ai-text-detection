@@ -19,8 +19,8 @@
 
 | 相对路径 | 说明 | 样本量 | SHA-256 |
 | --- | --- | --- | --- |
-| `data/processed/v1/smoke_train.jsonl` | 训练小样（抽自 train） | 200（human 73 / machine 127） | `f8ca7a70b775f9f58fba2decb9b2dbc2cf80a1fcf4b34724cf193ccf62a8974b` |
-| `data/processed/v1/smoke_dev.jsonl` | 调参小样（抽自 dev） | 100（human 36 / machine 64） | `975f1f7c27388e5e4e5789585cb3024999ba591552bf4dc3f5afd1671cc064a4` |
+| `data/processed/v1/smoke_train.jsonl` | 训练小样（抽自 train） | 1000（human 366 / machine 634） | `862abf14341297c5a90d13ffd173ec834877fb991488dd219be5e26519c6f3a1` |
+| `data/processed/v1/smoke_dev.jsonl` | 调参小样（抽自 dev） | 200（human 73 / machine 127） | `cc57e00857422e08add6292d98be245c026ef494e71e3b8468ac5ed45edffaf4` |
 | `data/processed/v1/manifest.json` | 权威机器可读清单（版本/字段/分组/划分/评估/限制） | — | 见 git |
 | `data/processed/v1/cleaning_audit.md` | 清洗与划分审计报告 | — | 见 git |
 | `data_tools/preprocess.py` | 生成 internal-v1 的处理与划分脚本 | — | 见 git |
@@ -58,7 +58,7 @@ python data_tools/preprocess.py --data data.jsonl --out-dir data/processed/v1 --
 复现 smoke 小样（可选，已入库）：
 
 ```bash
-python data_tools/make_smoke.py --train data/processed/v1/train.jsonl --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 --n-train 200 --n-dev 100 --seed 42
+python data_tools/make_smoke.py --train data/processed/v1/train.jsonl --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 --n-train 1000 --n-dev 200 --seed 42
 ```
 
 本地评测（以 smoke_dev 为例，test 同理换成 `--gold data/processed/v1/test.jsonl`）：

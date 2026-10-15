@@ -5,7 +5,7 @@
 - 用法:
     python data_tools/make_smoke.py --train data/processed/v1/train.jsonl \
         --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 \
-        --n-train 200 --n-dev 100 --seed 42
+        --n-train 1000 --n-dev 200 --seed 42
 """
 import argparse
 import hashlib
