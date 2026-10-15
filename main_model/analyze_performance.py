@@ -142,6 +142,7 @@ def main():
     ax.legend(handles=[Patch(color=colors[0],label='True human'),Patch(color=colors[1],label='True machine')],fontsize=8,loc='upper left')
     ax.set(xticks=x,xticklabels=names,ylim=(0,1),ylabel='p_machine',title='C  Class-wise probability distributions')
     ax=axes[1,1]
+    curves = []
     for i,(name,r) in enumerate(runs.items()):
         if r['summary'].get('inference_source','').startswith('50-step prefix'):
             continue
@@ -151,18 +152,26 @@ def main():
         log=[json.loads(line) for line in path.read_text(encoding='utf-8').splitlines()]
         values=np.array([entry.get('unweighted_loss',entry['loss']) for entry in log if not entry['skipped']])
         if len(values)>=10:
-            ax.plot(np.arange(10,len(values)+1),np.convolve(values,np.ones(10)/10,mode='valid'),color=colors[i],label=name)
+            steps = np.arange(10,len(values)+1)
+            smoothed = np.convolve(values,np.ones(10)/10,mode='valid')
+            ax.plot(steps,smoothed,color=colors[i],label=name)
+            curves.extend(dict(run=name,optimizer_step=int(step),unweighted_ce_mean10=float(value))
+                          for step,value in zip(steps,smoothed))
     ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss; prefix traces omitted')
     ax.legend(fontsize=8)
     fig.suptitle(f'Internal dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); one seed; exploratory results',fontsize=12)
     fig.savefig(out/'performance.png'); fig.savefig(out/'performance.pdf'); plt.close(fig)
+    if curves:
+        with (out/'training_curves.csv').open('w',encoding='utf-8',newline='') as f:
+            writer=csv.DictWriter(f,fieldnames=list(curves[0]))
+            writer.writeheader(); writer.writerows(curves)
     fig,axs=plt.subplots(1,len(names),figsize=(3.8*len(names),3.7),layout='constrained',squeeze=False)
     for ax,(name,r) in zip(axs[0],runs.items()):
         cm=np.array(r['metrics']['confusion_matrix'])
         ax.imshow(cm,cmap='Blues',vmin=0,vmax=max(sum(y==0),sum(y==1)))
         for i in range(2):
             for j in range(2):
-                ax.text(j,i,str(cm[i,j]),ha='center',va='center',fontsize=18,color='white' if cm[i,j]>.5*max(sum(y==0),sum(y==1)) else 'black')
+                ax.text(j,i,f'{cm[i,j]}\n({cm[i,j]/cm[i].sum():.1%})',ha='center',va='center',fontsize=15,color='white' if cm[i,j]>.5*max(sum(y==0),sum(y==1)) else 'black')
         ax.set(xticks=[0,1],yticks=[0,1],xticklabels=['human','machine'],yticklabels=['human','machine'],
                xlabel='Predicted',ylabel='True',title=name)
     fig.suptitle('Internal dev confusion matrices (counts); threshold 0.5',fontsize=12)
