@@ -1,0 +1,117 @@
+{
+  "version": "internal-v1",
+  "owner": "A",
+  "branch": "work/a-data",
+  "created": "2026-10-15",
+  "source": {
+    "path": "data.jsonl",
+    "bytes": 980438954,
+    "sha256": "a4d8d012f10ee57110473e06cfdda648fc64643eef72e97e4ef3b818ba727d98",
+    "format": "UTF-8 JSONL",
+    "storage": "Git LFS",
+    "verified": "本机副本 SHA-256 与 data/manifest.raw.json 记录完全一致, 原始文件未被修改"
+  },
+  "generation": {
+    "script": "data_tools/preprocess.py",
+    "command": "git lfs pull --include=\"data.jsonl\" && python data_tools/preprocess.py --data data.jsonl --out-dir data/processed/v1 --seed 42 --min-len 20",
+    "seed": 42,
+    "min_text_len": 20
+  },
+  "fields": ["sample_id", "group_id", "text", "label", "generator", "domain"],
+  "label_map": {"human": 0, "machine": 1},
+  "grouping": {
+    "rule": "先按 (domain, 来源ID) 合并, 再按人类正文指纹(小写+空白规范化)合并; 缺ID用正文指纹兜底, 再退化为行索引",
+    "id_priority": ["source_id", "source_ID", "question_id", "answer_id", "q_id", "a_id", "id"],
+    "excluded_from_id": ["Unnamed: 0 (pandas 索引泄漏列, 跨记录形态会撞号)"]
+  },
+  "split": {
+    "type": "group-based",
+    "ratios": {"train": 0.8, "dev": 0.1, "test": 0.1},
+    "seed": 42,
+    "cross_split_group_leakage": false,
+    "verified": "train∩dev / train∩test / dev∩test 的 group_id 交集均为 0"
+  },
+  "totals": {
+    "records_read": 95889,
+    "groups": 33199,
+    "samples": 149895,
+    "human": 54908,
+    "machine": 94987
+  },
+  "splits": {
+    "train": {
+      "path": "train.jsonl",
+      "samples": 119727,
+      "human": 43870,
+      "machine": 75857,
+      "bytes": 281186299,
+      "sha256": "ebf52482625cc69d73ea1a7b2f2fd3557acc944718f3f3b0c36eb1de9d6a2b6d"
+    },
+    "dev": {
+      "path": "dev.jsonl",
+      "samples": 14998,
+      "human": 5444,
+      "machine": 9554,
+      "bytes": 35049138,
+      "sha256": "4790283a83857538b7c799d143db9dfb4870449b5d20dd38bf66d2864ff4e14a"
+    },
+    "test": {
+      "path": "test.jsonl",
+      "samples": 15170,
+      "human": 5594,
+      "machine": 9576,
+      "bytes": 35785495,
+      "sha256": "737a728de70e70bb7c17940e1bba59ae2f34aa864d1b32035dee33b32cc6850b"
+    }
+  },
+  "smoke": {
+    "description": "从正式 train/dev 分层抽样的真实小样(保持原类别比例, 两类均有), 供 B/C 首轮快速验收; 与正式划分同源, 天然满足组隔离",
+    "script": "data_tools/make_smoke.py",
+    "command": "python data_tools/make_smoke.py --train data/processed/v1/train.jsonl --dev data/processed/v1/dev.jsonl --out-dir data/processed/v1 --n-train 1000 --n-dev 200 --seed 42",
+    "seed": 42,
+    "files": {
+      "smoke_train": {
+        "path": "smoke_train.jsonl",
+        "samples": 1000,
+        "human": 366,
+        "machine": 634,
+        "bytes": 2388548,
+        "sha256": "862abf14341297c5a90d13ffd173ec834877fb991488dd219be5e26519c6f3a1",
+        "sampled_from": "train.jsonl"
+      },
+      "smoke_dev": {
+        "path": "smoke_dev.jsonl",
+        "samples": 200,
+        "human": 73,
+        "machine": 127,
+        "bytes": 481666,
+        "sha256": "cc57e00857422e08add6292d98be245c026ef494e71e3b8468ac5ed45edffaf4",
+        "sampled_from": "dev.jsonl"
+      }
+    },
+    "verified": "六字段齐全, sample_id 唯一且为正式集子集, 两类均有, 文本非空, 两小样无重叠"
+  },
+  "evaluation": {
+    "script": "data_tools/evaluate.py",
+    "command": "python data_tools/evaluate.py --gold data/processed/v1/test.jsonl --pred predictions.csv --threshold 0.5",
+    "prediction_csv": {
+      "columns": ["sample_id", "p_machine"],
+      "order": "与输入一致, 每个编号一条",
+      "probability_direction": "p_machine 为 machine(label=1) 的概率; p_machine >= 0.5 判为 machine",
+      "range": "[0, 1]"
+    },
+    "score_formula": "S = 0.7 * MacroF1_all + 0.3 * MacroF1_short"
+  },
+  "storage_in_repo": {
+    "split_files_uploaded": false,
+    "smoke_files_uploaded": true,
+    "reason": "train/dev/test 合计约 352MB 且 *.jsonl 走 Git LFS; 为不占满团队 LFS 配额, 完整划分暂不入库, 由接收方按 generation.command 本地生成并用 sha256 核对; smoke 小样体积小, 已入库直接交付",
+    "note": ".gitattributes 已为 *.jsonl 配置 LFS; 后续如需正式发布完整划分, 直接 git add data/processed/v1/train.jsonl dev.jsonl test.jsonl 并推送"
+  },
+  "known_limitations": [
+    "短文本口径: 团队临时口径为 <100 词; data_tools/evaluate.py 默认按字符<100(--short-by char), 需按官方核实结果切换并明确标注为临时口径",
+    "generator 保留原始 model 名称, 未做家族归一化(cohere / cohere-xlarge-nightly / davinci / text-davinci-003 等仍分列)",
+    "domain 直接取自 source, 空字符串或缺失统一记为 unknown",
+    "类别不均衡: machine 约占 63%"
+  ]
+}
