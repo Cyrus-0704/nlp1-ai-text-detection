@@ -1,0 +1,60 @@
+# Each member keeps installed environments and machine configuration local.
+.local/
+.venv/
+venv/
+envs/
+.conda/
+.python-version
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+*.code-workspace
+environment/
+
+# Downloadable models, personal experiments, caches and temporary files.
+models/
+main_model/synthetic/
+runs/
+outputs/
+checkpoints/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.cache/
+hf-cache/
+wandb/
+mlruns/
+*.log
+*.tmp
+*.part
+*.bak
+*LOCAL_SETUP*
+local_settings.*
+
+# Credentials must never be committed.
+*.pem
+*.key
+credentials.json
+token.json
+id_rsa*
+id_ed25519*
+
+# Incidental training weights are local; explicitly shared models go below.
+*.safetensors
+*.pt
+*.pth
+*.bin
+!handoffs/shared_models/**/*.safetensors
+!handoffs/shared_models/**/*.pt
+!handoffs/shared_models/**/*.pth
+!handoffs/shared_models/**/*.bin
+
+# OS metadata.
+.DS_Store
+Thumbs.db
+desktop.ini

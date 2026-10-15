@@ -1,0 +1,9 @@
+-r base.txt
+# Install a suitable CPU/CUDA torch build for your own machine first.
+torch==2.13.0
+transformers==4.57.6
+accelerate==1.15.0
+datasets==5.0.1
+sentencepiece==0.2.2
+safetensors==0.8.0
+protobuf==7.36.2

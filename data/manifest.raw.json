@@ -1,0 +1,10 @@
+{
+  "version": "raw-v1",
+  "path": "data.jsonl",
+  "bytes": 980438954,
+  "sha256": "a4d8d012f10ee57110473e06cfdda648fc64643eef72e97e4ef3b818ba727d98",
+  "source": "competition-provided training data",
+  "format": "UTF-8 JSONL",
+  "storage": "Git LFS",
+  "immutable": true
+}

@@ -1,0 +1,4 @@
+# Shared package versions; installed environments remain on each member's machine.
+numpy==2.4.6
+pandas==3.0.6
+scikit-learn==1.9.1
