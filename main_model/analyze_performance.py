@@ -122,7 +122,7 @@ def main():
         bars=ax.bar(x+(j-1)*width,[runs[n]['metrics'][key] for n in names],width,label=label,color=colors[j])
         ax.bar_label(bars,fmt='%.3f',fontsize=8,padding=3)
     ax.set(xticks=x,xticklabels=names,ylim=(0,1.15),title='A  Fixed-threshold performance',ylabel='Score')
-    ax.legend(loc='upper left',fontsize=8)
+    ax.legend(loc='upper left',fontsize=8,ncol=3)
     ax=axes[0,1]
     for i,(name,r) in enumerate(runs.items()):
         fpr,tpr,_=roc_curve(y,r['prob'])
@@ -139,8 +139,8 @@ def main():
             parts['boxes'][0].set(facecolor=colors[c],alpha=.65)
     ax.axhline(.5,color='.35',ls='--',lw=1,label='Threshold 0.5')
     from matplotlib.patches import Patch
-    ax.legend(handles=[Patch(color=colors[0],label='True human'),Patch(color=colors[1],label='True machine')],fontsize=8,loc='upper left')
-    ax.set(xticks=x,xticklabels=names,ylim=(0,1),ylabel='p_machine',title='C  Class-wise probability distributions')
+    ax.legend(handles=[Patch(color=colors[0],label='True human'),Patch(color=colors[1],label='True machine')],fontsize=8,loc='upper left',ncol=2)
+    ax.set(xticks=x,xticklabels=names,ylim=(0,1.15),ylabel='p_machine',title='C  Class-wise probability distributions')
     ax=axes[1,1]
     curves = []
     for i,(name,r) in enumerate(runs.items()):
@@ -157,7 +157,7 @@ def main():
             ax.plot(steps,smoothed,color=colors[i],label=name)
             curves.extend(dict(run=name,optimizer_step=int(step),unweighted_ce_mean10=float(value))
                           for step,value in zip(steps,smoothed))
-    ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss; prefix traces omitted')
+    ax.set(xlabel='Optimizer update',ylabel='Unweighted CE (10-update mean)',title='D  Training loss (10-update mean)')
     ax.legend(fontsize=8)
     fig.suptitle(f'Internal dev: {len(rows)} samples / {len(groups)} groups; threshold 0.5\n*Short = <100 whitespace words (temporary); one seed; exploratory results',fontsize=12)
     fig.savefig(out/'performance.png'); fig.savefig(out/'performance.pdf'); plt.close(fig)

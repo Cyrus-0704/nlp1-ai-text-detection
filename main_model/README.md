@@ -2,6 +2,8 @@
 
 任务状态见[个人清单](../docs/tasks/B_MAIN_MODEL.md)，共享接口见[团队约定](../TEAM_WORKPLAN.md)。各人自己准备环境；本文使用当前环境的python和仓库相对路径，本机绝对路径/安装日志不上传。
 
+当前v2先导结果见 [完整dev对照与图](../handoffs/B/b_v2_full_pilot/README.md)：CE500宏F1=0.882048、临时S=0.880403，本轮优于加权500步。仅单seed、约6.7%训练覆盖，尚非最终模型。小样50步链路及两项完整dev保存重载均已通过，不重复现有验证代替下一阶段实验。
+
 ## 依赖与预训练模型
 
 B在Windows/NVIDIA上的已验证版本是Python3.11、PyTorch2.13.0+cu126与Transformers4.57.6；其他电脑先确认驱动和PyTorch构建适配。
@@ -20,10 +22,10 @@ python main_model/download_model.py --output-dir models/xlm-roberta-base --revis
 收到A的manifest、六字段真实内部train/dev及统一评估说明后，从仓库根目录运行。以下路径按A实际版本调整，输出目录必须是新的。
 
 ```powershell
-python main_model/train.py --train-file data/processed/v1/smoke_train.jsonl --dev-file data/processed/v1/smoke_dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_real_smoke_50 --data-kind a-internal --data-manifest data/processed/v1/manifest.json --evaluation-script data_tools/evaluate.py --seed 42 --max-steps 50 --max-length 256 --batch-size 1 --gradient-accumulation 16 --learning-rate 2e-5
-python main_model/predict.py --model-dir runs/b_real_smoke_50/checkpoint --input data/processed/v1/smoke_dev.jsonl --output runs/b_real_smoke_50/dev_predictions_independent.csv --precision fp32 --batch-size 1
-python data_tools/evaluate.py --gold data/processed/v1/smoke_dev.jsonl --pred runs/b_real_smoke_50/dev_predictions.csv --threshold 0.5 --short-by word --short-threshold 100 --save-report runs/b_real_smoke_50/a_evaluation_repeat.txt
-python main_model/package_checkpoint.py --checkpoint runs/b_real_smoke_50/checkpoint
+python main_model/train.py --train-file data/processed/v2/smoke_train.jsonl --dev-file data/processed/v2/smoke_dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_v2_smoke_50_repeat --data-kind a-internal --data-manifest data/processed/v2/manifest.json --evaluation-script data_tools/evaluate.py --seed 42 --max-steps 50 --max-length 256 --batch-size 1 --gradient-accumulation 16 --learning-rate 2e-5 --deterministic
+python main_model/predict.py --model-dir runs/b_v2_smoke_50_repeat/checkpoint --input data/processed/v2/smoke_dev.jsonl --output runs/b_v2_smoke_50_repeat/dev_predictions_independent.csv --precision fp32 --batch-size 1
+python data_tools/evaluate.py --gold data/processed/v2/smoke_dev.jsonl --pred runs/b_v2_smoke_50_repeat/dev_predictions.csv --threshold 0.5 --short-by word --short-threshold 100 --save-report runs/b_v2_smoke_50_repeat/a_evaluation_repeat.txt
+python main_model/package_checkpoint.py --checkpoint runs/b_v2_smoke_50_repeat/checkpoint
 python main_model/check_contracts.py
 ```
 
@@ -48,9 +50,8 @@ B本机已经完成正式预训练模型下载及1000/200合成样本50次更新
 恢复必须指定一个新的输出目录，数据、预训练来源、随机种子、长度、batch、累积、学习率及加权设置应保持一致。输入哈希和恢复状态哈希不一致会被拒绝。当前使用恒定学习率，无可变调度器状态；`--max-steps` 是恢复后的总目标步数，可以增大。当前仅支持单GPU、num_workers=0；同机确定性核验不代表跨软件版本/硬件逐位一致。
 
 ```powershell
-python main_model/train.py --train-file data/processed/v1/smoke_train.jsonl --dev-file data/processed/v1/smoke_dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_resumed_new --data-kind a-internal --data-manifest data/processed/v1/manifest.json --evaluation-script data_tools/evaluate.py --max-steps 400 --save-steps 100 --keep-checkpoints 2 --class-weighting none --deterministic --resume-from runs/b_ce200/checkpoints/step-000200
+python main_model/train.py --train-file data/processed/v2/train.jsonl --dev-file data/processed/v2/dev.jsonl --model-dir models/xlm-roberta-base --output-dir runs/b_v2_ce2000_resume --data-kind a-internal --data-manifest data/processed/v2/manifest.json --evaluation-script data_tools/evaluate.py --seed 42 --max-steps 2000 --max-length 256 --batch-size 1 --gradient-accumulation 16 --learning-rate 2e-5 --save-steps 250 --keep-checkpoints 2 --class-weighting none --deterministic --inference-batch-size 8 --resume-from runs/b_v2_full_ce500/checkpoints/step-000500
 
-python main_model/verify_resume.py --train-file data/processed/v1/smoke_train.jsonl --dev-file data/processed/v1/smoke_dev.jsonl --data-manifest data/processed/v1/manifest.json --model-dir models/xlm-roberta-base --output-dir runs/b_resume_verification_repeat
 python main_model/check_training_state.py
 ```
 
@@ -61,10 +62,10 @@ python main_model/check_training_state.py
 可选依赖 `requirements/analysis.txt`；不会进入模型推理包。每个run目录必须有PASS的运行摘要与完全匹配同一dev编号/哈希的预测；默认0.5阈值，不搜索阈值。图表和分组bootstrap仅用于开发诊断。
 
 ```powershell
-python main_model/analyze_performance.py --gold-internal-dev data/processed/v1/smoke_dev.jsonl --run CE50=runs/b_ce50_control --run CE200=runs/b_ce200 --run Balanced200=runs/b_balanced200 --output-dir runs/b_performance_analysis
+python main_model/analyze_performance.py --gold-internal-dev data/processed/v2/dev.jsonl --run CE500=runs/b_v2_full_ce500 --run Balanced500=runs/b_v2_full_balanced500 --output-dir runs/b_v2_full_analysis_repeat
 ```
 
-该入口输出宏F1/AUC/概率分布/训练曲线、混淆矩阵、domain/generator分项和以dev的group_id为单位的bootstrap区间。区间仅反映当前固定模型下dev抽样不确定性，不覆盖不同seed和训练样本变化。单类别或小样本切片只能定位问题，不能据此宣称某生成器的可靠泛化能力。CE50对照取自CE200同一训练轨迹的50步检查点，与此前旧50步流程结果区分。
+该入口输出宏F1/AUC/概率分布/训练曲线、混淆矩阵、domain/generator分项和以dev的group_id为单位的bootstrap区间。区间仅反映当前固定模型下dev抽样不确定性，不覆盖不同seed和训练样本变化。单类别或小样本切片只能定位问题，不能据此宣称某生成器的可靠泛化能力。历史v1的CE50轨迹只留档；本轮只比较同一v2完整dev的两项500步结果。
 
 ## 按需交接
 
@@ -72,9 +73,9 @@ runs/和models/保持本地。把A/C需要的真实dev预测、参数、数据�
 
 正式冻结推理与官方CSV导出由B提供入口、A运行验收，融合方案若保留须把C的完整规则集成到入口。详细责任和前置条件见B个人清单。
 
-## 修复数据的合并前验收
+## 修复数据验收
 
-A的internal-v2已通过B独立复现，报告见 `handoffs/B/full_data_acceptance_v2/`。PR #3合入main并同步后才能作为主干交付使用；v1命令仅保留历史示例，新实验改用v2输入及新输出目录。
+A的internal-v2已通过B独立复现，报告见 `handoffs/B/full_data_acceptance_v2/`。PR #3已合并main `7231172`并同步B；新实验一律使用v2输入及新输出目录。
 
 ```powershell
 python main_model/verify_data_delivery.py --manifest data/processed/v2/manifest.json --raw-file data.jsonl --split-dir .local/internal-v2-repeat --output-dir runs/b_acceptance_v2_repeat --reproduce
@@ -93,7 +94,7 @@ python main_model/train.py --train-file data/processed/v2/train.jsonl --dev-file
 
 完整划分按A脚本本地生成并校验，不上传副本。新增 `--inference-batch-size` 默认1；完整dev使用8，保存前与新进程加载后使用同一FP32精度、同一batch和顺序严格比较；不改变训练batch与有效batch。运行摘要记录两段推理耗时。图表标签同时适用于小样dev和完整dev。
 
-完整dev对照结束后生成评估图及不含正文的诊断数据：
+完整dev对照已完成；以下用于按需复画评估图及不含正文的诊断数据，输出目录须新的：
 
 ```powershell
 python main_model/analyze_performance.py --gold-internal-dev data/processed/v2/dev.jsonl --run CE500=runs/b_v2_full_ce500 --run Balanced500=runs/b_v2_full_balanced500 --output-dir runs/b_v2_full_pilot_analysis

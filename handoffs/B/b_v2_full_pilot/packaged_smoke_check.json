@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "selected_pilot": "CE500",
+  "input": "A frozen v2 smoke_dev; exact 200-row subset of full dev",
+  "prediction_rows": 200,
+  "precision": "fp32",
+  "batch_size": 8,
+  "reference": "full-dev independent reload predictions matched by sample_id",
+  "batch_membership_may_differ": true,
+  "rtol": 1e-05,
+  "atol": 1e-06,
+  "max_abs_probability_difference": 0.0,
+  "ordered_ids_verified": true,
+  "finite_probability_range_verified": true
+}
