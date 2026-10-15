@@ -148,3 +148,5 @@ git push
 | 2026-10-16 | internal-v2合并前验收 | A `574eed6` / PR #3；`handoffs/B/full_data_acceptance_v2/` | 完整复现哈希一致；train/dev隔离0重叠；新小样归属通过；未训练 | PR合入main并同步后，从原始XLM-R执行v2流程及完整数据对照 |
 | 2026-10-16 | v2主干接入与50步流程 | main `7231172`、训练`1183ed5`；`handoffs/B/b_v2_smoke_50/` | GPU/有限损失/保存重载/打包预测PASS，宏F1=0.471588，偏machine | 继续完整train/dev CE500/Balanced500先导对照，出同版本诊断图，不读test |
 | 2026-10-16 | v2完整dev先导与评估图 | CE`eb68cc4`/Balanced`aa3064c`；`handoffs/B/b_v2_full_pilot/` | 两项重载PASS；本轮CE500较优，宏F1=0.882048，图表/打包子集检查通过 | 经PR交A/C同版预测与图；下一轮CE延长+seed43，再测输入长度；B06仍未完成 |
+
+本轮交接：[PR #4](https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/4)已创建，状态OPEN，当前结果提交`4e7101f`。A修复已通过PR #3进入main `7231172`；B本轮验收、小样、完整dev先导和图表尚待PR #4合并，不写成main已收到。合并后A/C从main拉取同一v2预测；2000步与seed43尚未启动。
