@@ -1,6 +1,6 @@
 # C Internal-v2 Round 1 Handoff
 
-Status: exploratory development handoff; not a frozen model or official score. Generated on 2026-10-16 from C's `work/c-baseline` working tree. The C source changes are currently uncommitted; the recorded Git revision is the base repository revision, not a pin for the exact training source snapshot.
+Status: exploratory development handoff; not a frozen model or official score. The model training run recorded base revision `7231172ba8e99dfe9dead7b40bf0c47e24ba3f21`, but the training worktree had uncommitted changes and did not record the exact source-file fingerprint. The current inference source fingerprint is documented separately in the H04 handoff; do not treat it as a retroactive proof of the exact training source snapshot.
 
 ## Data and Evaluation
 

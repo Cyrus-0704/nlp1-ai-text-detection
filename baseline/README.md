@@ -67,3 +67,15 @@ python baseline/compare.py `
 ```
 
 The output includes the full candidate grid, error-overlap counts, and one best-dev blend CSV per peer model. The selected weight is exploratory because it was selected on dev; report the full comparison and do not treat it as an independent performance estimate.
+
+For a predeclared fixed blend, use this verifier instead of the grid-search command. It checks the reported CSV against the exact formula and reports classification/probability metrics and C/B error overlap without searching weights or thresholds.
+
+```powershell
+python baseline/verify_fixed_fusion.py `
+  --gold .local/processed/v2/dev.jsonl `
+  --c-prediction handoffs/C/c_v2_round1/baseline_dev_predictions.csv `
+  --b-prediction handoffs/B/b_v2_length512_two_seed/L512_s43_u2000_dev_predictions.csv `
+  --reported-fusion handoffs/B/b_v2_length512_two_seed/C07_B03_L512_s43_u2000_dev_predictions.csv `
+  --output-json runs/c06_v2_fixed_fusion_verification/summary.json `
+  --c-weight 0.7 --threshold 0.5 --short-by word --short-threshold 100
+```
