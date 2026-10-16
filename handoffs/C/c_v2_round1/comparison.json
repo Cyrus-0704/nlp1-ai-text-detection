@@ -1,0 +1,164 @@
+{
+  "gold_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "c_prediction_sha256": "031662988c4459b0cc30f1a8b45b89f396568b8b4b844789a88fc4362adfcabd",
+  "threshold": 0.5,
+  "short_text_rule": "word < 100 (provisional unless confirmed by A)",
+  "fusion_grid": "C weight 0.1 through 0.9 in 0.1 increments; peer weight is 1 - C weight",
+  "selection_note": "Best fusion selected on this dev set only; treat as exploratory and report all candidates.",
+  "c_metrics": {
+    "macro_f1_all": 0.9467656635577062,
+    "macro_f1_short": 0.9184681863331245,
+    "score_s": 0.9382764203903317,
+    "human_recall": 0.9419472247497725,
+    "machine_recall": 0.9553748305703263
+  },
+  "pairs": {
+    "CE500": {
+      "peer_metrics": {
+        "macro_f1_all": 0.8820480823036492,
+        "macro_f1_short": 0.8765654474558089,
+        "score_s": 0.880403291849297,
+        "human_recall": 0.7683348498635123,
+        "machine_recall": 0.9680950891460745
+      },
+      "error_overlap": {
+        "all": {
+          "samples": 15086,
+          "both_correct": 13013,
+          "c_only_correct": 1326,
+          "peer_only_correct": 494,
+          "both_wrong": 253
+        },
+        "short": {
+          "samples": 1841,
+          "both_correct": 1586,
+          "c_only_correct": 136,
+          "peer_only_correct": 77,
+          "both_wrong": 42
+        }
+      }
+    },
+    "CE2000_s42": {
+      "peer_metrics": {
+        "macro_f1_all": 0.902357920762766,
+        "macro_f1_short": 0.9101283183783533,
+        "score_s": 0.9046890400474421,
+        "human_recall": 0.7916287534121929,
+        "machine_recall": 0.9832134292565947
+      },
+      "error_overlap": {
+        "all": {
+          "samples": 15086,
+          "both_correct": 13223,
+          "c_only_correct": 1116,
+          "peer_only_correct": 557,
+          "both_wrong": 190
+        },
+        "short": {
+          "samples": 1841,
+          "both_correct": 1637,
+          "c_only_correct": 85,
+          "peer_only_correct": 78,
+          "both_wrong": 41
+        }
+      }
+    },
+    "CE2000_s43": {
+      "peer_metrics": {
+        "macro_f1_all": 0.8924368946824512,
+        "macro_f1_short": 0.9432830190947645,
+        "score_s": 0.9076907320061451,
+        "human_recall": 0.7572338489535941,
+        "machine_recall": 0.9911375247627985
+      },
+      "error_overlap": {
+        "all": {
+          "samples": 15086,
+          "both_correct": 13092,
+          "c_only_correct": 1247,
+          "peer_only_correct": 575,
+          "both_wrong": 172
+        },
+        "short": {
+          "samples": 1841,
+          "both_correct": 1675,
+          "c_only_correct": 47,
+          "peer_only_correct": 84,
+          "both_wrong": 35
+        }
+      }
+    }
+  },
+  "best_fusions": {
+    "CE500": {
+      "c_weight": 0.7,
+      "peer_weight": 0.30000000000000004,
+      "metrics": {
+        "macro_f1_all": 0.9577020999030856,
+        "macro_f1_short": 0.9416169803795595,
+        "score_s": 0.9528765640460277,
+        "human_recall": 0.9383075523202912,
+        "machine_recall": 0.9739338963611719
+      },
+      "delta_s_vs_c_bootstrap": {
+        "unit": "group_id, sampled with replacement",
+        "replicates": 500,
+        "seed": 42,
+        "delta_s_ci_95": [
+          0.010006075939198233,
+          0.02006555947542332
+        ],
+        "fraction_delta_s_positive": 1.0,
+        "caveat": "Conditional on models and a blend weight selected on this same dev; not an independent test or training-seed interval."
+      },
+      "prediction_path": "fusion_c0.7_CE500.csv"
+    },
+    "CE2000_s42": {
+      "c_weight": 0.7,
+      "peer_weight": 0.30000000000000004,
+      "metrics": {
+        "macro_f1_all": 0.9608412229203452,
+        "macro_f1_short": 0.9352149342455023,
+        "score_s": 0.9531533363178923,
+        "human_recall": 0.9330300272975433,
+        "machine_recall": 0.9817537274528203
+      },
+      "delta_s_vs_c_bootstrap": {
+        "unit": "group_id, sampled with replacement",
+        "replicates": 500,
+        "seed": 42,
+        "delta_s_ci_95": [
+          0.00896052175213185,
+          0.02121654377500424
+        ],
+        "fraction_delta_s_positive": 1.0,
+        "caveat": "Conditional on models and a blend weight selected on this same dev; not an independent test or training-seed interval."
+      },
+      "prediction_path": "fusion_c0.7_CE2000_s42.csv"
+    },
+    "CE2000_s43": {
+      "c_weight": 0.7,
+      "peer_weight": 0.30000000000000004,
+      "metrics": {
+        "macro_f1_all": 0.9614219002659365,
+        "macro_f1_short": 0.9499221405226628,
+        "score_s": 0.9579719723429543,
+        "human_recall": 0.9299363057324841,
+        "machine_recall": 0.9844646022312584
+      },
+      "delta_s_vs_c_bootstrap": {
+        "unit": "group_id, sampled with replacement",
+        "replicates": 500,
+        "seed": 42,
+        "delta_s_ci_95": [
+          0.014761213811166074,
+          0.025715705593737263
+        ],
+        "fraction_delta_s_positive": 1.0,
+        "caveat": "Conditional on models and a blend weight selected on this same dev; not an independent test or training-seed interval."
+      },
+      "prediction_path": "fusion_c0.7_CE2000_s43.csv"
+    }
+  },
+  "comparison_csv": "comparison.csv"
+}

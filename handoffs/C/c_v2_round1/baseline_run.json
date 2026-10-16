@@ -1,0 +1,39 @@
+{
+  "dataset_version": "internal-v2",
+  "git_revision": "7231172ba8e99dfe9dead7b40bf0c47e24ba3f21",
+  "python_version": "3.14.0",
+  "numpy_version": "2.4.6",
+  "scikit_learn_version": "1.9.1",
+  "train_path": ".local\\processed\\v2\\train.jsonl",
+  "train_sha256": "5a5dca9db706e0faadc5c89cbcadc77dc585ce302f5e73b11b82213f40ab7ff6",
+  "train_samples": 119842,
+  "train_label_counts": {
+    "0": 43922,
+    "1": 75920
+  },
+  "dev_path": ".local\\processed\\v2\\dev.jsonl",
+  "dev_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "dev_samples": 15086,
+  "model": {
+    "vectorizer": "TfidfVectorizer",
+    "analyzer": "char",
+    "ngram_range": [
+      2,
+      5
+    ],
+    "min_df": 2,
+    "max_features": 300000,
+    "classifier": "LogisticRegression",
+    "C": 1.0,
+    "class_weight": "balanced",
+    "max_iter": 1000,
+    "solver": "liblinear",
+    "seed": 42
+  },
+  "fit_seconds": 530.635,
+  "artifacts": {
+    "model": "baseline.joblib",
+    "dev_predictions": "dev_predictions.csv"
+  },
+  "evaluation_status": "not evaluated by this command"
+}

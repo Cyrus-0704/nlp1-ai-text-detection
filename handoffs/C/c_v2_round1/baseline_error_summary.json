@@ -1,0 +1,26 @@
+{
+  "dataset_version": "internal-v2",
+  "gold_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "prediction_sha256": "031662988c4459b0cc30f1a8b45b89f396568b8b4b844789a88fc4362adfcabd",
+  "threshold": 0.5,
+  "short_text_rule": "word < 100 (provisional unless confirmed by A)",
+  "samples": 15086,
+  "overall": {
+    "slice_type": "overall",
+    "slice": "all",
+    "samples": 15086,
+    "human_support": 5495,
+    "machine_support": 9591,
+    "false_positive_human_as_machine": 319,
+    "false_negative_machine_as_human": 428,
+    "error_rate": 0.04951610764947634,
+    "human_recall": 0.9419472247497725,
+    "machine_recall": 0.9553748305703263,
+    "macro_f1": 0.9467656635577062,
+    "macro_f1_note": "only reported when both classes are present"
+  },
+  "slice_count": 34,
+  "privacy_note": "No raw text or sample IDs are written to this report.",
+  "interpretation_note": "Small domain/generator slices are descriptive and are not independent generalization estimates.",
+  "slices_csv": "error_slices.csv"
+}
