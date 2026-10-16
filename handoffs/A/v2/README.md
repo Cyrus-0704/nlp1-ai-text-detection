@@ -44,7 +44,7 @@
 - **label 含义**：`human = 0`，`machine = 1`；人类 `generator` 统一为 `human`，机器保留原始模型名。
 - **预测 CSV 格式**：必须包含 `sample_id` 和 `p_machine` 两列；`p_machine` 为 **machine（label=1）方向的预测概率**，取值 `[0,1]`，每个编号一条，顺序与输入一致。`evaluate.py` 对概率列名有容错（`p_machine/prob/score` 等均可），但请优先使用 `p_machine`。
 - **评测阈值**：默认 `p_machine >= 0.5` 判为 machine（可用 `--threshold` 调整）。
-- **短文本定义**：团队临时口径为「文本长度 **< 100 词**」（空白分词）；当前 `evaluate.py` 默认按「**字符数 < 100**」（`--short-by char --short-threshold 100`）实现，属临时口径，待官方核实后用 `--short-by word` 切换并在报告中标注。
+- **短文本定义**：团队统一口径为「文本长度 **< 100 词**」（空白分词）。请**显式传** `--short-by word --short-threshold 100`；`evaluate.py` 默认的 `char` 口径不是团队口径。官方计词方式待核实，其结果将在报告中标注。
 - **综合得分**：`S = 0.7 × 全体MacroF1 + 0.3 × 短文本MacroF1`；脚本同时输出混淆矩阵、各类别召回率、短文本数量与占比。
 
 ## 4. 可复制命令
@@ -65,7 +65,7 @@ python data_tools/make_smoke.py --train data/processed/v2/train.jsonl --dev data
 本地评测（以 smoke_dev 为例，test 同理换成 `--gold data/processed/v2/test.jsonl`）：
 
 ```bash
-python data_tools/evaluate.py --gold data/processed/v2/smoke_dev.jsonl --pred predictions.csv --threshold 0.5 --save-report report.txt
+python data_tools/evaluate.py --gold data/processed/v2/smoke_dev.jsonl --pred predictions.csv --threshold 0.5 --short-by word --short-threshold 100 --save-report report.txt
 ```
 
 ## 5. 验收检查
@@ -77,7 +77,7 @@ python data_tools/evaluate.py --gold data/processed/v2/smoke_dev.jsonl --pred pr
 
 ## 6. 已知限制
 
-1. 短文本口径待官方核实（当前为字符 <100 的临时口径）。
+1. 官方计词方式与阈值待核实；团队内部统一使用 word 分词、<100 words（须显式传参，勿依赖脚本默认的 char 口径）。
 2. `generator` 未做家族归一化（`davinci`/`text-davinci-003` 等仍分列）。
 3. 类别不均衡：machine 约占 63%，训练时建议类别加权或调阈值。
 4. `domain` 取自 `source`，缺失记为 `unknown`。

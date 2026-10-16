@@ -72,6 +72,9 @@ WS_RE = re.compile(r"\s+")
 
 SPLITS = ("train", "dev", "test")
 RATIOS = {"train": 0.8, "dev": 0.1, "test": 0.1}
+# 允许在控制台/日志中展示正文示例的集合。internal test 属于内部测试集,
+# 按角色 C 的隐私要求, 其正文绝不允许出现在控制台或日志里。
+LOG_EXAMPLE_SPLITS = ("train", "dev")
 
 
 # ----------------------------------------------------------------------------
@@ -384,7 +387,7 @@ def process(opts, log):
     writers = {s: open(out_paths[s], "w", encoding="utf-8") for s in SPLITS}
     stats = {s: {"total": 0, "label": Counter(), "generator": Counter(), "domain": Counter()}
              for s in SPLITS}
-    examples = {s: [] for s in SPLITS}
+    examples = {s: [] for s in LOG_EXAMPLE_SPLITS}   # 仅 train/dev 收集示例, test 不收集
     sample_seq = 0
 
     # 完整性自检: 记录各集合的正文指纹与 group_id 归属, 写出后做交叉核验
@@ -467,7 +470,7 @@ def process(opts, log):
                     st["label"][lab] += 1
                     st["generator"][gen] += 1
                     st["domain"][domain] += 1
-                    if len(examples[split]) < 2:
+                    if split in examples and len(examples[split]) < 2:
                         examples[split].append((rec["sample_id"], lab, gen, domain, t2))
     finally:
         for w in writers.values():
@@ -517,8 +520,8 @@ def process(opts, log):
     log.append("  原始数据是否被修改 : 否 (data.jsonl 全程只读)")
 
     log.append("")
-    log.append("[各集合示例]")
-    for s in SPLITS:
+    log.append("[各集合示例] (仅展示 %s; internal test 正文按隐私要求不输出)" % "/".join(LOG_EXAMPLE_SPLITS))
+    for s in LOG_EXAMPLE_SPLITS:
         log.append("  --- %s ---" % s)
         for sid, lab, gen, dom, txt in examples[s]:
             prev = txt if len(txt) <= 120 else txt[:120] + "..."
