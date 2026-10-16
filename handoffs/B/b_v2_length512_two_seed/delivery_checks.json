@@ -1,0 +1,30 @@
+{
+  "status": "PASS_CPU_CHECKS",
+  "syntax": "All main_model Python files parsed",
+  "cpu_tests": {
+    "count": 5,
+    "result": "PASS",
+    "command": "python -X utf8 -m unittest discover -s main_model -p test_local_round.py"
+  },
+  "dry_run": {
+    "result": "PASS",
+    "effective_seeds": [
+      43
+    ],
+    "gpu_inference": false,
+    "missing_dependencies": [],
+    "missing_auditors": []
+  },
+  "packages": {
+    "torch": "2.13.0+cu126",
+    "transformers": "4.57.6",
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2",
+    "PyMuPDF": "1.28.2",
+    "psutil": "7.2.2"
+  },
+  "training_started": false,
+  "gpu_inference_started": false,
+  "test_or_official_data_read": false
+}

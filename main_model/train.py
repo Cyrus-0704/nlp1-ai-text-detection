@@ -44,8 +44,12 @@ def main():
     p.add_argument('--resume-from', help='Trusted local resumable checkpoint; output-dir must be new')
     p.add_argument('--stop-after-steps', type=int, help='Controlled optimizer-boundary interruption for resume verification')
     p.add_argument('--deterministic', action='store_true', help='Require deterministic CUDA operations on this environment')
+    p.add_argument('--training-only', action='store_true', help='Save complete state; evaluation is a separate foreground stage')
+    p.add_argument('--strict-resume-code', action='store_true', help='Bind new trajectory checkpoints to training source hashes')
+    p.add_argument('--protect-checkpoints', action='store_true', help='Never delete checkpoint nodes in this run')
+    p.add_argument('--progress-every', type=int, default=1)
     args = p.parse_args()
-    if args.save_steps < 1 or args.keep_checkpoints < 1 or (args.stop_after_steps is not None and args.stop_after_steps < 1):
+    if args.progress_every < 1 or args.save_steps < 1 or args.keep_checkpoints < 1 or (args.stop_after_steps is not None and args.stop_after_steps < 1):
         raise ValueError('Invalid checkpoint/stop settings')
     if args.deterministic:
         os.environ['CUBLAS_WORKSPACE_CONFIG'] = ':4096:8'
@@ -102,8 +106,8 @@ def main():
                  python=platform.python_version(), packages={k: importlib.metadata.version(k)
                  for k in ['torch','transformers','accelerate','numpy','scikit-learn']},
                  created_at_utc=datetime.now(timezone.utc).isoformat())
-    if not training_stats['completed']:
-        stats['status'] = 'STOPPED_AT_CHECKPOINT'
+    if args.training_only or not training_stats['completed']:
+        stats['status'] = 'TRAINING_COMPLETE' if training_stats['completed'] else 'STOPPED_AT_CHECKPOINT'
         write_json(out/'run_summary.json', stats)
         print(json.dumps(stats, indent=2), flush=True)
         return
@@ -169,4 +173,16 @@ def main():
     print(json.dumps(stats, indent=2), flush=True)
 
 if __name__ == '__main__':
-    main()
+    from gpu_guard import ProjectGpuLock
+    import traceback
+    try:
+        with ProjectGpuLock():
+            main()
+    except BaseException as exc:
+        # A failed partial accumulation is deliberately not advertised as resumable.
+        if '--output-dir' in sys.argv:
+            dest = Path(sys.argv[sys.argv.index('--output-dir')+1])
+            if dest.is_dir():
+                write_json(dest/'failure.json', dict(status='FAILED', error=repr(exc), traceback=traceback.format_exc(),
+                    recovery='Resume only a verified optimizer-boundary checkpoint; partial accumulation is discarded'))
+        raise

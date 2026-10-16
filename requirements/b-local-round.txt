@@ -1,0 +1,5 @@
+-r train.txt
+matplotlib==3.11.2
+PyMuPDF==1.28.2
+Pillow==12.3.0
+psutil==7.2.2

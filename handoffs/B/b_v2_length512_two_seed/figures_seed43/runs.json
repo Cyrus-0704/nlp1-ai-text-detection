@@ -1,0 +1,8 @@
+{
+  "L256_s42_u500": "runs/b_v2_full_ce500",
+  "L256_s42_u2000": "runs/b_v2_ce2000_resume",
+  "L256_s43_u2000": "runs/b_v2_ce2000_seed43",
+  "L512_s43_u500": "runs/b_v2_length512_seed43/seed-43/evaluation/step-000500/attempt-001",
+  "L512_s43_u1000": "runs/b_v2_length512_seed43/seed-43/evaluation/step-001000/attempt-001",
+  "L512_s43_u2000": "runs/b_v2_length512_seed43/seed-43/evaluation/step-002000/attempt-001"
+}
