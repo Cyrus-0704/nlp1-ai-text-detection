@@ -1,0 +1,148 @@
+{
+  "status": "PASS",
+  "source": "main_model/analyze_performance.py",
+  "source_sha256": "d9d577487f47f47fbeb17b0995f0acd31d8692d9184880fd6380cad36c540cc4",
+  "panel_tolerance_pt": 1.5,
+  "checks": [
+    {
+      "figure": "performance",
+      "auditor": "audit_pdf_text.py",
+      "exit_code": 0
+    },
+    {
+      "figure": "performance",
+      "auditor": "audit_figure_collisions.py",
+      "exit_code": 0
+    },
+    {
+      "figure": "confusion",
+      "auditor": "audit_pdf_text.py",
+      "exit_code": 0
+    },
+    {
+      "figure": "confusion",
+      "auditor": "audit_figure_collisions.py",
+      "exit_code": 0
+    },
+    {
+      "figure": "error_analysis",
+      "auditor": "audit_pdf_text.py",
+      "exit_code": 0
+    },
+    {
+      "figure": "error_analysis",
+      "auditor": "audit_figure_collisions.py",
+      "exit_code": 0
+    }
+  ],
+  "scope": "Competition experiment report, not a journal submission; PNG 300 dpi and editable PDF/SVG",
+  "source_preflight_warnings_reviewed": [
+    "No TIFF required for this competition report",
+    "Report canvas width intentionally larger than journal columns",
+    "Random generator resamples real dev groups for bootstrap; no synthetic observations",
+    "Models plotted separately, not a seed mean; dev-group intervals explicitly shown"
+  ],
+  "auditor_sha256": {
+    "audit_panel_alignment.py": "4ed2d6afe9db45aaf6ca26aeb264cfc251ae92b49ee9fbf117d926e1956acf56",
+    "audit_pdf_text.py": "0b3d3e30ce9ec7191b8ba6dd053226487ab41594297005afcd127acda3b08281",
+    "audit_figure_collisions.py": "4bd020238a9f207c8a67c61d7209cef5959f2995a1d9cd95911d6fa93de7aa36"
+  },
+  "manual_review": "All 11 panels and complete figures inspected; corrected recall legend overlap before acceptance",
+  "manual_review_date": "2026-10-16 Asia/Shanghai",
+  "figure_contract": {
+    "question": "How do longer training and a second seed change detection and probability quality on the same dev?",
+    "archetype": "quantitative grid",
+    "backend": "Python matplotlib",
+    "scope": "A fixed internal-v2 dev only; not official validation or final internal test"
+  },
+  "panels": [
+    {
+      "figure": "performance",
+      "panel": "A",
+      "role": "Threshold .5 detection scores; temporary short and S labels",
+      "review": "PASS",
+      "uncertainty": "Raw model metrics, not a seed average",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "performance",
+      "panel": "B",
+      "role": "Ranking comparison with AUC",
+      "review": "PASS",
+      "uncertainty": "Empirical ROC, not a seed average",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "performance",
+      "panel": "C",
+      "role": "Probability concentration by true class",
+      "review": "PASS",
+      "uncertainty": "Box median/IQR/1.5-IQR whiskers; outlier glyphs hidden; all observations used",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "performance",
+      "panel": "D",
+      "role": "Optimization trajectory; prefix500 marked once",
+      "review": "PASS",
+      "uncertainty": "Trailing mean of 10 successful updates; no seed mean",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "confusion",
+      "panel": "CE500",
+      "role": "Class-specific baseline mistakes",
+      "review": "PASS",
+      "uncertainty": "Counts and within-true-class percentages",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "confusion",
+      "panel": "CE2000_s42",
+      "role": "Changes along the extended seed42 trajectory",
+      "review": "PASS",
+      "uncertainty": "Counts and within-true-class percentages",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "confusion",
+      "panel": "CE2000_s43",
+      "role": "Trade-off under a second seed and subset",
+      "review": "PASS",
+      "uncertainty": "Counts and within-true-class percentages",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "error_analysis",
+      "panel": "A",
+      "role": "Human and machine recall trade-off",
+      "review": "PASS",
+      "uncertainty": "Raw model metrics, not a seed average",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "error_analysis",
+      "panel": "B",
+      "role": "Machine-positive precision-recall ranking",
+      "review": "PASS",
+      "uncertainty": "Empirical curve; prevalence shown",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "error_analysis",
+      "panel": "C",
+      "role": "Confidence quality boundary",
+      "review": "PASS",
+      "uncertainty": "Empirical means in 10 fixed bins; no fitted calibrator",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    },
+    {
+      "figure": "error_analysis",
+      "panel": "D",
+      "role": "Dev sampling uncertainty in all-text F1",
+      "review": "PASS",
+      "uncertainty": "1000 group-bootstrap repetitions; percentile95%; conditional on fitted models",
+      "unit": "Fixed fitted model on the same 15086 dev rows/3303 groups"
+    }
+  ]
+}

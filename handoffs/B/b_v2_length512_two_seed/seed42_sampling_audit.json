@@ -1,0 +1,54 @@
+{
+  "comparisons": [
+    {
+      "seed": 42,
+      "steps": 50,
+      "attempts_512": 51,
+      "attempts_256": 52,
+      "equal_sample_prefix_at_equal_attempts": true,
+      "same_exposure_at_equal_effective_updates": false,
+      "conclusion": "EXPOSURE_DIFFERS_REPORT_FP16_SKIPS",
+      "note": "Different lengths can change FP16 skips; never claim equal exposure from equal update counts alone"
+    },
+    {
+      "seed": 42,
+      "steps": 500,
+      "attempts_512": 503,
+      "attempts_256": 503,
+      "equal_sample_prefix_at_equal_attempts": true,
+      "same_exposure_at_equal_effective_updates": true,
+      "conclusion": "MATCHED_EXPOSURE",
+      "note": "Different lengths can change FP16 skips; never claim equal exposure from equal update counts alone"
+    },
+    {
+      "seed": 42,
+      "steps": 1000,
+      "attempts_512": 1004,
+      "attempts_256": 1003,
+      "equal_sample_prefix_at_equal_attempts": true,
+      "same_exposure_at_equal_effective_updates": false,
+      "conclusion": "EXPOSURE_DIFFERS_REPORT_FP16_SKIPS",
+      "note": "Different lengths can change FP16 skips; never claim equal exposure from equal update counts alone"
+    },
+    {
+      "seed": 42,
+      "steps": 1500,
+      "attempts_512": 1504,
+      "attempts_256": 1503,
+      "equal_sample_prefix_at_equal_attempts": true,
+      "same_exposure_at_equal_effective_updates": false,
+      "conclusion": "EXPOSURE_DIFFERS_REPORT_FP16_SKIPS",
+      "note": "Different lengths can change FP16 skips; never claim equal exposure from equal update counts alone"
+    },
+    {
+      "seed": 42,
+      "steps": 2000,
+      "attempts_512": 2004,
+      "attempts_256": 2003,
+      "equal_sample_prefix_at_equal_attempts": true,
+      "same_exposure_at_equal_effective_updates": false,
+      "conclusion": "EXPOSURE_DIFFERS_REPORT_FP16_SKIPS",
+      "note": "Different lengths can change FP16 skips; never claim equal exposure from equal update counts alone"
+    }
+  ]
+}

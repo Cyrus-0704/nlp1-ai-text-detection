@@ -1,0 +1,91 @@
+{
+  "training_code": {
+    "main_model/train.py": "19296a2349c3b394cfc5cb39e961c22e97421fa1a9a1a0f68373793a88af7583",
+    "main_model/training_engine.py": "483de0544302038151d95f575b6e66d0ae625d2583dc619f57ba0741c9303900",
+    "main_model/common.py": "51b8b44987222d0979b14638a210bf02df9e3ed3cf6126332408ce07aa73459e"
+  },
+  "initial_code": {
+    "commit": "4ca7c858c43fea44a5863eb528df2734b736795b",
+    "branch": "work/b-model",
+    "status_porcelain": "M docs/tasks/B_MAIN_MODEL.md\n M handoffs/B/NEXT_HANDOFF_20261016.md\n M main_model/train.py\n M main_model/training_engine.py\n M requirements/train.txt\n?? handoffs/B/LOCAL_512_RUNBOOK_20261016.md\n?? handoffs/B/b512_preparation_checks.json\n?? handoffs/B/paper_direction_review_20261016.md\n?? main_model/configs/\n?? main_model/evaluate_node.py\n?? main_model/figure_audit/\n?? main_model/gpu_guard.py\n?? main_model/local_round.py\n?? main_model/plot_local_round.py\n?? main_model/round_support.py\n?? main_model/test_local_round.py\n?? requirements/b-local-round.txt",
+    "files": {
+      "main_model/analyze_performance.py": "d9d577487f47f47fbeb17b0995f0acd31d8692d9184880fd6380cad36c540cc4",
+      "main_model/check_contracts.py": "d306d52ef3013c35bb49ddcfbc0d148a8be45f3c746dbde0330e70536130825d",
+      "main_model/check_tokenizer.py": "52a31e17a5635f39dd6a50ecc4a76e308eb417e79217a0e4a3cc7e9734cdd244",
+      "main_model/check_training_state.py": "26e6cb932f6a4c0c5af4142794ea70433eac63082f81d6b7539d3ff2594a0b6b",
+      "main_model/common.py": "51b8b44987222d0979b14638a210bf02df9e3ed3cf6126332408ce07aa73459e",
+      "main_model/download_model.py": "eb63c342c6a51c159e9c4cb9b05edfbc3ec7fbb79f8a7f3654bfe21e9e1399ec",
+      "main_model/evaluate_node.py": "00c2e3a6841dc6e4f015730795732b4b098ea0315833398cb1670358958c9f4e",
+      "main_model/figure_audit/audit_figure_collisions.py": "4bd020238a9f207c8a67c61d7209cef5959f2995a1d9cd95911d6fa93de7aa36",
+      "main_model/figure_audit/audit_panel_alignment.py": "4ed2d6afe9db45aaf6ca26aeb264cfc251ae92b49ee9fbf117d926e1956acf56",
+      "main_model/figure_audit/audit_pdf_text.py": "0b3d3e30ce9ec7191b8ba6dd053226487ab41594297005afcd127acda3b08281",
+      "main_model/figure_audit/validate_figure.py": "09694ac0ac4036d4b759e7c9aeb3d4f7a9b525212db50085d2ea0d88b0e49d76",
+      "main_model/gpu_guard.py": "bf8ced1ad3a0d31674521b6890863ae2faf0eab1f605ac380bc795c626500bbd",
+      "main_model/local_round.py": "1ac4e9ee01a6723fbb34d1d33bf71edd5c23a249cbf60fc8787d8765d0873804",
+      "main_model/make_synthetic.py": "642860a8142b71dbf7ce42c710e49cec85ad1337049099ee11d1845ebe1e1309",
+      "main_model/package_checkpoint.py": "765e5780884f7820f7a8905e8e8eb3768e87de9b9b8802d2407f29f9c6ec5ea0",
+      "main_model/plot_local_round.py": "b9fd51f298a4236b568389b457bae01b224c9f56b222e5ba4f0bb0014e665ef1",
+      "main_model/predict.py": "ad993380a541aff26867e2e32a0853a10dd2ffcaadcf21b17b74449c3c7f9eca",
+      "main_model/profile_lengths.py": "c83f54d891496876dd4f123a086f184c52d0e943bbeeaaec28a379659b2ec261",
+      "main_model/round_support.py": "c780d0b1c973bc4975b56347a6934cb716728acabc1bc5fdcc98dba36b9d7e6a",
+      "main_model/test_local_round.py": "34d1b08109b0dc87e7021e3001e61e3684b4d1994e82f52466ba4a386d03948a",
+      "main_model/train.py": "19296a2349c3b394cfc5cb39e961c22e97421fa1a9a1a0f68373793a88af7583",
+      "main_model/training_engine.py": "483de0544302038151d95f575b6e66d0ae625d2583dc619f57ba0741c9303900",
+      "main_model/verify_data_delivery.py": "fa8360be16708825ecc80c20e8eb28be5dbc23ae64b5504ddab25f1ba3914307",
+      "main_model/verify_resume.py": "162ffeffef303d009fba9aceb8234e56a42480263930b25f728af75937cb68e2"
+    }
+  },
+  "training_runtime": {
+    "torch": "2.13.0+cu126",
+    "transformers": "4.57.6",
+    "numpy": "2.4.6",
+    "accelerate": "1.15.0"
+  },
+  "predeclared_nodes": {
+    "max_steps": 2000,
+    "max_length": 512,
+    "batch_size": 1,
+    "gradient_accumulation": 16,
+    "learning_rate": 2e-05,
+    "class_weighting": "none",
+    "inference_batch_size": 8,
+    "save_steps": 500,
+    "progress_every": 100,
+    "resource_steps": 50,
+    "evaluation_steps": [
+      500,
+      1000,
+      2000
+    ],
+    "segment_steps": [
+      50,
+      500,
+      1000,
+      1500,
+      2000
+    ],
+    "deterministic": true
+  },
+  "manual_visual_review": "PENDING_AFTER_RUN",
+  "optimizer": "AdamW lr2e-5 wd.01 foreach=False max_grad_norm1; constant LR",
+  "missing_historical_nodes": [
+    {
+      "length": 256,
+      "seed": 42,
+      "steps": 1000,
+      "status": "MISSING_NOT_RECONSTRUCTED"
+    },
+    {
+      "length": 256,
+      "seed": 43,
+      "steps": 500,
+      "status": "MISSING_NOT_RECONSTRUCTED"
+    },
+    {
+      "length": 256,
+      "seed": 43,
+      "steps": 1000,
+      "status": "MISSING_NOT_RECONSTRUCTED"
+    }
+  ]
+}

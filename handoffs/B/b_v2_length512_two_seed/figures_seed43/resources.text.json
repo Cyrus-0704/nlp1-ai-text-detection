@@ -1,0 +1,10 @@
+{
+  "pdf": "runs/b_v2_length512_seed43/figures/attempt-001/resources.pdf",
+  "auditable": true,
+  "minimum_required_pt": 5.0,
+  "minimum_found_pt": 7.999999999596668,
+  "text_run_count": 8,
+  "below_minimum_count": 0,
+  "below_minimum": [],
+  "warnings": []
+}

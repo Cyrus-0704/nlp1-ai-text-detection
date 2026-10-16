@@ -1,0 +1,278 @@
+{
+  "status": "PASS",
+  "records": [
+    {
+      "source": "plot_local_round.py",
+      "audit": "source",
+      "exit_code": 0
+    },
+    {
+      "source": "analyze_performance.py",
+      "audit": "source",
+      "exit_code": 0
+    },
+    {
+      "figure": "performance",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "performance",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "performance",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "PASS"
+    },
+    {
+      "figure": "performance",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "performance",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "confusion_L256_s42_u2000",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "confusion_L256_s42_u2000",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "confusion_L256_s42_u2000",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "NOT APPLICABLE"
+    },
+    {
+      "figure": "confusion_L256_s42_u2000",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "confusion_L256_s42_u2000",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "confusion_L256_s43_u2000",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "confusion_L256_s43_u2000",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "confusion_L256_s43_u2000",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "NOT APPLICABLE"
+    },
+    {
+      "figure": "confusion_L256_s43_u2000",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "confusion_L256_s43_u2000",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "confusion_L512_s43_u2000",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "confusion_L512_s43_u2000",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "confusion_L512_s43_u2000",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "NOT APPLICABLE"
+    },
+    {
+      "figure": "confusion_L512_s43_u2000",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "confusion_L512_s43_u2000",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "roc_reliability",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "roc_reliability",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "roc_reliability",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "PASS"
+    },
+    {
+      "figure": "roc_reliability",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "roc_reliability",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "probability_quality",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "probability_quality",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "probability_quality",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "PASS"
+    },
+    {
+      "figure": "probability_quality",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "probability_quality",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "training_loss",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "training_loss",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "training_loss",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "NOT APPLICABLE"
+    },
+    {
+      "figure": "training_loss",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "training_loss",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "resources",
+      "audit": "PNG_300dpi",
+      "exit_code": 0,
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    {
+      "figure": "resources",
+      "audit": "SVG_editable_text",
+      "exit_code": 0
+    },
+    {
+      "figure": "resources",
+      "audit": "alignment",
+      "exit_code": 0,
+      "verdict": "PASS"
+    },
+    {
+      "figure": "resources",
+      "audit": "audit_pdf_text.py",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "figure": "resources",
+      "audit": "audit_figure_collisions.py",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ],
+  "manual_visual_review": "PENDING_AFTER_RUN",
+  "source_advisories": {
+    "raster": "300dpi PNG requested; TIFF not required; dpi is set by reused export_figure",
+    "dimensions": "Report figures use readable physical widths; no journal column-width submission claim",
+    "uncertainty": "Each seed is shown separately; no mean or uncertainty across training seeds is claimed"
+  },
+  "note": "Source checks, rendered axes alignment at 1.5pt, PDF glyph floor5pt and strict collision geometry; not human acceptance"
+}

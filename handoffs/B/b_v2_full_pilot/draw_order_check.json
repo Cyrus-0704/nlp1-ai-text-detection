@@ -1,0 +1,35 @@
+{
+  "common_attempts": 503,
+  "all_common_prefix_sample_order_hashes_equal": true,
+  "training_core_git_blobs": {
+    "main_model/train.py": {
+      "blobs": [
+        "204917c7ab97d4053114fc0a2660558c157a8e24",
+        "204917c7ab97d4053114fc0a2660558c157a8e24"
+      ],
+      "identical": true
+    },
+    "main_model/training_engine.py": {
+      "blobs": [
+        "83fcc30bb54e2b7b3c0b650c466bd286cffaa5d2",
+        "83fcc30bb54e2b7b3c0b650c466bd286cffaa5d2"
+      ],
+      "identical": true
+    },
+    "main_model/common.py": {
+      "blobs": [
+        "b78d45bd0dcb790a08af61030bd92eafe9ff4fbd",
+        "b78d45bd0dcb790a08af61030bd92eafe9ff4fbd"
+      ],
+      "identical": true
+    }
+  },
+  "attempts": {
+    "CE500": 503,
+    "Balanced500": 503
+  },
+  "processed_samples": {
+    "CE500": 8048,
+    "Balanced500": 8048
+  }
+}

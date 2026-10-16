@@ -1,0 +1,81 @@
+{
+  "stages": {
+    "seed43/train50": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T08:18:36.406662+00:00",
+      "directory": "seed-43/training/to-000050/attempt-001",
+      "checkpoint": "seed-43/training/to-000050/attempt-001/checkpoints/step-000050"
+    },
+    "seed43/train500": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T08:27:22.498949+00:00",
+      "directory": "seed-43/training/to-000500/attempt-001",
+      "checkpoint": "seed-43/training/to-000500/attempt-001/checkpoints/step-000500"
+    },
+    "seed43/train1000": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T08:47:01.164078+00:00",
+      "directory": "seed-43/training/to-001000/attempt-001",
+      "checkpoint": "seed-43/training/to-001000/attempt-001/checkpoints/step-001000"
+    },
+    "seed43/train1500": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T09:08:42.535310+00:00",
+      "directory": "seed-43/training/to-001500/attempt-001",
+      "checkpoint": "seed-43/training/to-001500/attempt-001/checkpoints/step-001500"
+    },
+    "seed43/train2000": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T09:18:11.822320+00:00",
+      "directory": "seed-43/training/to-002000/attempt-001",
+      "checkpoint": "seed-43/training/to-002000/attempt-001/checkpoints/step-002000"
+    },
+    "seed43/resource_gate": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T08:18:41.563774+00:00"
+    },
+    "seed43/predict500": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T08:35:52.649170+00:00",
+      "directory": "seed-43/evaluation/step-000500/attempt-001"
+    },
+    "seed43/predict1000": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T08:56:02.074375+00:00",
+      "directory": "seed-43/evaluation/step-001000/attempt-001"
+    },
+    "seed43/predict2000": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T09:26:52.168907+00:00",
+      "directory": "seed-43/evaluation/step-002000/attempt-001"
+    },
+    "plotting": {
+      "status": "PASS_RENDERED_PENDING_AUDIT",
+      "at_utc": "2026-10-16T09:27:14.244397+00:00",
+      "directory": "figures/attempt-001"
+    },
+    "automatic_audit": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T09:27:19.204201+00:00",
+      "directory": "figures/attempt-001",
+      "manual_visual_review": "PENDING_AFTER_RUN"
+    },
+    "analysis_bundle": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T09:27:23.678550+00:00",
+      "directory": "bundles/attempt-001",
+      "archive": "bundles/attempt-001_analysis_bundle.zip",
+      "sha256": "a8392e5e1fc140fddd96114889b0054e8de3f3ceeac4ce5409e22425e7ceb711"
+    },
+    "preflight": {
+      "status": "PASS",
+      "at_utc": "2026-10-16T08:16:39.387381+00:00"
+    },
+    "requested_phase": {
+      "status": "PASS_PENDING_MANUAL_REVIEW",
+      "at_utc": "2026-10-16T09:27:19.205205+00:00",
+      "phase": "run"
+    }
+  },
+  "manual_visual_review": "PENDING_AFTER_RUN"
+}
