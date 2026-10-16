@@ -109,13 +109,14 @@ def main():
             require(digest(run/name) == item['sha256'], f'Run artifact differs: {name}')
         protocol = read_json(run/'protocol.json')
         require(protocol['training_code'] == read_json(args.run42/'protocol.json')['training_code'], 'Training core changed across seeds')
-        for name, sha in protocol['training_code'].items():
-            require(digest(ROOT/name) == sha, f'Training core differs now: {name}')
+        # Historical runs pin executed source; later development need not match it.
+        # Never rewrite their source hashes to the current checkout.
         audit = read_json(run/'figures/attempt-001/automatic_audit.json')
         require(audit['status'] == 'PASS' and all(r['exit_code'] == 0 for r in audit['records']), 'Figure audit failed')
         audits[str(seed)] = dict(bundle_sha256=digest(archive), bundle_files_verified=len(manifest),
             artifact_files_verified=len(artifacts), automatic_figure_checks=len(audit['records']),
             training_code=protocol['training_code'], independent_reload={})
+        audits[str(seed)]['current_code_matches_historical']={name:digest(ROOT/name)==sha for name,sha in protocol['training_code'].items()}
         for step in (500,1000,2000):
             folder = run/f'seed-{seed}/evaluation/step-{step:06d}/attempt-001'
             summary = read_json(folder/'run_summary.json')

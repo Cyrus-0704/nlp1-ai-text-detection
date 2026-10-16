@@ -109,7 +109,7 @@ def render(config,runs,out):
         metric,info = metrics_for_run(ROOT/config['dev_file'],path,config)
         stats[name],detail[name] = metric,info
         a,s = info['arguments'],info['summary']
-        records.append(dict(run=name,length=a['max_length'],seed=a['seed'],steps=s['optimizer_updates'],**metric,
+        records.append(dict(run=name,length=a['max_length'],seed=a['seed'],classifier_dropout=a.get('classifier_dropout') or .1,steps=s['optimizer_updates'],**metric,
             active_training_seconds=s['training_seconds'],updates_per_second=s['optimizer_updates']/s['training_seconds'],
             peak_allocated_mib=s['peak_allocated_mib'],peak_reserved_mib=s['peak_reserved_mib'],
             before_save_inference_seconds=s.get('before_save_inference_seconds'),
@@ -120,6 +120,8 @@ def render(config,runs,out):
     x = np.arange(len(names))
     colors = ['#487A9B','#BD795A','#6F8B6C','#8975A6','#A18C55','#587C80']
     note = 'internal-v2 dev | threshold 0.5 | *temporary short: <100 whitespace words'
+    if config.get('experiment')=='classifier_dropout_02':
+        note+='\nD01/D02 = classifier dropout0.1/0.2; encoder/attention0.1'
     fig_names = []
     def save(fig,name):
         require_matplotlib_panel_alignment(fig,json_out=out/(name+'.alignment.json'),strict=True,
@@ -129,7 +131,7 @@ def render(config,runs,out):
         plt.close(fig)
         fig_names.append(name)
         dump(out/'figure_index.json',dict(figures=fig_names,manual_visual_review='PENDING_AFTER_RUN',
-            metadata='Labels = length / seed / effective updates; no test or official scores',
+            metadata='Labels = length / seed / classifier dropout / effective updates; no test or official scores',
             formats=['300dpi PNG','editable PDF','editable SVG']))
     def bars(ax,keys):
         width=.72/len(keys)
@@ -200,12 +202,12 @@ def render(config,runs,out):
     selected = {}
     for name,info in detail.items():
         a = info['arguments']
-        key = (a['max_length'],a['seed'])
+        key = (a['max_length'],a['seed'],a.get('classifier_dropout') or .1)
         if key not in selected or info['summary']['optimizer_updates']>detail[selected[key]]['summary']['optimizer_updates']:
             selected[key]=name
     loss_source = []
     fig,ax = plt.subplots(figsize=(10,5.8),layout='constrained')
-    for i,((length,seed),name) in enumerate(selected.items()):
+    for i,((length,seed,dropout),name) in enumerate(selected.items()):
         folder = ROOT/runs[name]
         path = folder/'training_log.jsonl'
         if not path.exists():
@@ -213,7 +215,7 @@ def render(config,runs,out):
         history = [json.loads(line) for line in path.read_text(encoding='utf-8').splitlines()]
         for other,info in detail.items():
             a = info['arguments']
-            if (a['max_length'],a['seed'])==(length,seed) and other!=name:
+            if (a['max_length'],a['seed'],a.get('classifier_dropout') or .1)==(length,seed,dropout) and other!=name:
                 old = [json.loads(line) for line in (ROOT/runs[other]/'training_log.jsonl').read_text(encoding='utf-8').splitlines()]
                 # Timing is operational and need not be byte-identical across saved copies.
                 if any((p['sample_order_hash'],p['loss'])!=(q['sample_order_hash'],q['loss']) for p,q in zip(old,history)) or len(old)>len(history):
@@ -223,10 +225,10 @@ def render(config,runs,out):
         if len(values)>=10:
             avg = np.convolve(values,np.ones(10)/10,mode='valid')
             steps = [e['optimizer_step'] for e in entries[9:]]
-            ax.plot(steps,avg,color=colors[i%len(colors)],label=f'L{length} seed{seed} (one trajectory)')
-        loss_source.extend(dict(length=length,seed=seed,step=e['optimizer_step'],attempt=e['attempt'],
+            ax.plot(steps,avg,color=colors[i%len(colors)],label=f'L{length} seed{seed} head dropout{dropout}')
+        loss_source.extend(dict(length=length,seed=seed,classifier_dropout=dropout,step=e['optimizer_step'],attempt=e['attempt'],
                                 skipped=e['skipped'],loss=e['loss'],unweighted_loss=e.get('unweighted_loss',e['loss'])) for e in history)
-    ax.set(xlabel='Effective optimizer update',ylabel='Unweighted CE (10-update mean)',title='One curve per length / seed; verified prefixes omitted')
+    ax.set(xlabel='Effective optimizer update',ylabel='Unweighted CE (10-update mean)',title='One curve per length / seed / dropout; verified prefixes omitted')
     ax.legend()
     fig.suptitle('Training trajectory\n'+note,fontsize=10)
     csv_out(out/'training_loss.csv',loss_source)

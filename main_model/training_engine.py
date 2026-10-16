@@ -69,6 +69,9 @@ def signature(args, weights):
     if getattr(args, 'strict_resume_code', False):
         result['training_code'] = {name:sha256(Path(__file__).with_name(name))
                                    for name in ('train.py', 'training_engine.py', 'common.py')}
+    if getattr(args,'classifier_dropout',None) is not None:
+        result['classifier_dropout']=args.classifier_dropout
+        result['dropout_protocol_sha256']=sha256(Path(__file__).with_name('dropout_protocol.py'))
     return result
 
 

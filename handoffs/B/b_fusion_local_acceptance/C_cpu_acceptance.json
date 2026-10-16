@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "rows": 15086,
+  "max_abs_probability_difference": 4.99960073341299e-11,
+  "rtol": 1e-06,
+  "atol": 1e-08,
+  "seconds": 35.05292439999903,
+  "model_sha256": "6d231819e61d24b2f9b8ee91b07b72f6e7c0f8c26d93c500d419d791211c46f8",
+  "dev_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "warnings": [],
+  "reference_sha256": "031662988c4459b0cc30f1a8b45b89f396568b8b4b844789a88fc4362adfcabd",
+  "prediction_sha256": "a8d52d1d558496e0dc4a8595fdc1e5482dedd80f1beb3f409cfb5969e4664fd9",
+  "packages": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0"
+  },
+  "C_function_canonical_sha256": "8e776881c3ffd474429433dd393baad78c72d00ebcaf2a487dad81de017745ae",
+  "reused_from": "runs\\b_fusion_acceptance"
+}

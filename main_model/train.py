@@ -48,6 +48,8 @@ def main():
     p.add_argument('--strict-resume-code', action='store_true', help='Bind new trajectory checkpoints to training source hashes')
     p.add_argument('--protect-checkpoints', action='store_true', help='Never delete checkpoint nodes in this run')
     p.add_argument('--progress-every', type=int, default=1)
+    p.add_argument('--classifier-dropout',type=float,default=None,
+                   help='Reviewed new experiment:0.2 classifier only; default preserves original model')
     args = p.parse_args()
     if args.progress_every < 1 or args.save_steps < 1 or args.keep_checkpoints < 1 or (args.stop_after_steps is not None and args.stop_after_steps < 1):
         raise ValueError('Invalid checkpoint/stop settings')
@@ -88,12 +90,18 @@ def main():
     model = AutoModelForSequenceClassification.from_pretrained(
         load_path, local_files_only=True, num_labels=2, label2id=LABEL2ID,
         id2label=ID2LABEL, attn_implementation='sdpa').to('cuda')
+    dropout_record=None
+    if args.classifier_dropout is not None:
+        from dropout_protocol import apply_classifier_dropout
+        dropout_record=apply_classifier_dropout(model,args.classifier_dropout,resuming=bool(args.resume_from))
+        write_json(out/'dropout_configuration.json',dropout_record)
     model.config.detection_max_length = args.max_length
     model.config.detection_inference_precision = 'fp32'
     model.config.use_cache = False
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant': False})
     training_stats = train_updates(model, tokenizer, train, args, out)
     stats = dict(status='TRAINED_PENDING_RELOAD_CHECK', data_kind=args.data_kind,
+                 dropout_configuration=dropout_record,
                  competition_performance_claim=False, evaluation_scope='internal-development-only',
                  code_commit=code_commit, main_model_code_dirty=code_dirty, data_provenance=provenance,
                  train_rows=len(train), dev_rows=len(dev), **training_stats,
