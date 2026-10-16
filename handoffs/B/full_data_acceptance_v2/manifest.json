@@ -1,0 +1,20 @@
+{
+  "files": {
+    "data_acceptance.json": {
+      "bytes": 2252,
+      "sha256": "6445de650cc705d26dab044e82f4c99c19bd0a919c9fd8354dfae683e1a55a41"
+    },
+    "execution_provenance.json": {
+      "bytes": 727,
+      "sha256": "6764da856f42a7b65c0efec6beba09e1a1fb170207ec1ce1c09e8eb5575a9daa"
+    },
+    "overlap_evidence.json": {
+      "bytes": 81,
+      "sha256": "7ae4a6ab640db4fa09927de0b660fe19421bcaea54b65e18759ce2d90bc55e5d"
+    },
+    "README.md": {
+      "bytes": 2653,
+      "sha256": "eaa0b8f126203648dff319116a73138a3e2c425b5de33e96972bd1e8b1d483de"
+    }
+  }
+}

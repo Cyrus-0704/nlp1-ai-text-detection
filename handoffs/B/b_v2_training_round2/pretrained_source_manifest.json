@@ -1,0 +1,32 @@
+{
+  "repo_id": "FacebookAI/xlm-roberta-base",
+  "revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+  "source": "https://huggingface.co/FacebookAI/xlm-roberta-base",
+  "downloaded_at_utc": "2026-10-15T05:33:37.298862+00:00",
+  "files": {
+    "config.json": {
+      "bytes": 615,
+      "sha256": "d66ed8cd4f2a93b358c245e50736fa389ed4f35c0bae7aad0b32abb20c62b579"
+    },
+    "model.safetensors": {
+      "bytes": 1115567652,
+      "sha256": "6fd4797bc397c3b8b55d6bb5740366b57e6a3ce91c04c77f22aafc0c128e6feb"
+    },
+    "README.md": {
+      "bytes": 5238,
+      "sha256": "bec9f2cd81f7396a64ee474145117d81139906443a21480cbe4993c97cb499aa"
+    },
+    "sentencepiece.bpe.model": {
+      "bytes": 5069051,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+    },
+    "tokenizer.json": {
+      "bytes": 9096718,
+      "sha256": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c"
+    },
+    "tokenizer_config.json": {
+      "bytes": 25,
+      "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce"
+    }
+  }
+}

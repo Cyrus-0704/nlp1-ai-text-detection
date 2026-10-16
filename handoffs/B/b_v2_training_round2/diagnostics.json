@@ -1,0 +1,165 @@
+{
+  "scope": "Exploratory internal dev; not official validation or final test",
+  "gold_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "rows": 15086,
+  "groups": 3303,
+  "short_rows": 1841,
+  "threshold": 0.5,
+  "short_rule": "TEMPORARY len(text.split())<100",
+  "uncertainty": "95% percentile bootstrap of dev groups; conditional on these fitted models; not seed/training uncertainty",
+  "bootstrap_repetitions": 1000,
+  "seed": 42,
+  "runs": {
+    "CE500": {
+      "macro_f1_all": 0.8820480823036492,
+      "macro_f1_short_temporary": 0.8765654474558089,
+      "weighted_score_temporary": 0.880403291849297,
+      "roc_auc": 0.9693192805015394,
+      "average_precision": 0.9828031562613901,
+      "log_loss": 0.2428758603481844,
+      "brier": 0.07487695361292401,
+      "human_recall": 0.7683348498635123,
+      "machine_recall": 0.9680950891460745,
+      "predicted_machine": 10558,
+      "confusion_matrix": [
+        [
+          4222,
+          1273
+        ],
+        [
+          306,
+          9285
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.002238599583506584,
+          0.010726718232035637,
+          0.06250336766242981,
+          0.4508061707019806,
+          0.9962840676307678
+        ],
+        "1": [
+          0.002937495242804289,
+          0.9545380175113678,
+          0.9880598187446594,
+          0.9948621392250061,
+          0.9983885288238525
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.8747614022593406,
+        0.8885777907067139
+      ]
+    },
+    "CE2000_s42": {
+      "macro_f1_all": 0.9023579207627659,
+      "macro_f1_short_temporary": 0.9101283183783533,
+      "weighted_score_temporary": 0.9046890400474421,
+      "roc_auc": 0.9839672827944076,
+      "average_precision": 0.9910559386162966,
+      "log_loss": 0.3204117596972791,
+      "brier": 0.07441762223382058,
+      "human_recall": 0.7916287534121929,
+      "machine_recall": 0.9832134292565947,
+      "predicted_machine": 10575,
+      "confusion_matrix": [
+        [
+          4350,
+          1145
+        ],
+        [
+          161,
+          9430
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.00047868862748146057,
+          0.0012659633066505194,
+          0.0049173119477927685,
+          0.2386084347963333,
+          0.999727189540863
+        ],
+        "1": [
+          0.0009715673513710499,
+          0.9993825554847717,
+          0.9997145533561707,
+          0.9997953772544861,
+          0.9998688697814941
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.8955994308369618,
+        0.908424241127477
+      ]
+    },
+    "CE2000_s43": {
+      "macro_f1_all": 0.8924368946824512,
+      "macro_f1_short_temporary": 0.9432830190947645,
+      "weighted_score_temporary": 0.9076907320061451,
+      "roc_auc": 0.9859356317612364,
+      "average_precision": 0.9919553744333999,
+      "log_loss": 0.30294521950176995,
+      "brier": 0.07704689343008368,
+      "human_recall": 0.7572338489535941,
+      "machine_recall": 0.9911375247627985,
+      "predicted_machine": 10840,
+      "confusion_matrix": [
+        [
+          4161,
+          1334
+        ],
+        [
+          85,
+          9506
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.0012072278186678886,
+          0.005941323004662991,
+          0.02891588769853115,
+          0.4534256011247635,
+          0.9984709620475769
+        ],
+        "1": [
+          0.010664548724889755,
+          0.9974955022335052,
+          0.9983221888542175,
+          0.9986914992332458,
+          0.999150276184082
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.8853325470567475,
+        0.8997925358442782
+      ]
+    }
+  },
+  "paired_differences": {
+    "CE2000_s42 minus CE500": {
+      "macro_f1_difference": 0.020309838459116714,
+      "paired_group_bootstrap_ci95": [
+        0.013467715143978654,
+        0.027153884452775785
+      ]
+    },
+    "CE2000_s43 minus CE2000_s42": {
+      "macro_f1_difference": -0.009921026080314643,
+      "paired_group_bootstrap_ci95": [
+        -0.016552175026004028,
+        -0.003046172127978295
+      ]
+    }
+  },
+  "training_seeds": [
+    42,
+    43
+  ],
+  "omitted_prefix_curves": [
+    "CE500"
+  ],
+  "official_score": null,
+  "threshold_selected": false
+}

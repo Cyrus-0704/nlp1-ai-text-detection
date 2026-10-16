@@ -1,0 +1,22 @@
+{
+  "train_file": "data/processed/v2/train.jsonl",
+  "dev_file": "data/processed/v2/dev.jsonl",
+  "model_dir": "models/xlm-roberta-base",
+  "output_dir": "runs/b_v2_full_ce500",
+  "data_kind": "a-internal",
+  "data_manifest": "data/processed/v2/manifest.json",
+  "evaluation_script": "data_tools/evaluate.py",
+  "seed": 42,
+  "max_steps": 500,
+  "max_length": 256,
+  "batch_size": 1,
+  "inference_batch_size": 8,
+  "gradient_accumulation": 16,
+  "learning_rate": 2e-05,
+  "class_weighting": "none",
+  "save_steps": 250,
+  "keep_checkpoints": 2,
+  "resume_from": null,
+  "stop_after_steps": null,
+  "deterministic": true
+}

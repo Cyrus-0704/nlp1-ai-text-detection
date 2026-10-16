@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "rows": 200,
+  "inference_precision": "fp32",
+  "batch_size": 1,
+  "before_save_independent_reload_packaged_csv_identical": true,
+  "sha256": "9bb4150d95920d91196faf5a2357ddbaa42c62985dd8fef3613977de072411be",
+  "max_probability_difference": 0.0
+}

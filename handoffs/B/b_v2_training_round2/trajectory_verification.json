@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "ce500_history_is_exact_prefix_of_s42": true,
+  "prefix_attempts": 503,
+  "training_core_git_blobs": {
+    "main_model/train.py": {
+      "blobs": [
+        "204917c7ab97d4053114fc0a2660558c157a8e24",
+        "204917c7ab97d4053114fc0a2660558c157a8e24",
+        "204917c7ab97d4053114fc0a2660558c157a8e24"
+      ],
+      "identical": true
+    },
+    "main_model/training_engine.py": {
+      "blobs": [
+        "83fcc30bb54e2b7b3c0b650c466bd286cffaa5d2",
+        "83fcc30bb54e2b7b3c0b650c466bd286cffaa5d2",
+        "83fcc30bb54e2b7b3c0b650c466bd286cffaa5d2"
+      ],
+      "identical": true
+    },
+    "main_model/common.py": {
+      "blobs": [
+        "b78d45bd0dcb790a08af61030bd92eafe9ff4fbd",
+        "b78d45bd0dcb790a08af61030bd92eafe9ff4fbd",
+        "b78d45bd0dcb790a08af61030bd92eafe9ff4fbd"
+      ],
+      "identical": true
+    }
+  },
+  "seed42_resume_starts_at_step": 500,
+  "seed43_starts_from_original_pretrained": true,
+  "seed_effect": "Changes initialization, sample permutation and seen subset; not matched sample exposure",
+  "cumulative_samples": {
+    "CE500": 8048,
+    "CE2000_s42": 32048,
+    "CE2000_s43": 32048
+  },
+  "cumulative_training_seconds": {
+    "CE500": 609.8448267999775,
+    "CE2000_s42": 2472.3375886001013,
+    "CE2000_s43": 2430.3311722000653
+  },
+  "s42_added_training_seconds": 1862.4927618001238,
+  "s42_added_samples": 24000,
+  "new_segment_wall_seconds": {
+    "CE500": 620.6077372,
+    "CE2000_s42": 1897.808705000003,
+    "CE2000_s43": 2474.4071146999922
+  }
+}

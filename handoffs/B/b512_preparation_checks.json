@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-16",
+  "scope": "Preparation only; existing measured internal-v2 train/dev artifacts and tiny CPU regression fixture",
+  "branch": "work/b-model",
+  "commit": "4ca7c858c43fea44a5863eb528df2734b736795b",
+  "python_version": "3.11.17",
+  "dependencies": {
+    "torch": "2.13.0+cu126",
+    "transformers": "4.57.6",
+    "numpy": "2.4.6",
+    "sklearn": "1.9.1",
+    "accelerate": "1.15.0",
+    "matplotlib": "3.11.2",
+    "fitz": "1.28.2",
+    "PIL": "12.3.0",
+    "psutil": "7.2.2"
+  },
+  "checks": {
+    "syntax": "PASS",
+    "cpu_regressions": 5,
+    "pip_check": "No broken requirements found",
+    "frozen_data_and_baselines": "CPU_PREFLIGHT_PASS",
+    "baseline_acceptance": [
+      {
+        "name": "L256_s42_u500",
+        "status": "REUSED_VERIFIED",
+        "steps": 500,
+        "seed": 42
+      },
+      {
+        "name": "L256_s42_u2000",
+        "status": "REUSED_VERIFIED",
+        "steps": 2000,
+        "seed": 42
+      },
+      {
+        "name": "L256_s43_u2000",
+        "status": "REUSED_VERIFIED",
+        "steps": 2000,
+        "seed": 43
+      }
+    ],
+    "figure_smoke": {
+      "status": "PASS",
+      "automatic_checks": 37,
+      "figures": 7,
+      "raster_dpi": 300,
+      "manual_visual_review": "PENDING_AFTER_RUN"
+    },
+    "bundle_smoke": {
+      "status": "PASS",
+      "files": 72,
+      "bytes": 2196632,
+      "manifest_sha256_verified": true,
+      "contains_weights_or_full_logs": false,
+      "scope": "Existing 256 measured results and audited CPU-rendered figures only"
+    },
+    "git_diff_check": "PASS"
+  },
+  "missing_historical_nodes": [
+    {
+      "length": 256,
+      "seed": 42,
+      "steps": 1000,
+      "status": "MISSING_NOT_RECONSTRUCTED"
+    },
+    {
+      "length": 256,
+      "seed": 43,
+      "steps": 500,
+      "status": "MISSING_NOT_RECONSTRUCTED"
+    },
+    {
+      "length": 256,
+      "seed": 43,
+      "steps": 1000,
+      "status": "MISSING_NOT_RECONSTRUCTED"
+    }
+  ],
+  "not_executed": [
+    "512 resource validation",
+    "formal training",
+    "GPU inference",
+    "GPU FP16 resume test",
+    "optional seed43",
+    "actual 512 figure audits",
+    "final manual visual acceptance"
+  ],
+  "training_started": false,
+  "gpu_inference_started": false,
+  "official_run_directory_created": false,
+  "git_committed_or_pushed": false,
+  "files": {
+    "main_model/local_round.py": "1ac4e9ee01a6723fbb34d1d33bf71edd5c23a249cbf60fc8787d8765d0873804",
+    "main_model/round_support.py": "c780d0b1c973bc4975b56347a6934cb716728acabc1bc5fdcc98dba36b9d7e6a",
+    "main_model/evaluate_node.py": "00c2e3a6841dc6e4f015730795732b4b098ea0315833398cb1670358958c9f4e",
+    "main_model/gpu_guard.py": "bf8ced1ad3a0d31674521b6890863ae2faf0eab1f605ac380bc795c626500bbd",
+    "main_model/plot_local_round.py": "b9fd51f298a4236b568389b457bae01b224c9f56b222e5ba4f0bb0014e665ef1",
+    "main_model/test_local_round.py": "34d1b08109b0dc87e7021e3001e61e3684b4d1994e82f52466ba4a386d03948a",
+    "main_model/train.py": "19296a2349c3b394cfc5cb39e961c22e97421fa1a9a1a0f68373793a88af7583",
+    "main_model/training_engine.py": "483de0544302038151d95f575b6e66d0ae625d2583dc619f57ba0741c9303900",
+    "main_model/configs/length512_v2.json": "6d785e3825359b60f5d6fb8114b3457ac691fda0511f9965748575b7b80cd582",
+    "requirements/b-local-round.txt": "ede21c0c0a7c9afa288b98637051fcb2967edf99a863f5fa759b475557107991",
+    "requirements/train.txt": "88c06673af13e385bd136ac1f9740ebaddf7a6f47b5baa1cefac96fd231cdf40"
+  },
+  "auditor_files": {
+    "audit_figure_collisions.py": "4bd020238a9f207c8a67c61d7209cef5959f2995a1d9cd95911d6fa93de7aa36",
+    "audit_panel_alignment.py": "4ed2d6afe9db45aaf6ca26aeb264cfc251ae92b49ee9fbf117d926e1956acf56",
+    "audit_pdf_text.py": "0b3d3e30ce9ec7191b8ba6dd053226487ab41594297005afcd127acda3b08281",
+    "validate_figure.py": "09694ac0ac4036d4b759e7c9aeb3d4f7a9b525212db50085d2ea0d88b0e49d76"
+  },
+  "instructions": "handoffs/B/LOCAL_512_RUNBOOK_20261016.md"
+}

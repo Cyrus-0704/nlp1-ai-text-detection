@@ -1,0 +1,109 @@
+{
+  "scope": "Exploratory internal dev; not official validation or final test",
+  "gold_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "rows": 15086,
+  "groups": 3303,
+  "short_rows": 1841,
+  "threshold": 0.5,
+  "short_rule": "TEMPORARY len(text.split())<100",
+  "uncertainty": "95% percentile bootstrap of dev groups; conditional on these fitted models; not seed/training uncertainty",
+  "bootstrap_repetitions": 1000,
+  "seed": 42,
+  "runs": {
+    "CE500": {
+      "macro_f1_all": 0.8820480823036492,
+      "macro_f1_short_temporary": 0.8765654474558089,
+      "weighted_score_temporary": 0.880403291849297,
+      "roc_auc": 0.9693192805015394,
+      "average_precision": 0.9828031562613901,
+      "log_loss": 0.2428758603481844,
+      "brier": 0.07487695361292401,
+      "human_recall": 0.7683348498635123,
+      "machine_recall": 0.9680950891460745,
+      "predicted_machine": 10558,
+      "confusion_matrix": [
+        [
+          4222,
+          1273
+        ],
+        [
+          306,
+          9285
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.002238599583506584,
+          0.010726718232035637,
+          0.06250336766242981,
+          0.4508061707019806,
+          0.9962840676307678
+        ],
+        "1": [
+          0.002937495242804289,
+          0.9545380175113678,
+          0.9880598187446594,
+          0.9948621392250061,
+          0.9983885288238525
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.8747614022593406,
+        0.8885777907067139
+      ]
+    },
+    "Balanced500": {
+      "macro_f1_all": 0.860067946796703,
+      "macro_f1_short_temporary": 0.8874661516987906,
+      "weighted_score_temporary": 0.8682874082673292,
+      "roc_auc": 0.8992790291246846,
+      "average_precision": 0.878164579330195,
+      "log_loss": 0.33332501826274097,
+      "brier": 0.09702726321553454,
+      "human_recall": 0.7093721565059145,
+      "machine_recall": 0.9751850693358357,
+      "predicted_machine": 10950,
+      "confusion_matrix": [
+        [
+          3898,
+          1597
+        ],
+        [
+          238,
+          9353
+        ]
+      ],
+      "probability_quantiles_by_label": {
+        "0": [
+          0.0028060567565262318,
+          0.009983624331653118,
+          0.06112316623330116,
+          0.6603636145591736,
+          0.9843770265579224
+        ],
+        "1": [
+          0.003787468886002898,
+          0.8890706300735474,
+          0.8995850682258606,
+          0.9093083441257477,
+          0.9906367659568787
+        ]
+      },
+      "macro_f1_group_bootstrap_ci95": [
+        0.8526604189420695,
+        0.8680044470450669
+      ]
+    }
+  },
+  "paired_differences": {
+    "Balanced500 minus CE500": {
+      "macro_f1_difference": -0.02198013550694622,
+      "paired_group_bootstrap_ci95": [
+        -0.028640625812237603,
+        -0.014057015287885189
+      ]
+    }
+  },
+  "official_score": null,
+  "threshold_selected": false
+}

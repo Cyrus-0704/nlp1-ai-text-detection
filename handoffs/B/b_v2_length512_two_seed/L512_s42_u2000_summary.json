@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "optimizer_updates": 2000,
+  "attempted_updates": 2004,
+  "fp16_skipped_updates": 4,
+  "training_loss": 0.262070147663404,
+  "training_seconds": 2265.124194699997,
+  "processed_samples": 32064,
+  "sample_order_hash": "8474a6ffe71c1a9b50422295ab2b8c6adff82ed18cd36874b2120a9b28c1e9e3",
+  "peak_allocated_mib": 5772.78466796875,
+  "peak_reserved_mib": 6078.0,
+  "max_observed_sequence_length": 512,
+  "optimizer_updates_per_second": 0.8829537932973642,
+  "input_files": {
+    "train": {
+      "path": "data/processed/v2/train.jsonl",
+      "sha256": "5a5dca9db706e0faadc5c89cbcadc77dc585ce302f5e73b11b82213f40ab7ff6"
+    },
+    "dev": {
+      "path": "data/processed/v2/dev.jsonl",
+      "sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600"
+    }
+  },
+  "data_provenance": {
+    "version": "internal-v2",
+    "manifest_sha256": "fc8c0b909e132ab8380c6dcb420c4adffc0eee4016c252e41895bc99136f2a1e"
+  },
+  "threshold": 0.5,
+  "short_text_rule": "TEMPORARY len(text.split()) < 100",
+  "checkpoint_recovered": true,
+  "training_arguments": {
+    "train_file": "data/processed/v2/train.jsonl",
+    "dev_file": "data/processed/v2/dev.jsonl",
+    "model_dir": "models/xlm-roberta-base",
+    "output_dir": "runs/b_v2_length512_round/seed-42/training/to-002000/attempt-001",
+    "data_kind": "a-internal",
+    "data_manifest": "data/processed/v2/manifest.json",
+    "evaluation_script": null,
+    "seed": 42,
+    "max_steps": 2000,
+    "max_length": 512,
+    "batch_size": 1,
+    "inference_batch_size": 8,
+    "gradient_accumulation": 16,
+    "learning_rate": 2e-05,
+    "class_weighting": "none",
+    "save_steps": 500,
+    "keep_checkpoints": 10,
+    "resume_from": "runs/b_v2_length512_round/seed-42/training/to-001500/attempt-001/checkpoints/step-001500",
+    "stop_after_steps": null,
+    "deterministic": true,
+    "training_only": true,
+    "strict_resume_code": true,
+    "protect_checkpoints": true,
+    "progress_every": 100
+  },
+  "before_save_inference_seconds": 243.34852200000023,
+  "independent_reload_and_inference_seconds": 250.60309649999908,
+  "a_evaluation_seconds": 0.4780988000002253,
+  "reload_max_abs_probability_difference": 0.0,
+  "prediction_rows": 15086,
+  "ordered_ids_verified": true,
+  "finite_probability_range_verified": true,
+  "probability_direction": "softmax(logits)[:,1]; machine=1",
+  "inference_precision": "fp32",
+  "inference_batch_size": 8,
+  "checkpoint_manifest_sha256": "39c846405acf7db894efa01346588ebca23ace4f6e52ede85264032542a53433",
+  "a_evaluation": {
+    "script_sha256": "ead97832dfbf7f8f48017b5bc0b933bafc29e98a2c833fc68fd982de5607a31e",
+    "short_by": "word",
+    "threshold": 0.5,
+    "short_threshold": 100
+  },
+  "evaluated_optimizer_step": 2000,
+  "competition_performance_claim": false
+}

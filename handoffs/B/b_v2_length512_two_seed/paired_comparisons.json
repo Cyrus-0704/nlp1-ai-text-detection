@@ -1,0 +1,249 @@
+{
+  "unit": "dev group_id",
+  "groups": 3303,
+  "replicates": 1000,
+  "seed": 20261016,
+  "comparisons": [
+    {
+      "new": "L512_s42_u2000",
+      "old": "L256_s42_u2000",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": 0.014202025770964188,
+          "ci95": [
+            0.0072239435019083535,
+            0.02098796538528319
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": 0.021105806827085294,
+          "ci95": [
+            0.006638964347022144,
+            0.03643305206181762
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.016273160087800553,
+          "ci95": [
+            0.009038510464970003,
+            0.023579386881720024
+          ]
+        }
+      },
+      "old_only_correct": 459,
+      "new_only_correct": 644,
+      "both_wrong": 662
+    },
+    {
+      "new": "L512_s43_u2000",
+      "old": "L256_s43_u2000",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": 0.053138375287240525,
+          "ci95": [
+            0.04645118162675559,
+            0.06024373670497113
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": 0.013660247200050324,
+          "ci95": [
+            0.0019870863755612122,
+            0.02588973563847252
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.04129493686108354,
+          "ci95": [
+            0.03479510327606971,
+            0.048645560126363674
+          ]
+        }
+      },
+      "old_only_correct": 254,
+      "new_only_correct": 924,
+      "both_wrong": 495
+    },
+    {
+      "new": "L512_s43_u2000",
+      "old": "L512_s42_u2000",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": 0.029015323435961582,
+          "ci95": [
+            0.023177031585117597,
+            0.03498646285817612
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": 0.025709141089376275,
+          "ci95": [
+            0.011629390471432615,
+            0.040624828424546
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.028023468731986023,
+          "ci95": [
+            0.021204098370042584,
+            0.0352041144544965
+          ]
+        }
+      },
+      "old_only_correct": 311,
+      "new_only_correct": 683,
+      "both_wrong": 438
+    },
+    {
+      "new": "L512_s43_u2000",
+      "old": "L512_s43_u1000",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": 0.00034048884689252823,
+          "ci95": [
+            -0.004244872275056974,
+            0.004954354894204404
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": -0.0002749908894562614,
+          "ci95": [
+            -0.0114611189779186,
+            0.011641509173952083
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.00015584492598796906,
+          "ci95": [
+            -0.005149004630901044,
+            0.0057242126170898005
+          ]
+        }
+      },
+      "old_only_correct": 359,
+      "new_only_correct": 368,
+      "both_wrong": 390
+    },
+    {
+      "new": "L512_s43_u2000",
+      "old": "C_TFIDF",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": -0.0011903935880144267,
+          "ci95": [
+            -0.0069967424465472074,
+            0.004943474628089979
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": 0.038475079961690306,
+          "ci95": [
+            0.022021972901935027,
+            0.05493348676694848
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.010709248476897026,
+          "ci95": [
+            0.0035150185081195885,
+            0.018173842440703872
+          ]
+        }
+      },
+      "old_only_correct": 569,
+      "new_only_correct": 567,
+      "both_wrong": 180
+    },
+    {
+      "new": "C07_B03_L512_s43_u2000",
+      "old": "C_TFIDF",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": 0.021697793221507444,
+          "ci95": [
+            0.01779200069577099,
+            0.025789977953497613
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": 0.03491311077415338,
+          "ci95": [
+            0.023644350908754587,
+            0.04794942756321091
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.02566238848730118,
+          "ci95": [
+            0.020980054630525973,
+            0.03107443717322693
+          ]
+        }
+      },
+      "old_only_correct": 107,
+      "new_only_correct": 414,
+      "both_wrong": 333
+    },
+    {
+      "new": "C07_B03_L512_s43_u2000",
+      "old": "C07_B03_L256_s43_u2000",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": 0.007041556513277092,
+          "ci95": [
+            0.003969792394158528,
+            0.010749180843905188
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": 0.003459156584615153,
+          "ci95": [
+            -0.003813190890790438,
+            0.011941070243194301
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.005966836534678555,
+          "ci95": [
+            0.0022987400249573713,
+            0.009685432875701066
+          ]
+        }
+      },
+      "old_only_correct": 94,
+      "new_only_correct": 188,
+      "both_wrong": 346
+    },
+    {
+      "new": "C07_B03_L512_s43_u2000",
+      "old": "C07_B03_L512_s42_u2000",
+      "metrics": {
+        "macro_f1_all": {
+          "delta": 0.0047376093962787635,
+          "ci95": [
+            0.0016115420674829989,
+            0.007842036595849918
+          ]
+        },
+        "macro_f1_short_temporary": {
+          "delta": 0.013018215752224171,
+          "ci95": [
+            0.004626846942062268,
+            0.023026940465243208
+          ]
+        },
+        "weighted_score_temporary": {
+          "delta": 0.00722179130306233,
+          "ci95": [
+            0.0034459007074950226,
+            0.01142280262814176
+          ]
+        }
+      },
+      "old_only_correct": 111,
+      "new_only_correct": 174,
+      "both_wrong": 329
+    }
+  ],
+  "limitation": "Conditional fitted-model and same-dev selection intervals; not seed uncertainty or independent generalization; no multiplicity correction"
+}

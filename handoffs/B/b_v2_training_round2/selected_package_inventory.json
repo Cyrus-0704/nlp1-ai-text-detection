@@ -1,0 +1,62 @@
+{
+  "data_kind": "a-internal",
+  "competition_ready": false,
+  "files": {
+    "base.txt": {
+      "bytes": 130,
+      "sha256": "a4cb61b70ee69647e6d47afd3df22a874ead38210ca07178faf0ae74a5cf9ca6"
+    },
+    "common.py": {
+      "bytes": 5121,
+      "sha256": "51b8b44987222d0979b14638a210bf02df9e3ed3cf6126332408ce07aa73459e"
+    },
+    "config.json": {
+      "bytes": 900,
+      "sha256": "4f6d223a4966b5edadc5d01593569999445b284c443dc178be0b09647041c543"
+    },
+    "data_manifest.json": {
+      "bytes": 5685,
+      "sha256": "fc8c0b909e132ab8380c6dcb420c4adffc0eee4016c252e41895bc99136f2a1e"
+    },
+    "INFERENCE.md": {
+      "bytes": 524,
+      "sha256": "0bcb1e905f0a469ae836611deb9fb1fd6dff5786bd9462aa2dd0761504ee61be"
+    },
+    "model.safetensors": {
+      "bytes": 1112205008,
+      "sha256": "312e80d534e41813fcc6a92e04069e5fcb3d5938840d3b5b07c25425b495912a"
+    },
+    "predict.py": {
+      "bytes": 1579,
+      "sha256": "ad993380a541aff26867e2e32a0853a10dd2ffcaadcf21b17b74449c3c7f9eca"
+    },
+    "requirements.txt": {
+      "bytes": 209,
+      "sha256": "af8e2cd4ec826e7bcc389e756b1581313a47e4cc7402485d216bb4a3c8825832"
+    },
+    "sentencepiece.bpe.model": {
+      "bytes": 5069051,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+    },
+    "source_manifest.json": {
+      "bytes": 1107,
+      "sha256": "b37fc3b7ac2153aae1d4e1b552c6f60d3b59bc1b5852f71030a24a4a57236d3e"
+    },
+    "special_tokens_map.json": {
+      "bytes": 295,
+      "sha256": "8574792bfefae68f2ce2eae93a4145d95b1232c59e71094bcdcb49dbcb549c97"
+    },
+    "tokenizer.json": {
+      "bytes": 17082987,
+      "sha256": "a514807cffabd8abaf028cfaffe7ff0c4f60b97ea2db80c41f14172ae6b018ca"
+    },
+    "tokenizer_config.json": {
+      "bytes": 1264,
+      "sha256": "e1e3b44e298ddc716e817065bd0e543585ab6200ec068a108ad092ea05926cf0"
+    },
+    "training_arguments.json": {
+      "bytes": 646,
+      "sha256": "36c15af2d9f2edc92e3eee78d1bd765cebbc24437b5b51a84989890ef2689d02"
+    }
+  }
+}
