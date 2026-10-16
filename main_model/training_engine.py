@@ -45,32 +45,39 @@ def classification_loss(logits, labels, weights):
     return (F.cross_entropy(logits.float(), labels, reduction='none') * weights[labels]).mean()
 
 
-def capture_rng():
+def capture_rng(cuda=True):
     return dict(python=random.getstate(), numpy=np.random.get_state(),
-                torch=torch.get_rng_state(), cuda=torch.cuda.get_rng_state_all())
+                torch=torch.get_rng_state(), cuda=torch.cuda.get_rng_state_all() if cuda and torch.cuda.is_initialized() else [])
 
 
 def restore_rng(rng):
     random.setstate(rng['python'])
     np.random.set_state(rng['numpy'])
     torch.set_rng_state(rng['torch'])
-    torch.cuda.set_rng_state_all(rng['cuda'])
+    if rng['cuda']:
+        torch.cuda.set_rng_state_all(rng['cuda'])
 
 
 def signature(args, weights):
-    return dict(train_sha256=sha256(args.train_file), dev_sha256=sha256(args.dev_file),
+    result = dict(train_sha256=sha256(args.train_file), dev_sha256=sha256(args.dev_file),
                 source_manifest_sha256=sha256(Path(args.model_dir)/'source_manifest.json'),
                 seed=args.seed, max_length=args.max_length, batch_size=args.batch_size,
                 gradient_accumulation=args.gradient_accumulation, learning_rate=args.learning_rate,
                 class_weighting=args.class_weighting, weights=weights, deterministic=args.deterministic,
                 optimizer='AdamW;weight_decay=.01;foreach=False;max_grad_norm=1',
                 scheduler='constant; no scheduler state', torch_version=torch.__version__)
+    if getattr(args, 'strict_resume_code', False):
+        result['training_code'] = {name:sha256(Path(__file__).with_name(name))
+                                   for name in ('train.py', 'training_engine.py', 'common.py')}
+    return result
 
 
 def save_checkpoint(model, tokenizer, optimizer, scaler, cursor, counters, history, config, args, out):
     root = out/'checkpoints'
     root.mkdir(exist_ok=True)
     dest = root/f"step-{counters['updates']:06d}"
+    if dest.exists():
+        raise FileExistsError(f'Never overwrite a completed checkpoint: {dest}')
     pending = root/f".step-{counters['updates']:06d}.pending"
     pending.mkdir(exist_ok=False)
     model.save_pretrained(pending, safe_serialization=True)
@@ -81,13 +88,14 @@ def save_checkpoint(model, tokenizer, optimizer, scaler, cursor, counters, histo
             shutil.copy2(out/src, pending/dst)
     state = dict(format_version=1, signature=config, optimizer=optimizer.state_dict(),
                  scaler=scaler.state_dict(), cursor=cursor.state_dict(), counters=dict(counters),
-                 history=list(history), rng=capture_rng())
+                 history=list(history), rng=capture_rng(cuda=next(model.parameters()).device.type=='cuda'))
     torch.save(state, pending/'training_state.pt')
     write_json(pending/'resume_manifest.json', dict(format_version=1, optimizer_step=counters['updates'],
-               signature=config, files={name:sha256(pending/name) for name in ['model.safetensors','training_state.pt']},
+               signature=config, files={p.name:sha256(p) for p in pending.iterdir() if p.is_file()},
                trusted_local_state_only=True, checkpoint_at='after optimizer update and zero_grad'))
     pending.rename(dest)
-    older = sorted(p for p in root.glob('step-*') if p.is_dir())[:-args.keep_checkpoints]
+    older = [] if getattr(args, 'protect_checkpoints', False) else sorted(
+        p for p in root.glob('step-*') if p.is_dir() and not (p/'PROTECTED').exists())[:-args.keep_checkpoints]
     for p in older:
         if p.is_symlink() or p.resolve().parent != root.resolve():
             raise RuntimeError('Checkpoint retention path escaped this run')
@@ -107,7 +115,9 @@ def load_training_state(path, expected):
     return torch.load(path/'training_state.pt', map_location='cpu', weights_only=False)
 
 
-def train_updates(model, tokenizer, rows, args, out):
+def train_updates(model, tokenizer, rows, args, out, device='cuda'):
+    # device='cpu' is only used by the tiny deterministic regression test.
+    is_cuda = device == 'cuda'
     weights_list = class_weights(rows, args.class_weighting)
     config = signature(args, weights_list)
     state = load_training_state(args.resume_from, config) if args.resume_from else None
@@ -117,12 +127,12 @@ def train_updates(model, tokenizer, rows, args, out):
                           padding=True, return_tensors='pt')
         batch['labels'] = torch.tensor([r['label'] for r in batch_rows], dtype=torch.long)
         return batch, [r['sample_id'] for r in batch_rows]
-    loader = DataLoader(rows, batch_sampler=cursor, collate_fn=collate, num_workers=0, pin_memory=True,
+    loader = DataLoader(rows, batch_sampler=cursor, collate_fn=collate, num_workers=0, pin_memory=is_cuda,
                         generator=torch.Generator().manual_seed(args.seed+9000))
     iterator = iter(loader)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=.01, foreach=False)
-    scaler = torch.amp.GradScaler('cuda')
-    weights = torch.tensor(weights_list, device='cuda', dtype=torch.float32)
+    scaler = torch.amp.GradScaler('cuda', enabled=is_cuda)
+    weights = torch.tensor(weights_list, device=device, dtype=torch.float32)
     counters = dict(updates=0, attempts=0, seen=0, gpu_batches=0, total_loss=0., training_seconds=0.,
                     max_observed_length=0, observed_tokens=0, sample_order_hash='')
     history = []
@@ -136,7 +146,8 @@ def train_updates(model, tokenizer, rows, args, out):
     if args.max_steps <= start_step:
         raise ValueError('max_steps must exceed the resumed optimizer step')
     optimizer.zero_grad(set_to_none=True)
-    torch.cuda.reset_peak_memory_stats()
+    if is_cuda:
+        torch.cuda.reset_peak_memory_stats()
     wall_start = time.perf_counter()
     last_checkpoint = None
     with (out/'training_log.jsonl').open('w',encoding='utf-8',buffering=1) as log:
@@ -153,11 +164,11 @@ def train_updates(model, tokenizer, rows, args, out):
                 counters['observed_tokens'] += int(batch['attention_mask'].sum())
                 counters['seen'] += len(ids)
                 counters['gpu_batches'] += 1
-                batch = {k:v.to('cuda',non_blocking=True) for k,v in batch.items()}
-                if next(model.parameters()).device.type != 'cuda' or batch['input_ids'].device.type != 'cuda':
+                batch = {k:v.to(device,non_blocking=is_cuda) for k,v in batch.items()}
+                if next(model.parameters()).device.type != device or batch['input_ids'].device.type != device:
                     raise RuntimeError('GPU placement failed')
                 labels = batch.pop('labels')
-                with torch.autocast('cuda',dtype=torch.float16):
+                with torch.autocast(device,dtype=torch.float16,enabled=is_cuda):
                     logits = model(**batch).logits
                     loss = classification_loss(logits, labels, weights)
                 raw_loss = F.cross_entropy(logits.detach().float(), labels)
@@ -180,7 +191,13 @@ def train_updates(model, tokenizer, rows, args, out):
                 counters['total_loss'] += float(np.mean(losses))
             if counters['attempts'] > args.max_steps+50:
                 raise RuntimeError('Too many FP16 skipped updates')
+            if is_cuda:
+                torch.cuda.synchronize()
             counters['training_seconds'] += time.perf_counter()-tick
+            counters['peak_allocated_mib'] = max(counters.get('peak_allocated_mib',0.),
+                                                torch.cuda.max_memory_allocated()/2**20 if is_cuda else 0.)
+            counters['peak_reserved_mib'] = max(counters.get('peak_reserved_mib',0.),
+                                               torch.cuda.max_memory_reserved()/2**20 if is_cuda else 0.)
             counters['sample_order_hash'] = hashlib.sha256((counters['sample_order_hash']+json.dumps(batch_ids)).encode()).hexdigest()
             entry = dict(optimizer_step=counters['updates'],attempt=counters['attempts'],skipped=skipped,
                          loss=float(np.mean(losses)),unweighted_loss=float(np.mean(unweighted_losses)),
@@ -189,22 +206,27 @@ def train_updates(model, tokenizer, rows, args, out):
                          cursor=cursor.state_dict())
             history.append(entry)
             log.write(json.dumps(entry,allow_nan=False)+'\n')
-            print(json.dumps(entry,allow_nan=False),flush=True)
+            progress_every = getattr(args, 'progress_every', 1)
+            if not skipped and counters['updates'] % progress_every == 0:
+                print(f"update={counters['updates']}/{args.max_steps} attempts={counters['attempts']} "
+                      f"skips={counters['attempts']-counters['updates']} loss={entry['loss']:.5f} "
+                      f"seen={counters['seen']} active_s={counters['training_seconds']:.1f}", flush=True)
             stop = args.stop_after_steps is not None and counters['updates'] >= args.stop_after_steps
             if not skipped and (counters['updates'] % args.save_steps == 0 or stop or counters['updates'] == args.max_steps):
                 last_checkpoint = save_checkpoint(model,tokenizer,optimizer,scaler,cursor,counters,history,config,args,out)
             if stop:
                 break
-    torch.cuda.synchronize()
+    if is_cuda:
+        torch.cuda.synchronize()
     stats = dict(optimizer_updates=counters['updates'],attempted_updates=counters['attempts'],
                  fp16_skipped_updates=counters['attempts']-counters['updates'],
                  training_loss=counters['total_loss']/counters['updates'],training_seconds=counters['training_seconds'],
                  segment_wall_seconds=time.perf_counter()-wall_start,
                  optimizer_updates_per_second=counters['updates']/counters['training_seconds'],
                  samples_per_second=counters['seen']/counters['training_seconds'],processed_samples=counters['seen'],
-                 gpu_batches=counters['gpu_batches'],gpu=torch.cuda.get_device_name(0),
+                 gpu_batches=counters['gpu_batches'],gpu=torch.cuda.get_device_name(0) if is_cuda else 'CPU regression fixture',
                  max_observed_sequence_length=counters['max_observed_length'],processed_nonpadding_tokens=counters['observed_tokens'],
-                 peak_allocated_mib=torch.cuda.max_memory_allocated()/2**20,peak_reserved_mib=torch.cuda.max_memory_reserved()/2**20,
+                 peak_allocated_mib=counters.get('peak_allocated_mib',0.),peak_reserved_mib=counters.get('peak_reserved_mib',0.),
                  resumed_from=str(args.resume_from) if args.resume_from else None,resumed_start_step=start_step,
                  class_weighting=args.class_weighting,class_weights=weights_list,loss_reduction='mean(per_example_CE * class_weight)',
                  sampler='seeded-per-epoch cursor',sampler_state=cursor.state_dict(),sample_order_hash=counters['sample_order_hash'],

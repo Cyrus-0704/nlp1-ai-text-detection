@@ -1,0 +1,50 @@
+{
+  "status": "PASS_READABILITY_FOR_INTERNAL_REPORT",
+  "date": "2026-10-16",
+  "figures": 8,
+  "panels": 12,
+  "details": [
+    {
+      "figure": "performance",
+      "panels": 2,
+      "note": "Six measured nodes; axis labels/legends readable; seed43 nodes distinct; endpoints retained"
+    },
+    {
+      "figure": "probability_quality",
+      "panels": 2,
+      "note": "Log loss and Brier explicitly show1000 to2000 regression; readable without clipping"
+    },
+    {
+      "figure": "roc_reliability",
+      "panels": 2,
+      "note": "ROC legend agrees with AUC; reliability descriptive and sparse-bin counts in sources, not calibrated"
+    },
+    {
+      "figure": "resources",
+      "panels": 2,
+      "note": "Actual endpoints; old timing boundaries differ; no causal speed ratio claim"
+    },
+    {
+      "figure": "training_loss",
+      "panels": 1,
+      "note": "Three length/seed trajectories, ten-update rolling means; no duplicated seed42 prefix"
+    },
+    {
+      "figure": "confusion_L256_s42_u2000",
+      "panels": 1,
+      "note": "1145/161 errors agree; rows true, columns predicted; counts/percentages readable"
+    },
+    {
+      "figure": "confusion_L256_s43_u2000",
+      "panels": 1,
+      "note": "1334/85 errors agree; rows true, columns predicted; counts/percentages readable"
+    },
+    {
+      "figure": "confusion_L512_s43_u2000",
+      "panels": 1,
+      "note": "561/188 errors agree; rows true, columns predicted; counts/percentages readable"
+    }
+  ],
+  "automated_checks": 42,
+  "limitation": "Rendered PNGs inspected, not final journal acceptance. Original run bundles and pending markers remain untouched."
+}

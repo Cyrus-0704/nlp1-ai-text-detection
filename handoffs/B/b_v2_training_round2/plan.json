@@ -1,0 +1,82 @@
+{
+  "stage": "B round2: extend unweighted training and check a second seed",
+  "data_version": "internal-v2",
+  "train_rows": 119842,
+  "dev_rows": 15086,
+  "model_revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+  "max_steps": 2000,
+  "max_length": 256,
+  "batch_size": 1,
+  "gradient_accumulation": 16,
+  "learning_rate": 2e-05,
+  "class_weighting": "none",
+  "fp16": true,
+  "gradient_checkpointing": true,
+  "deterministic": true,
+  "inference_precision": "fp32",
+  "inference_batch_size": 8,
+  "save_steps": 250,
+  "keep_checkpoints": 2,
+  "threshold": 0.5,
+  "short_rule": "TEMPORARY len(text.split())<100",
+  "dev_policy": "Only evaluate the predeclared 2000-step endpoints; no checkpoint selection midrun",
+  "internal_test_used": false,
+  "official_validation_used": false,
+  "source_code_commit": "421c9f9b87bf1afe48d493d7fdc38e745c37f2a9",
+  "runs": [
+    {
+      "name": "CE2000_s42",
+      "seed": 42,
+      "resume_from": "runs/b_v2_full_ce500/checkpoints/step-000500",
+      "output_dir": "runs/b_v2_ce2000_resume"
+    },
+    {
+      "name": "CE2000_s43",
+      "seed": 43,
+      "resume_from": null,
+      "output_dir": "runs/b_v2_ce2000_seed43"
+    }
+  ],
+  "comparison_criterion": "Temporary S=0.7*all macroF1+0.3*short macroF1 at fixed threshold .5; include CE500 reference",
+  "planned_comparisons": [
+    "CE2000_s42 minus CE500 (extended same trajectory)",
+    "CE2000_s43 minus CE2000_s42 (seed changes initialization, draw order and seen subset)"
+  ],
+  "training_epoch_note": "2000 updates cover about 27% of the frozen training rows, not a full epoch",
+  "fixed_output_nodes": [
+    {
+      "id": "N1",
+      "task": "Finish the two fixed 2000-step training endpoints",
+      "outputs": [
+        "runs/b_v2_ce2000_resume/run_summary.json",
+        "runs/b_v2_ce2000_seed43/run_summary.json"
+      ]
+    },
+    {
+      "id": "N2",
+      "task": "Aligned dev comparison metrics and figures",
+      "outputs": [
+        "runs/b_v2_round2_analysis/diagnostics.json",
+        "runs/b_v2_round2_analysis/performance.png",
+        "runs/b_v2_round2_analysis/confusion.png",
+        "runs/b_v2_round2_analysis/error_analysis.png"
+      ]
+    },
+    {
+      "id": "N3",
+      "task": "Package chosen candidate and independently predict A smoke subset",
+      "outputs": [
+        "handoffs/B/b_v2_training_round2/selected_package_check.json"
+      ]
+    },
+    {
+      "id": "N4",
+      "task": "Curated report and integrity manifest, then visual review",
+      "outputs": [
+        "handoffs/B/b_v2_training_round2/README.md",
+        "handoffs/B/b_v2_training_round2/manifest.json"
+      ]
+    }
+  ],
+  "reporting_preference": "Produce artifacts at fixed nodes; report together at completion; explain actionable exceptions"
+}

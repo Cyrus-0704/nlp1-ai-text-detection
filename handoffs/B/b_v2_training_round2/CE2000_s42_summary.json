@@ -1,0 +1,94 @@
+{
+  "status": "PASS",
+  "data_kind": "a-internal",
+  "competition_performance_claim": false,
+  "evaluation_scope": "internal-development-only",
+  "code_commit": "421c9f9b87bf1afe48d493d7fdc38e745c37f2a9",
+  "main_model_code_dirty": false,
+  "data_provenance": {
+    "version": "internal-v2",
+    "manifest_sha256": "fc8c0b909e132ab8380c6dcb420c4adffc0eee4016c252e41895bc99136f2a1e"
+  },
+  "train_rows": 119842,
+  "dev_rows": 15086,
+  "optimizer_updates": 2000,
+  "attempted_updates": 2003,
+  "fp16_skipped_updates": 3,
+  "training_loss": 0.26985327337269066,
+  "training_seconds": 2472.3375886001013,
+  "segment_wall_seconds": 1897.808705000003,
+  "optimizer_updates_per_second": 0.8089510143040173,
+  "samples_per_second": 12.962631053207572,
+  "processed_samples": 32048,
+  "gpu_batches": 32048,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "max_observed_sequence_length": 256,
+  "processed_nonpadding_tokens": 7440781,
+  "peak_allocated_mib": 5772.20068359375,
+  "peak_reserved_mib": 6072.0,
+  "resumed_from": "runs/b_v2_full_ce500/checkpoints/step-000500",
+  "resumed_start_step": 500,
+  "class_weighting": "none",
+  "class_weights": [
+    1.0,
+    1.0
+  ],
+  "loss_reduction": "mean(per_example_CE * class_weight)",
+  "sampler": "seeded-per-epoch cursor",
+  "sampler_state": {
+    "epoch": 0,
+    "position": 32048
+  },
+  "sample_order_hash": "5f68adb74a149bc2e15431fea955a192718c496686d99a3510947a72b3674414",
+  "last_resumable_checkpoint": "checkpoints/step-002000",
+  "constant_learning_rate": true,
+  "completed": true,
+  "fp16": true,
+  "gradient_checkpointing": true,
+  "dataloader_num_workers": 0,
+  "inference_precision": "fp32",
+  "inference_batch_size": 8,
+  "threshold": 0.5,
+  "short_text_rule": "TEMPORARY ONLY: len(text.split()) < 100; not official multilingual word counting",
+  "split_overlap_checks": [
+    "sample_id",
+    "group_id",
+    "whitespace-normalized exact text"
+  ],
+  "input_files": {
+    "train": {
+      "path": "data/processed/v2/train.jsonl",
+      "sha256": "5a5dca9db706e0faadc5c89cbcadc77dc585ce302f5e73b11b82213f40ab7ff6"
+    },
+    "dev": {
+      "path": "data/processed/v2/dev.jsonl",
+      "sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600"
+    }
+  },
+  "python": "3.11.17",
+  "packages": {
+    "torch": "2.13.0+cu126",
+    "transformers": "4.57.6",
+    "accelerate": "1.15.0",
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1"
+  },
+  "created_at_utc": "2026-10-15T18:26:08.563992+00:00",
+  "before_save_inference_seconds": 145.90633230000094,
+  "independent_reload_and_inference_seconds": 153.29056780000974,
+  "a_evaluation": {
+    "script_sha256": "ead97832dfbf7f8f48017b5bc0b933bafc29e98a2c833fc68fd982de5607a31e",
+    "report": "a_evaluation_report.txt",
+    "short_by": "word",
+    "threshold": 0.5,
+    "short_threshold": 100,
+    "rule_status": "temporary; not official"
+  },
+  "reload_check": "independent subprocess; FP32, batch=8, rtol=1e-5, atol=1e-6",
+  "reload_max_abs_probability_difference": 0.0,
+  "prediction_rows": 15086,
+  "ordered_ids_verified": true,
+  "probability_direction": "softmax(logits)[:,1]; machine=1",
+  "finite_loss_verified": true,
+  "finite_probability_range_verified": true
+}

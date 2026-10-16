@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "data_version": "internal-v2",
+  "train_file": "data/processed/v2/train.jsonl",
+  "dev_file": "data/processed/v2/dev.jsonl",
+  "data_manifest": "data/processed/v2/manifest.json",
+  "train_sha256": "5a5dca9db706e0faadc5c89cbcadc77dc585ce302f5e73b11b82213f40ab7ff6",
+  "dev_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "manifest_sha256": "fc8c0b909e132ab8380c6dcb420c4adffc0eee4016c252e41895bc99136f2a1e",
+  "model_dir": "models/xlm-roberta-base",
+  "model_repo": "FacebookAI/xlm-roberta-base",
+  "model_revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+  "source_manifest_sha256": "b37fc3b7ac2153aae1d4e1b552c6f60d3b59bc1b5852f71030a24a4a57236d3e",
+  "evaluation_script": "data_tools/evaluate.py",
+  "evaluator_sha256": "ead97832dfbf7f8f48017b5bc0b933bafc29e98a2c833fc68fd982de5607a31e",
+  "training": {
+    "max_steps": 2000,
+    "max_length": 512,
+    "batch_size": 1,
+    "gradient_accumulation": 16,
+    "learning_rate": 2e-05,
+    "class_weighting": "none",
+    "inference_batch_size": 8,
+    "save_steps": 500,
+    "progress_every": 100,
+    "resource_steps": 50,
+    "evaluation_steps": [
+      500,
+      1000,
+      2000
+    ],
+    "segment_steps": [
+      50,
+      500,
+      1000,
+      1500,
+      2000
+    ],
+    "deterministic": true
+  },
+  "seeds": [
+    42
+  ],
+  "optional_seeds": [
+    43
+  ],
+  "evaluation": {
+    "threshold": 0.5,
+    "short_by": "word",
+    "short_threshold": 100,
+    "temporary": true
+  },
+  "minimum_free_gib_per_seed": 25,
+  "baselines": [
+    {
+      "name": "L256_s42_u500",
+      "prefix": "CE500",
+      "seed": 42,
+      "steps": 500,
+      "run": "runs/b_v2_full_ce500"
+    },
+    {
+      "name": "L256_s42_u2000",
+      "prefix": "CE2000_s42",
+      "seed": 42,
+      "steps": 2000,
+      "run": "runs/b_v2_ce2000_resume"
+    },
+    {
+      "name": "L256_s43_u2000",
+      "prefix": "CE2000_s43",
+      "seed": 43,
+      "steps": 2000,
+      "run": "runs/b_v2_ce2000_seed43"
+    }
+  ],
+  "baseline_handoff": "handoffs/B/b_v2_training_round2",
+  "effective_seeds": [
+    43
+  ]
+}

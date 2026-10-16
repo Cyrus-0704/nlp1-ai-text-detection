@@ -1,0 +1,60 @@
+{
+  "nodes": [
+    {
+      "node": "training_endpoints",
+      "status": "WAITING",
+      "at_utc": "2026-10-15T18:39:15.991563+00:00",
+      "outputs": []
+    },
+    {
+      "node": "training_endpoints",
+      "status": "PASS",
+      "at_utc": "2026-10-15T19:17:31.411598+00:00",
+      "outputs": [
+        "runs/b_v2_ce2000_resume/run_summary.json",
+        "runs/b_v2_ce2000_seed43/run_summary.json"
+      ]
+    },
+    {
+      "node": "comparison_metrics_and_figures",
+      "status": "PASS",
+      "at_utc": "2026-10-15T19:17:40.657493+00:00",
+      "outputs": [
+        "runs/b_v2_round2_analysis"
+      ]
+    },
+    {
+      "node": "selected_package_and_independent_prediction",
+      "status": "PASS",
+      "at_utc": "2026-10-15T19:17:54.046038+00:00",
+      "outputs": [
+        "runs/b_v2_ce2000_seed43/checkpoint",
+        "runs/b_v2_ce2000_seed43/dev_packaged_round2_smoke.csv"
+      ]
+    },
+    {
+      "node": "curated_handoff_report",
+      "status": "PASS",
+      "at_utc": "2026-10-15T19:17:54.587372+00:00",
+      "outputs": [
+        "handoffs/B/b_v2_training_round2/README.md"
+      ]
+    },
+    {
+      "node": "artifact_integrity",
+      "status": "PASS",
+      "at_utc": "2026-10-15T19:17:54.734477+00:00",
+      "outputs": [
+        "handoffs/B/b_v2_training_round2/manifest.json"
+      ]
+    }
+  ],
+  "reporting": "Fixed-node outputs; final report after review",
+  "code_commit_at_postprocessing_start": "c77094414537e6a5a9654c5f110130b47371a07a",
+  "final_review": {
+    "status": "PASS",
+    "date": "2026-10-16 Asia/Shanghai",
+    "figure_qa": "figure_qa.json",
+    "scope": "manual visual review and final manifest verification"
+  }
+}

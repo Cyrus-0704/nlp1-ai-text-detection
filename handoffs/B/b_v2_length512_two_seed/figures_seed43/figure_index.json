@@ -1,0 +1,19 @@
+{
+  "figures": [
+    "performance",
+    "confusion_L256_s42_u2000",
+    "confusion_L256_s43_u2000",
+    "confusion_L512_s43_u2000",
+    "roc_reliability",
+    "probability_quality",
+    "training_loss",
+    "resources"
+  ],
+  "manual_visual_review": "PENDING_AFTER_RUN",
+  "metadata": "Labels = length / seed / effective updates; no test or official scores",
+  "formats": [
+    "300dpi PNG",
+    "editable PDF",
+    "editable SVG"
+  ]
+}

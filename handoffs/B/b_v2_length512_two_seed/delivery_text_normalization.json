@@ -1,0 +1,118 @@
+{
+  "rule": "CRLF to LF in curated JSON/TXT/MD/SVG only; CSV LFS bytes and PDF/PNG unchanged",
+  "original_runtime_figure_files": {
+    "confusion_L256_s42_u2000.pdf": {
+      "bytes": 28906,
+      "sha256": "3bb890c303184af1ed82a587a4910fea683526c5de605a11a3962cc070766315"
+    },
+    "confusion_L256_s42_u2000.png": {
+      "bytes": 84805,
+      "sha256": "8e3a0c0dfed4eddc5f3957e5c8e36516fad4ef951dd4eef1be02c7ed0e16769d"
+    },
+    "confusion_L256_s42_u2000.svg": {
+      "bytes": 8989,
+      "sha256": "429ed9d96321ab8d7f2995ba543c214cf636ec51af298fea28e9b2695eb359b7"
+    },
+    "confusion_L256_s43_u2000.pdf": {
+      "bytes": 28888,
+      "sha256": "f6678a72b96ec1b1fe9e0984f7459b6189aa1aa03bb61bd612a12dfb59635a78"
+    },
+    "confusion_L256_s43_u2000.png": {
+      "bytes": 82528,
+      "sha256": "9719cfc682e08ae21aeb856b3c481c17758b2b9749561e22bee4847420e8ed1a"
+    },
+    "confusion_L256_s43_u2000.svg": {
+      "bytes": 8988,
+      "sha256": "6add0d6422540aa96da68599b3e5cac4d2a62e7a018796c07518a3ed3b31da59"
+    },
+    "confusion_L512_s43_u2000.pdf": {
+      "bytes": 28636,
+      "sha256": "e225af147d6a84c12f617b2d85baf804676cca08f4e7e8e5dd62701b17b705b0"
+    },
+    "confusion_L512_s43_u2000.png": {
+      "bytes": 84751,
+      "sha256": "8a6fd3e0e79cc18caceadf8de4b963388a945262196bfd9b4dd320e1c66169ff"
+    },
+    "confusion_L512_s43_u2000.svg": {
+      "bytes": 8988,
+      "sha256": "4739610bf9dea418f0caa19f7bf03e1b4cc64b0b3df41db8a974da473b06786e"
+    },
+    "metrics_resources.csv": {
+      "bytes": 1945,
+      "sha256": "4c33e7335e4dc80a1cf133979671e2d9a0d5d7631d18b2265778ee4ba4d27085"
+    },
+    "performance.pdf": {
+      "bytes": 30763,
+      "sha256": "45f69023eaf2da2a6edc7c5a6826231ff13c181cf2cd0090ece98b004b39d70b"
+    },
+    "performance.png": {
+      "bytes": 171368,
+      "sha256": "a64771c5dc59ec79cfecbde12b8efff638f40f0add53c1fe295690c38a707ca9"
+    },
+    "performance.svg": {
+      "bytes": 23301,
+      "sha256": "cebc09e34ef11224c2f90e7e689c6e4121fb338f18768e3c256d7cf21aa2d682"
+    },
+    "probability_quality.pdf": {
+      "bytes": 29411,
+      "sha256": "05a102db529494363c268a40d2fbdab488656ca3444d37b4ac1b10777b17d5da"
+    },
+    "probability_quality.png": {
+      "bytes": 164896,
+      "sha256": "aab3832d401a0ba51ac3be9240dcf234274d278c4af047a0b8d3cf8e54d44735"
+    },
+    "probability_quality.svg": {
+      "bytes": 18900,
+      "sha256": "68c7a9d1b58a8e118affd3339ad38a7e1c8a6c50fd884d5776fe96060dc68629"
+    },
+    "reliability.csv": {
+      "bytes": 2056,
+      "sha256": "8a2f43493fe1e9cffdc1644b35ff2dbef3b28900a910aa08baf1dd079190fe24"
+    },
+    "resources.pdf": {
+      "bytes": 30534,
+      "sha256": "311fd694bbca40cafe4783e8acffd4c878b209d5bb7300e139b0b13c432f53b1"
+    },
+    "resources.png": {
+      "bytes": 142248,
+      "sha256": "74100291bba7f5618fc9c970eb9c36f7bb0098d55e48e7ae9757e92468b2127f"
+    },
+    "resources.svg": {
+      "bytes": 15012,
+      "sha256": "38a2edcc5912d1c2dc5797b93258c49daa9619636b4d4a9b6e04bc5a73d36558"
+    },
+    "roc.csv": {
+      "bytes": 953199,
+      "sha256": "94845f1bf27528309dd7061ff096f09e08b3228ec56a23f7e9c41fd18b5b6474"
+    },
+    "roc_reliability.pdf": {
+      "bytes": 44120,
+      "sha256": "16b2c41de289657cf63d0d1ce475942d243fe066f8caccc73998c4dea8cf5ff0"
+    },
+    "roc_reliability.png": {
+      "bytes": 305053,
+      "sha256": "16d3f7766aeea0b4abc97322ce0352ad4fcf96c80e089757017eb35eea57bb80"
+    },
+    "roc_reliability.svg": {
+      "bytes": 56382,
+      "sha256": "92803b4d3c5bf151436f562340e557ea103e557284a035010e626404fb389393"
+    },
+    "training_loss.csv": {
+      "bytes": 374684,
+      "sha256": "67834d2e1a537f072bee5a2efd2605dc01e3adb151323bd7e856ba88b7878fa5"
+    },
+    "training_loss.pdf": {
+      "bytes": 87243,
+      "sha256": "bd314551e696f9aea37e1abc490c54ba41505197e674cf8d842b15580c7489db"
+    },
+    "training_loss.png": {
+      "bytes": 558081,
+      "sha256": "5191b5d3a8802c8ba29d01484ca5376787e50f232d6451895fda9a2a6b4b033a"
+    },
+    "training_loss.svg": {
+      "bytes": 148383,
+      "sha256": "b682479c461871e2dd0897f0a6ee22ff2483fc58b6cbe7df94cdbc0b43ddb10e"
+    }
+  },
+  "note": "Original runtime bundle and its manifest untouched; delivery manifest records checkout-stable bytes"
+}

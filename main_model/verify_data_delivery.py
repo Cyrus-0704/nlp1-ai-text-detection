@@ -20,6 +20,8 @@ def main():
     p.add_argument('--split-dir', required=True)
     p.add_argument('--output-dir', required=True)
     p.add_argument('--reproduce', action='store_true')
+    p.add_argument('--preprocess-script', help='Exact A script snapshot for pre-merge review; manifest is unchanged')
+    p.add_argument('--delivery-commit', help='A delivery Git commit being reviewed')
     a = p.parse_args()
     repo = Path(__file__).resolve().parent.parent
     manifest = json.loads(Path(a.manifest).read_text(encoding='utf-8-sig'))
@@ -32,10 +34,11 @@ def main():
                   official_validation_read=False, internal_test_performance_evaluated=False,
                   internal_test_access='opaque byte count and SHA-256 only; generated log not inspected',
                   raw_file_verified=False, files={}, overlap={}, smoke_membership={})
+    report['delivery_commit'] = a.delivery_commit
     if sha256(a.raw_file) != manifest['source']['sha256'] or Path(a.raw_file).stat().st_size != manifest['source']['bytes']:
         raise ValueError('Raw source hash/size mismatch')
     report['raw_file_verified'] = True
-    script = repo/manifest['generation']['script']
+    script = Path(a.preprocess_script).resolve() if a.preprocess_script else repo/manifest['generation']['script']
     report['a_preprocess_script_sha256'] = sha256(script)
     if a.reproduce:
         if splits.exists():
@@ -95,9 +98,15 @@ def main():
     for name,key in [('train','smoke_train'),('dev','smoke_dev')]:
         small=Path(a.manifest).resolve().parent/manifest['smoke']['files'][key]['path']
         smoke=read_rows(small,labeled=True)
+        expected = manifest['smoke']['files'][key]
+        smoke_hash_matches = sha256(small)==expected['sha256'] and small.stat().st_size==expected['bytes']
+        counts = Counter(r['label'] for r in smoke)
+        smoke_counts_match = len(smoke)==expected['samples'] and counts[0]==expected['human'] and counts[1]==expected['machine']
         by_id={r['sample_id']:r for r in rows[name]}
         matched=sum(by_id.get(r['sample_id'])==r for r in smoke)
-        report['smoke_membership'][name]=dict(smoke_rows=len(smoke),exact_matches=matched,passed=matched==len(smoke))
+        report['smoke_membership'][name]=dict(smoke_rows=len(smoke),exact_matches=matched,
+            matches_a_manifest=smoke_hash_matches,counts_match=smoke_counts_match,
+            passed=matched==len(smoke) and smoke_hash_matches and smoke_counts_match)
     write_json(out/'overlap_evidence.json',dict(contains_raw_text=False,per_check_key_limit=100,evidence=evidence))
     isolation_passed=all(v['shared_keys']==0 for v in report['overlap'].values())
     membership_passed=all(v['passed'] for v in report['smoke_membership'].values())
