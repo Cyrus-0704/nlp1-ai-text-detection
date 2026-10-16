@@ -1,0 +1,23 @@
+{
+  "C": {
+    "max_abs_difference": 4.99960073341299e-11,
+    "rtol": 1e-06,
+    "atol": 1e-08,
+    "reference_sha256": "031662988c4459b0cc30f1a8b45b89f396568b8b4b844789a88fc4362adfcabd",
+    "threshold_decisions_equal": true
+  },
+  "B": {
+    "max_abs_difference": 0.0,
+    "rtol": 1e-05,
+    "atol": 1e-06,
+    "reference_sha256": "36179ab16a91967cb04f3a12503d2f06751115e4d6838fa35ab6fc914dc591e4",
+    "threshold_decisions_equal": true
+  },
+  "predictions": {
+    "max_abs_difference": 3.4997338360653885e-11,
+    "rtol": 1e-05,
+    "atol": 1e-06,
+    "reference_sha256": "a1d42378fb56d1c58813cd3a39e42a351c04bdda9a95fc328723c941fc1ffea9",
+    "threshold_decisions_equal": true
+  }
+}

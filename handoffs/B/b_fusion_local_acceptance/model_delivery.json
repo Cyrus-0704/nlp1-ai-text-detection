@@ -1,0 +1,11 @@
+{
+  "status": "PENDING_SEPARATE_TRANSFER_TO_A",
+  "user_choice": "Merge code, evidence and inventory only; keep weights local for a later separate A handoff",
+  "local_bundle": "runs/b_fusion_acceptance_final/inference_bundle",
+  "original_bundle_json_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+  "files": 17,
+  "bytes": 1147638057,
+  "weights_in_this_PR": false,
+  "independent_A_acceptance": false,
+  "note": "model_inventory.json is an LF metadata copy, not the original bundle.json bytes. Its own SHA is in manifest.json."
+}

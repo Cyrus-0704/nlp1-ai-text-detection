@@ -1,0 +1,75 @@
+{
+  "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+  "files": {
+    "C.joblib": {
+      "bytes": 11931952,
+      "sha256": "6d231819e61d24b2f9b8ee91b07b72f6e7c0f8c26d93c500d419d791211c46f8"
+    },
+    "common.py": {
+      "bytes": 5121,
+      "sha256": "51b8b44987222d0979b14638a210bf02df9e3ed3cf6126332408ce07aa73459e"
+    },
+    "fusion_inference.py": {
+      "bytes": 5569,
+      "sha256": "0c4ee96fa00352a867bc9321c906835c30b5d5d20d238af502d65aa4508c4df7"
+    },
+    "gpu_guard.py": {
+      "bytes": 5567,
+      "sha256": "ea506123bbc060c23be9a2a03dc6100d685759a1ec4458b29b399b542b66c0b9"
+    },
+    "INFERENCE.md": {
+      "bytes": 407,
+      "sha256": "b061075138db4b033dfc098fbdc50fe0d03609f9a23403ef6761e7d3e4a3e02b"
+    },
+    "requirements.txt": {
+      "bytes": 234,
+      "sha256": "8b54ef092436cb2bf1fa5297d839e4af8cea245534117540e11480746d5ca9d6"
+    },
+    "verify_fusion_output.py": {
+      "bytes": 2403,
+      "sha256": "f8659d65da9b53e4d0ae76529e577d5ed57674872902b9015567f9cad987166d"
+    },
+    "B/config.json": {
+      "bytes": 900,
+      "sha256": "0eb5263e1fa63e1ea94cb53dd9cf87210388be0dbe8b2a656ecb2e2d24b09019"
+    },
+    "B/model.safetensors": {
+      "bytes": 1112205008,
+      "sha256": "47c9deae762ee43c7700045538bb9b9a388fc5b9c1b3e015db25f6874128e48e"
+    },
+    "B/sentencepiece.bpe.model": {
+      "bytes": 5069051,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+    },
+    "B/source_manifest.json": {
+      "bytes": 1107,
+      "sha256": "b37fc3b7ac2153aae1d4e1b552c6f60d3b59bc1b5852f71030a24a4a57236d3e"
+    },
+    "B/special_tokens_map.json": {
+      "bytes": 1015,
+      "sha256": "66715ae6a0dd4aff4fe228bcaaccac6e52c83fd0ba80992c2be7d0e43b362307"
+    },
+    "B/tokenizer.json": {
+      "bytes": 17082987,
+      "sha256": "883b037111086fd4dfebbbc9b7cee11e1517b5e0c0514879478661440f137085"
+    },
+    "B/tokenizer_config.json": {
+      "bytes": 1462,
+      "sha256": "4279f61796a28b88829544606767b048e84433a84dfa1026cb767a4f89c3784a"
+    },
+    "references/B.csv": {
+      "bytes": 474285,
+      "sha256": "36179ab16a91967cb04f3a12503d2f06751115e4d6838fa35ab6fc914dc591e4"
+    },
+    "references/C.csv": {
+      "bytes": 378998,
+      "sha256": "031662988c4459b0cc30f1a8b45b89f396568b8b4b844789a88fc4362adfcabd"
+    },
+    "references/predictions.csv": {
+      "bytes": 471991,
+      "sha256": "a1d42378fb56d1c58813cd3a39e42a351c04bdda9a95fc328723c941fc1ffea9"
+    }
+  },
+  "scope": "Inventory only; package weights remain local",
+  "independent_acceptance": "PENDING_A"
+}

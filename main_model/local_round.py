@@ -25,7 +25,13 @@ def load_config(path, include_optional=False, seed43_only=False):
         resource_steps=50,evaluation_steps=[500,1000,2000],segment_steps=[50,500,1000,1500,2000],deterministic=True)
     if t != expected:
         raise ValueError('Unexpected protocol change; define a separate reviewed experiment')
-    if c['seeds'] != [42] or c['optional_seeds'] != [43]:
+    intervention=c.get('experiment')=='classifier_dropout_02'
+    if not intervention and (c.get('experiment') is not None or c.get('classifier_dropout') is not None):
+        raise ValueError('Unknown intervention; do not silently ignore requested hyperparameters')
+    if intervention:
+        if c.get('classifier_dropout')!=.2 or c['seeds']!=[42,43] or c['optional_seeds']!=[] or include_optional or seed43_only:
+            raise ValueError('Dropout intervention fixes both seeds42/43 and classifier0.2')
+    elif c['seeds'] != [42] or c['optional_seeds'] != [43]:
         raise ValueError('Unexpected seed protocol')
     if include_optional and seed43_only:
         raise ValueError('Choose either both seeds or seed43 only')
@@ -77,6 +83,15 @@ def preflight(c):
         if digest(ROOT/c['model_dir']/name)!=item['sha256']:
             raise ValueError(f'Pretrained source file differs: {name}')
     ids = [r['sample_id'] for r in dev]
+    if c.get('experiment')=='classifier_dropout_02':
+        control_manifest=read_json(ROOT/'handoffs/B/b_v2_length512_two_seed/manifest.json')['files']
+        for control in c['comparison_baselines']:
+            path=ROOT/control['run']
+            ref_name=f'L512_s{control["seed"]}_u{control["steps"]}_dev_predictions.csv'
+            if digest(path/'dev_predictions.csv')!=control_manifest[ref_name]['sha256']:
+                raise ValueError('Dropout0.1 control predictions differ')
+            predictions(path/'dev_predictions.csv',ids)
+        if digest(ROOT/c['c_reference'])!=c['c_reference_sha256']:raise ValueError('C reference differs')
     shared = ROOT/c['baseline_handoff']
     index = read_json(shared/'manifest.json')['files']
     baselines = []
@@ -128,6 +143,8 @@ def preflight(c):
                                   dict(length=256,seed=43,steps=500,status='MISSING_NOT_RECONSTRUCTED'),
                                   dict(length=256,seed=43,steps=1000,status='MISSING_NOT_RECONSTRUCTED')],
         gpu_snapshot=process_snapshot(),source_manifest_sha256=digest(ROOT/c['model_dir']/'source_manifest.json'),
+        experiment=c.get('experiment','length512_original'),classifier_dropout=c.get('classifier_dropout',.1),
+        prerequisites='For dropout: current fusion PASS plus actual A receipt required before run; dry-run does not authorize training',
         evaluator_sha256=digest(ROOT/c['evaluation_script']),
         free_gib=shutil.disk_usage(ROOT).free/2**30,
         manual_visual_review='PENDING_AFTER_RUN')
@@ -146,6 +163,8 @@ def checkpoints(out,seed):
                         ('dev_sha256',frozen['dev_sha256'])]:
                     if sig.get(key)!=value:
                         raise ValueError(f'Checkpoint/config mismatch: {key}')
+                if frozen.get('classifier_dropout') is not None and sig.get('classifier_dropout')!=frozen['classifier_dropout']:
+                    raise ValueError('Dropout checkpoint mismatch; never resume original0.1 checkpoints')
             step = meta['optimizer_step']
             if step in found and digest(p/'model.safetensors')!=digest(found[step]/'model.safetensors'):
                 raise ValueError('Conflicting checkpoint models at one node')
@@ -168,6 +187,8 @@ def train_command(c,out,seed,target,resume):
         cmd += ['--stop-after-steps',str(target)]
     if resume:
         cmd += ['--resume-from',str(resume)]
+    if c.get('experiment')=='classifier_dropout_02':
+        cmd += ['--classifier-dropout','0.2']
     return cmd
 
 
@@ -266,13 +287,13 @@ def evaluate(c,out,seed,step,checkpoint,book,force=False):
 
 
 def evaluation_runs(c,out):
-    runs = {b['name']:ROOT/b['run'] for b in c['baselines']}
+    runs = {b['name']:ROOT/b['run'] for b in c.get('comparison_baselines',c['baselines'])}
     for seed in c['effective_seeds']:
         for step in c['training']['evaluation_steps']:
             root = out/f'seed-{seed}'/'evaluation'/f'step-{step:06d}'
             for p in sorted(root.glob('attempt-*/run_summary.json'),reverse=True):
                 if read_json(p).get('status')=='PASS':
-                    runs[f'L512_s{seed}_u{step}'] = p.parent
+                    runs[f'{c.get("run_label","L512")}_s{seed}_u{step}'] = p.parent
                     break
     return runs
 
@@ -281,7 +302,7 @@ def sample_audit(c,out):
     """Hash-chain comparison at equal attempts AND optimizer nodes, with prefix checks."""
     result = []
     for seed in c['effective_seeds']:
-        baseline = ROOT/next(b['run'] for b in c['baselines'] if b['seed']==seed and b['steps']==2000)
+        baseline = ROOT/next(b['run'] for b in c.get('comparison_baselines',c['baselines']) if b['seed']==seed and b['steps']==2000)
         reference = [json.loads(x) for x in (baseline/'training_log.jsonl').read_text(encoding='utf-8').splitlines()]
         for step,cp in checkpoints(out,seed).items():
             history = [json.loads(x) for x in (cp.parent.parent/'training_log.jsonl').read_text(encoding='utf-8').splitlines()]
@@ -295,7 +316,11 @@ def sample_audit(c,out):
                 equal_sample_prefix_at_equal_attempts=equal_attempts,
                 same_exposure_at_equal_effective_updates=same_exposure,
                 conclusion='MATCHED_EXPOSURE' if same_exposure else 'EXPOSURE_DIFFERS_REPORT_FP16_SKIPS',
-                note='Different lengths can change FP16 skips; never claim equal exposure from equal update counts alone'))
+                note='Intervention can change FP16 skips; equal attempts verify order, not equal effective gradients/exposure'))
+            if c.get('experiment')=='classifier_dropout_02':
+                result[-1]['attempts_intervention']=result[-1].pop('attempts_512')
+                result[-1]['attempts_control']=result[-1].pop('attempts_256')
+                result[-1].update(intervention_classifier_dropout=.2,control_classifier_dropout=.1,length=512)
             if not equal_attempts:
                 raise ValueError('Unexpected sample-order mismatch at equal attempts; inspect trajectory before continuing')
     dump(out/'sampling_audit.json',dict(comparisons=result))
@@ -334,6 +359,9 @@ def bundle(c,out,book):
     """Small analysis export: no weights, environment, raw text or full training logs."""
     directory = next_attempt(out/'bundles')
     directory.mkdir()
+    if c.get('experiment')=='classifier_dropout_02':
+        from dropout_results import generate
+        generate(c,out,directory/'regularization_comparison')
     safe = book.data['stages'].get('preflight',{}).get('status')=='PASS'
     runs = evaluation_runs(c,out) if safe else {}
     records = []
@@ -420,6 +448,17 @@ def main():
     p.add_argument('--dry-run-report',default='.local/b512_prepare/dry_run.json')
     args = p.parse_args()
     c = load_config(ROOT/args.config,args.include_seed43,args.seed43_only)
+    if c.get('experiment')=='classifier_dropout_02' and args.phase in ('run','resume'):
+        gate=ROOT/c['integration_gate']
+        if not gate.is_file():raise ValueError('Complete current unified fusion acceptance before starting dropout training')
+        accepted=read_json(gate)
+        if accepted.get('status')!='PASS_B_LOCAL_PENDING_A' or accepted.get('bundle_sha256')!=c['integration_bundle_sha256']:
+            raise ValueError('Current fusion gate missing, failed, or refers to a different candidate')
+        receipt=ROOT/c['independent_acceptance_receipt']
+        if not receipt.is_file():raise ValueError('Wait for A independent inference acceptance receipt before dropout experiment')
+        received=read_json(receipt)
+        if received.get('status')!='PASS' or received.get('reviewer')!='A' or received.get('bundle_sha256')!=c['integration_bundle_sha256'] or not received.get('evidence_url','').startswith('https://github.com/'):
+            raise ValueError('A receipt must record actual PASS, exact bundle SHA and traceable GitHub evidence')
     out = (ROOT/args.output).resolve()
     if not out.is_relative_to(ROOT/'runs') or out == ROOT/'runs':
         raise ValueError('Output must be a dedicated directory within runs/')
@@ -465,10 +504,11 @@ def main():
             raise RuntimeError('Required local dependencies/auditors missing')
         protocol_path = out/'protocol.json'
         training_names = ('main_model/train.py','main_model/training_engine.py','main_model/common.py')
+        if c.get('experiment')=='classifier_dropout_02':training_names+=('main_model/dropout_protocol.py',)
         code = {n:check['code']['files'][n] for n in training_names}
         if protocol_path.exists():
             old = read_json(protocol_path)
-            if old['training_code'] != code:
+            if old['training_code'] != code and args.phase in ('run','resume'):
                 raise ValueError('Training code differs from frozen trajectory; do not silently resume')
             if old['training_runtime']!={n:check['dependencies'][n] for n in ('torch','transformers','numpy','accelerate')}:
                 raise ValueError('Training runtime versions differ from frozen trajectory')

@@ -1,0 +1,17 @@
+{
+  "files": {
+    "checks.json": {
+      "bytes": 5449,
+      "sha256": "30c4f2355470c0300137c5e31611599b7555b0a78319ab3257d04b64f213bd01"
+    },
+    "C_full_dev_cpu_check.json": {
+      "bytes": 797,
+      "sha256": "d9044fc32b8fb2d78a0fde85648688c7360a2bbaf98c5a72f645c4ad1cfaf251"
+    },
+    "inference_package_inventory.json": {
+      "bytes": 2584,
+      "sha256": "61955eaff20dc49aec25522c35e8ad5e59bc614cfc23ef98ade4be12781e1544"
+    }
+  },
+  "serialization": "Portable LF copies; historical values unchanged"
+}

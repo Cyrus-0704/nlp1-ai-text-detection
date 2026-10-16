@@ -1,0 +1,28 @@
+{
+  "status": "PASS_CPU_EVIDENCE_AUDIT",
+  "source_archive": "runs/b_fusion_acceptance_final/analysis/attempt-002.zip",
+  "source_archive_sha256": "505a1ec70e8e5f4c40eb45f5596a8d174908efd42c9cf58b739b41e260aee0ad",
+  "source_archive_files_verified": 18,
+  "source_archive_unchanged": true,
+  "bundle_files_verified": 17,
+  "prediction_files_verified": 6,
+  "reference_checks_recomputed": true,
+  "metrics_recomputed": true,
+  "syntax": "PASS",
+  "cpu_tests": {
+    "status": "PASS",
+    "count": 12
+  },
+  "A_receipt_present": false,
+  "no_model_inference": true,
+  "no_training": true,
+  "test_or_official_data_read": false,
+  "state": "PASS_B_LOCAL_PENDING_A",
+  "manual_figure_review": "NO_NEW_FIGURES_CREATED",
+  "limitations": [
+    "A independent inference not yet accepted",
+    "Same development dev used for candidate comparison",
+    "No unseen-generator or cross-time generalization result",
+    "Dropout0.2 not run"
+  ]
+}

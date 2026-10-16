@@ -1,0 +1,14 @@
+{
+  "C_prediction": {
+    "status": "PASS",
+    "seconds": 2.770451600001252
+  },
+  "B_prediction": {
+    "status": "PASS",
+    "seconds": 3.5746214000027976,
+    "peak_allocated_mib": 1232.796875
+  },
+  "fusion": {
+    "status": "PASS"
+  }
+}

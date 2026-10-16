@@ -1,0 +1,98 @@
+{
+  "smoke_dev": {
+    "rows": 200,
+    "short_rows": 21,
+    "macro_f1": 0.9892749892749892,
+    "short_macro_f1": 0.8864864864864865,
+    "temporary_score": 0.9584384384384383,
+    "human_recall": 1.0,
+    "machine_recall": 0.984251968503937,
+    "confusion_matrix": [
+      [
+        73,
+        0
+      ],
+      [
+        2,
+        125
+      ]
+    ],
+    "errors": 2,
+    "high_confidence_human_false_positives": 0,
+    "log_loss": 0.12050973776906783,
+    "brier": 0.023565006226026402,
+    "auc": 0.9993528206234495,
+    "timing": {
+      "C_prediction": {
+        "status": "PASS",
+        "seconds": 2.770451600001252
+      },
+      "B_prediction": {
+        "status": "PASS",
+        "seconds": 3.5746214000027976,
+        "peak_allocated_mib": 1232.796875
+      },
+      "fusion": {
+        "status": "PASS"
+      }
+    },
+    "data_version": "internal-v2",
+    "threshold": 0.5,
+    "short_by": "word",
+    "short_definition": "temporary whitespace words <100",
+    "C_weight": 0.7,
+    "B_weight": 0.3,
+    "B_length": 512,
+    "B_seed": 43,
+    "B_updates": 2000,
+    "B_classifier_dropout": 0.1
+  },
+  "dev": {
+    "rows": 15086,
+    "short_rows": 1841,
+    "macro_f1": 0.9684634567792136,
+    "short_macro_f1": 0.9533812971072779,
+    "temporary_score": 0.9639388088776328,
+    "human_recall": 0.9563239308462238,
+    "machine_recall": 0.9791471170889375,
+    "confusion_matrix": [
+      [
+        5255,
+        240
+      ],
+      [
+        200,
+        9391
+      ]
+    ],
+    "errors": 440,
+    "high_confidence_human_false_positives": 0,
+    "log_loss": 0.14813216874301408,
+    "brier": 0.03405680404686808,
+    "auc": 0.9945513826704193,
+    "timing": {
+      "C_prediction": {
+        "status": "PASS",
+        "seconds": 34.46743509999942
+      },
+      "B_prediction": {
+        "status": "PASS",
+        "seconds": 244.08716400000048,
+        "peak_allocated_mib": 1232.796875
+      },
+      "fusion": {
+        "status": "PASS"
+      }
+    },
+    "data_version": "internal-v2",
+    "threshold": 0.5,
+    "short_by": "word",
+    "short_definition": "temporary whitespace words <100",
+    "C_weight": 0.7,
+    "B_weight": 0.3,
+    "B_length": 512,
+    "B_seed": 43,
+    "B_updates": 2000,
+    "B_classifier_dropout": 0.1
+  }
+}

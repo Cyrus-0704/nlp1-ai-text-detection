@@ -23,6 +23,7 @@ def process_snapshot():
             joined = ' '.join(cmd).replace('\\', '/').lower()
             relevant = any(x in joined for x in ('main_model/train.py', 'main_model/predict.py',
                          'main_model/local_round.py', 'main_model/evaluate_node.py',
+                         'fusion_inference.py', 'main_model/fusion_workflow.py',
                          'run_b_v2', 'run_b_round2'))
             if relevant:
                 cwd = Path(p.cwd()).resolve()
