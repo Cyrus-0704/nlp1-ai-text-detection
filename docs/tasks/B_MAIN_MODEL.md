@@ -68,6 +68,8 @@ git push
 
 ### 2026-10-17：第一版冻结草案、通用核验与C交接
 
+- 交付提交`e55bafbee671ed9536af713bc6201f023828614a`已推送work/b-model，并创建[PR #11](https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/11)供C接收审阅，目标main；尚未合并，不代表C已验收或全队已冻结。只提交11项相关文件，个人记录/重复分析/权重保持本地。
+
 - [冻结记录草案](../../handoffs/B/RELEASE_FREEZE_DRAFT_20261017.md)固定现有候选/数据/来源/包指纹，保持DRAFT；[运行说明](../../handoffs/B/INFERENCE_RUNBOOK_20261017.md)提供输入、离线预测及格式检查步骤。新增main_model/check_inference_io.py为包外标准库工具，检查JSONL/CSV输入与预测列/编号/顺序/行数/有限概率；不加载模型、不使用dev参考、不更改概率方向或标签。
 - 9项合成fixture/CLI回归通过，包括前导零、重复/非字符串编号、空正文、坏JSON/CSV、NaN/越界、错序/缺行及报告防覆盖；继续用既有dev输入/预测核验，不重新推理。本轮检查与辅助文件SHA见[检查记录](../../handoffs/B/release_preparation_checks_20261017.json)。
 - fetch发现A PR #10（90b6b29，OPEN）已声明独立复现；包SHA相同，但B概率最大差2.56e-5与原容差不符，且PR只更新个人清单、未附机器报告。B记录证据缺口，不自动放宽、签发PASS、合并A PR或重训。下一步接收A两份检查结果、manifest/命令/脚本SHA与环境解释。
