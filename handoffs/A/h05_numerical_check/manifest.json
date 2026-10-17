@@ -1,0 +1,43 @@
+{
+  "version": "h05-numerical-check-v1",
+  "owner": "A",
+  "date": "2026-10-17",
+  "files": {
+    "dev_B.csv": {
+      "bytes": 474285,
+      "sha256": "263b6618a78222018ae845aaa12ea62d49267883ba4d50203e2fe8360e40b18f"
+    },
+    "dev_C.csv": {
+      "bytes": 472223,
+      "sha256": "a8d52d1d558496e0dc4a8595fdc1e5482dedd80f1beb3f409cfb5969e4664fd9"
+    },
+    "dev_check.json": {
+      "bytes": 1064,
+      "sha256": "fe3659a87151239e9a64b04f83afe97aa8ee7a14268ab5e929da34ea3daedeab"
+    },
+    "dev_predictions.csv": {
+      "bytes": 472056,
+      "sha256": "310687adb155431d70640b9c84858951d0be4302ee044ab82c668a39ff0020c5"
+    },
+    "recheck.py": {
+      "bytes": 2011,
+      "sha256": "1703c2939ece46641f3d6bd5f4b711eee70ba3acc7f50667b77dbfaa19e0f881"
+    },
+    "smoke_B.csv": {
+      "bytes": 6310,
+      "sha256": "a04b5b2b6d3dcc3e02fc124f98702171cad729d72d85e8e78dd72b56d3bbcfd3"
+    },
+    "smoke_C.csv": {
+      "bytes": 6275,
+      "sha256": "bef7aa31365557129cb7e495e0dd22244a1a83c18960fdaa6b9c31a046169964"
+    },
+    "smoke_check.json": {
+      "bytes": 1110,
+      "sha256": "80b5219b9a846bae11fd411f92beb8d688552ab3cfd9c457b5b1744121b4daca"
+    },
+    "smoke_predictions.csv": {
+      "bytes": 6287,
+      "sha256": "99113f9fdc7abd4208e2c5c4c23b9481373cdb1f06f1547dff081458f2a8d9c2"
+    }
+  }
+}

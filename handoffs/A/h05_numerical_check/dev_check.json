@@ -1,0 +1,31 @@
+{
+  "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+  "input_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "rows": 15086,
+  "checks": {
+    "C": {
+      "max_abs_difference": 4.99960073341299e-11,
+      "rtol": 1e-06,
+      "atol": 1e-08,
+      "within_tolerance": true,
+      "threshold_decisions_identical": true
+    },
+    "B": {
+      "max_abs_difference": 2.5570392608642578e-05,
+      "rtol": 1e-05,
+      "atol": 1e-06,
+      "within_tolerance": false,
+      "threshold_decisions_identical": true
+    },
+    "predictions": {
+      "max_abs_difference": 7.671143219201149e-06,
+      "rtol": 1e-05,
+      "atol": 1e-06,
+      "within_tolerance": false,
+      "threshold_decisions_identical": true
+    }
+  },
+  "status": "PASS_DECISIONS_IDENTICAL_WITH_FP_TOLERANCE_NOTE",
+  "note": "CPU FP32 vs B CUDA FP32; max abs diff 2.557e-05; all threshold(0.5) decisions identical",
+  "reviewer_receipt": "This numeric check alone is not a signed A acceptance receipt"
+}
