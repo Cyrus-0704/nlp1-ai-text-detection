@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-17",
+  "status": "PREPARATION_PASS_NOT_FROZEN",
+  "tests": {
+    "standard_library_io_regressions": 9,
+    "status": "PASS",
+    "fixtures": "synthetic only; no model execution"
+  },
+  "saved_dev_format_check": {
+    "status": "PASS_INPUT_OUTPUT_FORMAT",
+    "rows": 15086,
+    "input_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+    "scope": "Format only; no model quality, provenance or probability-direction verification",
+    "predictions_sha256": "a1d42378fb56d1c58813cd3a39e42a351c04bdda9a95fc328723c941fc1ffea9",
+    "ordered_ids": true,
+    "finite_probability_range": true
+  },
+  "original_bundle": {
+    "sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+    "files_verified": 17,
+    "unchanged": true
+  },
+  "A_receipt": {
+    "pr": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/10",
+    "head": "90b6b291968fbafdd0ae48e44a3bee52a2701d8e",
+    "state_observed": "OPEN",
+    "status": "A_REPORTED_PASS_PENDING_B_NUMERIC_EVIDENCE_REVIEW",
+    "reported_B_max_abs_difference": 2.56e-05,
+    "original_B_max_possible_tolerance": 1.1e-05,
+    "machine_reports_in_PR": false,
+    "local_PASS_receipt_created": false
+  },
+  "new_training": false,
+  "real_model_inference": false,
+  "test_or_official_val_accessed": false,
+  "source_sha256": {
+    "main_model/check_inference_io.py": "04d69b43703382ea53a622894dbc0a45635c3a4b20ce46b9aed41ddc2d921630",
+    "main_model/test_inference_io.py": "5f1ecda1d9126d4cb03ebd83aea802a16c08cd7bd92872fc4fc9eee33fb3b11f",
+    "handoffs/B/RELEASE_FREEZE_DRAFT_20261017.md": "c3e2e41e4fd91e17f0e1ccff7cec7102e44bf0bf8e8259ec33aa148e6cb53aad",
+    "handoffs/B/INFERENCE_RUNBOOK_20261017.md": "68238d1a79c3297274e6cfbf566bde2977d3fb76a4c28e727a7b2029a07871e8",
+    "handoffs/B/B08_REPORT_MATERIALS_FOR_C_20261017.md": "ea14850e86dd7c3c2d944201419865911ccf42a86a8c867beaa6967fa8ad393d"
+  },
+  "delivery": "B branch PR; no merge or recipient acceptance implied"
+}

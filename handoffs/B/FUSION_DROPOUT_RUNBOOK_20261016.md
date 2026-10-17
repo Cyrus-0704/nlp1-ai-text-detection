@@ -2,6 +2,10 @@
 
 ## 最新状态：用户已完成本地验收
 
+2026-10-17交付范围更新：先完成现有候选的第一版，Dropout训练继续暂停。通用运行步骤以[新运行说明](INFERENCE_RUNBOOK_20261017.md)为准，A新PR #10的文字回执及待核对的CPU容差差异见[冻结草案](RELEASE_FREEZE_DRAFT_20261017.md)；下面的Dropout流程保留为后续版本历史计划。
+
+2026-10-17补充：用户确认模型ZIP已发送A，待接收确认及真实独立复现；不再处于待发送状态。[最新协议复核](DROPOUT_PROTOCOL_REVIEW_20261017.md)与[给C的B08报告材料](B08_REPORT_MATERIALS_FOR_C_20261017.md)已整理。本轮不启动训练，下面“权重稍后交A”等为此前交接记录。
+
 当前`PASS_B_LOCAL_PENDING_A`：200条smoke及15086条dev通过，S=.963938808878，log loss=.148132168743，Brier=.034056804047。不要重复运行下方历史本地验收计划。实测/误差/耗时和下一步见[FUSION_LOCAL_ACCEPTANCE_20261016.md](FUSION_LOCAL_ACCEPTANCE_20261016.md)，必要证据见`b_fusion_local_acceptance/`。
 
 用户选择本次只交代码、证据和模型清单；同一原始推理包保留本机`runs/b_fusion_acceptance_final/inference_bundle/`，权重稍后单独交A，尚未进入仓库。原bundle.json SHA保持`5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a`。A直接按最新交接命令在本人独立环境复现，不必等官方未给出的细则；旧CSV复评不能替代模型复现。B07未完成，Dropout.2不启动，等待A对同一包真实回执。

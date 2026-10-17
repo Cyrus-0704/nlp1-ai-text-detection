@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-17",
+  "scope": "B08 report preparation and dropout protocol review only",
+  "cpu_regressions": {
+    "status": "PASS",
+    "count": 7,
+    "real_XLMR_inference": false,
+    "tiny_synthetic_CPU_fixture": true
+  },
+  "dry_run": {
+    "status": "CPU_PREFLIGHT_PASS",
+    "dependencies": {
+      "torch": "2.13.0+cu126",
+      "transformers": "4.57.6",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "accelerate": "1.15.0",
+      "matplotlib": "3.11.2",
+      "fitz": "1.28.2",
+      "PIL": "12.3.0",
+      "psutil": "7.2.2"
+    },
+    "missing_dependencies": [],
+    "missing_auditors": [],
+    "free_gib_snapshot": 230.2471580505371,
+    "requires_rerun_before_training": true
+  },
+  "report_checks": {
+    "table_rows_matched_to_source": 8,
+    "relative_links": "PASS",
+    "external_references_and_license": "NOT_REVERIFIED"
+  },
+  "gates": {
+    "B_local": "PASS_B_LOCAL_PENDING_A",
+    "user_reported_model_sent": true,
+    "A_receipt_present": false,
+    "manual_review_of_A_evidence_required": true
+  },
+  "training_started": false,
+  "real_XLMR_inference": false,
+  "training_output_created": false,
+  "test_or_official_val_accessed": false,
+  "training_source_or_config_modified": false,
+  "git_delivery": "LOCAL_ONLY_NOT_COMMITTED_OR_PUSHED",
+  "source_sha256": {
+    "main_model/configs/dropout02_v2.json": "fa08ca0c71d06b9bab3ff6f4c3fb41537682543fd3b480f1b2a81d00e48b7cfe",
+    "main_model/dropout_protocol.py": "66d92a7aeed936d47b221bdbd47d747541db626db349f55a9d4f6a331f9a36c1",
+    "main_model/local_round.py": "6670882373a3d7a8994b9b8fca7c8428ffa10e6e81e417f0361a27b513c5392d",
+    "main_model/train.py": "791c038042eca26ebcbf0d94df711db180a28b1ac7f49a217d86855db0d78e7b",
+    "main_model/training_engine.py": "e63fe2c382db50338004cef77241f250f40e1513dcdc869fff27f149b898a783",
+    "main_model/dropout_results.py": "3ecbd838cbe484f6661d87043a8694e1fa157640e1a49e092167785c13bc1b89",
+    "main_model/test_fusion_dropout.py": "742599ff35f0a2a70f9865afb8b132624b941a77aa15eb67df31882c40383fdc",
+    "handoffs/B/b_v2_length512_two_seed/metrics.csv": "8bf0d66db3e7190c8223d60dd9a2aa29fe06d17443e05a6c80ca5705d8e53747",
+    "handoffs/B/b_v2_length512_two_seed/resources.csv": "777ce6421bb4a428c52f9f684224b1449e3acbf7f594712f7568494a78f55e73",
+    "handoffs/B/b_fusion_local_acceptance/acceptance.json": "6ad9e2013e5467cab933390b687432c01290fd12962410f6f59fe4ec5a4f6a24"
+  }
+}

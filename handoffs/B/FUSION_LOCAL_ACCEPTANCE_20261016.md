@@ -1,5 +1,7 @@
 # B统一融合本地验收与A/C下一步
 
+2026-10-17更新：用户已发送模型ZIP；A已通过PR #10报告同包CPU独立复现，但机器检查文件与B分量2.56e-5最大差仍待复核，详见[冻结草案](RELEASE_FREEZE_DRAFT_20261017.md)。本版优先工程交付，Dropout继续暂停。下文“稍后交A/待发送”为此前记录，原包及历史验收清单不改写。
+
 用户已前台完成现有候选的独立包推理。本轮B仅CPU复核运行产物、更新代码/交接，不启动训练、GPU推理或后台监测。原runs及已验收推理包原样保留。
 
 ## 已通过什么
@@ -12,6 +14,8 @@
 ## 模型清单已交，权重稍后单独交A
 
 用户明确选择本次先合代码、验收证据和模型清单，约1.15GB推理包保留本机`runs/b_fusion_acceptance_final/inference_bundle/`，稍后单独交A。该包只有一个B权重/分词器、C模型、离线代码、依赖和三份参考概率，不含优化器、其他seed、环境或中间checkpoint。本轮LFS上传已停止；仓库不含这个推理包，不能仅凭git pull开始A模型复现。
+
+本机发送用ZIP现已准备在`.local/b_fusion_delivery/b_v2_fusion_s43_2000_for_A.zip`（915002576字节，约915MB），旁边有同名.sha256和给A的README，ZIP内也包含说明与纯标准库文件校验脚本。ZIP SHA-256为`f5b34bb2d87e884ce876152875f0692c6e8f8eb03de26de9c50af696886dd687`；20个归档条目的SHA均已核验，原包字节不变。用户自行把ZIP及.sha256发给A；A解压至项目`handoffs/shared_models/`后，模型目录为`handoffs/shared_models/b_v2_fusion_s43_2000/`。当前仅“打包待发送”，不代表已传输、A已收到或H05完成；发送包保留本地，不上传Git。
 
 原始bundle.json SHA-256：`5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a`。`b_fusion_local_acceptance/model_inventory.json`是清单的LF副本，其自身SHA在交接manifest中；不要将副本SHA误认成原bundle SHA。交付状态见model_delivery.json。包内DEVELOPMENT_CANDIDATE/PENDING_A是历史状态，B本地PASS写于包外证据。
 
