@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "input_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+  "rows": 15086,
+  "device": "cpu",
+  "precision": "fp32",
+  "batch": 8,
+  "length": 512,
+  "probability_direction": "machine=1",
+  "files": {
+    "C.csv": {
+      "bytes": 472223,
+      "sha256": "a8d52d1d558496e0dc4a8595fdc1e5482dedd80f1beb3f409cfb5969e4664fd9"
+    },
+    "B.csv": {
+      "bytes": 474285,
+      "sha256": "263b6618a78222018ae845aaa12ea62d49267883ba4d50203e2fe8360e40b18f"
+    },
+    "predictions.csv": {
+      "bytes": 472056,
+      "sha256": "310687adb155431d70640b9c84858951d0be4302ee044ab82c668a39ff0020c5"
+    }
+  }
+}
