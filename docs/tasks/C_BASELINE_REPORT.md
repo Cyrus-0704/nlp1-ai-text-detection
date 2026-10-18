@@ -41,7 +41,7 @@
 
 ## 下一步与交接记录
 
-下一步：将本版报告源稿、可审阅PDF/DOCX、实验表、来源/许可证与匿名检查清单经 `work/c-baseline` 提交并向main提PR，在本issue #6回执接收的B commit、报告位置、完成项和剩余阻塞。随后等待A/B数值验收闭环与第一版冻结；冻结后由A执行一次内部test，C把结果纳入同一报告并导出最终匿名PDF。不追加融合权重/阈值/校准搜索，不重复H04，不运行test或官方验证集。
+下一步：本版报告源稿、可审阅PDF/DOCX、构建/检查脚本、来源/许可证与匿名检查清单已通过 `work/c-baseline` 提交，并提PR #13（head `ce64d4f`）；在本issue #6回执接收的B commit、报告位置、完成项和剩余阻塞。随后等待A/B数值验收闭环与第一版冻结；冻结后由A执行一次内部test，C把结果纳入同一报告并导出最终匿名PDF。不追加融合权重/阈值/校准搜索，不重复H04，不运行test或官方验证集。
 
 | 日期 | 任务编号 | 状态/产物与commit | 验收结果 | 已交给谁/下一步 |
 | --- | --- | --- | --- | --- |
@@ -51,4 +51,4 @@
 | 2026-10-16 | C03初轮 | `baseline/compare.py`；B交接提交`4ca7c858…736795b`；完整比较和融合CSV在`handoffs/C/c_v2_round1/` | B三份预测及C预测均通过15086行/顺序/概率验收；dev初选C/B=0.7/0.3，CE2000_s43临时S=0.957972。条件group bootstrap区间不消除同dev选权重的偏差，未冻结方案 | 将结果交B讨论；等待A确认官方评测口径，按统一口径重算后再决策 |
 | 2026-10-16 | C03/H04/报告更新 | 同步B PR #4 merge `89870c7c9ac716b9747e20c76800bbed8692114c`；新增`baseline/verify_fixed_fusion.py`及`handoffs/C/c_v2_round2_h04/` | B 6个512节点及固定融合CSV的manifest SHA、格式、编号顺序均通过；固定权重公式通过；Python3.14重载C模型，完整dev参考预测SHA完全一致。Python3.11兼容未验；训练时源码指纹未记录，已明确披露 | 请B完成跨环境加载，A确认官方口径；随后提交C PR |
 | 2026-10-17 | C03跨环境复核 | B本地统一融合验收、`handoffs/B/b_fusion_local_acceptance/`；A独立复现回执 | B Python3.11加载C模型成功，完整dev最大差4.9996e-11、classes_=[0,1]；统一包0.5决策一致。A报告B分量274条、融合4条超原逐点容差，分类决策全一致；原核验程序未数值PASS，原因待闭环 | 不重复H04；在报告中写“分类决策一致、数值验收差异待A/B闭环” |
-| 2026-10-18 | C04第一版收尾 | 从main接收B08材料、冻结草案（PR #11合并head `1bb48c8`）；更新`reports/technical_report_draft.md`、`reports/experiment_log.csv`；新增`reports/release_checklist.md`、`reports/build_technical_report.py`、`reports/check_report_anonymity.py`、`reports/release_anonymity_check.json`、10页可审阅`technical_report_v1_review.pdf/.docx`及`requirements/report.txt` | 报告数字与B `metrics.csv`/`resources.csv`、C H04和A回执逐项对照；来源/许可证与匿名机械检查通过（`PASS_REVIEW_PDF_PENDING_FINAL_FREEZE`）；未新增训练/融合搜索，未运行test/官方val | 经`work/c-baseline`提交并提PR；在issue #6回执；等待A/B数值闭环与冻结 |
+| 2026-10-18 | C04第一版收尾 | 从main接收B08材料、冻结草案（PR #11合并head `1bb48c8`）；更新`reports/technical_report_draft.md`；新增`reports/release_checklist.md`、`reports/build_technical_report.py`、`reports/check_report_anonymity.py`、`reports/release_anonymity_check.json`、10页可审阅`technical_report_v1_review.pdf/.docx`及`requirements/report.txt`；`work/c-baseline`提交`ce64d4f`，PR #13 | 报告数字与B `metrics.csv`/`resources.csv`、C H04和A回执逐项对照；来源/许可证与匿名机械检查通过（`PASS_REVIEW_PDF_PENDING_FINAL_FREEZE`）；未新增训练/融合搜索，未运行test/官方val | 在issue #6回执；等待A/B数值闭环与冻结，之后补test结果与最终匿名PDF |

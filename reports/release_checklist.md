@@ -1,6 +1,6 @@
 # 第一版报告来源、许可证与匿名检查清单
 
-维护人：C。日期：2026-10-18。适用于 `reports/technical_report_draft.md` 及其导出的 `technical_report_v1_review.pdf`。本清单是报告流程的一部分，不是新的跨人交接说明；A/B 的个人清单不由 C 代改。
+维护人：C。日期：2026-10-18。适用于 `reports/technical_report_draft.md` 及其导出的 `technical_report_v1_review.pdf`。本清单是报告流程的一部分，不是新的跨人交接说明；A/B 的个人清单不由 C 代改。第一版提交：`work/c-baseline` commit `ce64d4f`，PR #13。
 
 ## 1. 本版报告使用的接收版本
 
