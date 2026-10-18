@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-10-18T05:43:48+00:00",
+  "checked_at": "2026-10-18T06:05:30+00:00",
   "inputs": {
-    "reports\\technical_report_draft.md": "26a318decef709dc4e0bd289628a5ad80aac97515ef63870a8659ec67418ab76",
-    "reports\\technical_report_v1_review.docx": "9c88b68b36dc75fb9e68957ac634940797e7776254c3121e2bc65cf79fff40a5",
-    "reports\\technical_report_v1_review.pdf": "d27cfd126f4727e6c3f1ee867506bc08b53770ed4189d3f01c05045d0ba1f367"
+    "reports\\technical_report_draft.md": "038d32d5cb0473b52234b70bf9af74cd91c49cb5b79b62942786bc7e110175ed",
+    "reports\\technical_report_v1_review.docx": "30f0d9be99a53f1f150bedcb346fdb558900d1a552e3ea28b118bbf89360984b",
+    "reports\\technical_report_v1_review.pdf": "44d82e5e74e638ec1121a772ed90d126c1bac17fa9daa36c010f3eb4cec8a8d9"
   },
   "banned_tokens": [
     "Cyrus",
@@ -27,7 +27,7 @@
     "last_modified_by": ""
   },
   "pdf": {
-    "bytes": 539884,
+    "bytes": 539647,
     "header": "%PDF-",
     "hits": [],
     "metadata": {
