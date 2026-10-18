@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "owner": "B",
+  "recipient": "A",
+  "date": "2026-10-19",
+  "purpose": "V1 saved numerical diagnostics for offline analysis only; not a repair or model execution authorization",
+  "original_bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+  "dev_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+  "original_dev_batch_indices_zero_based": [
+    0,
+    1,
+    2,
+    3,
+    263,
+    528,
+    648,
+    696
+  ],
+  "rows_per_mode": 64,
+  "trace_rows": 32,
+  "archive": {
+    "path": "v1_numeric_diagnostics.zip",
+    "bytes": 39600,
+    "sha256": "e4cf75864f1be94572a3c50492ed7c8944b4b2f70aa31afe6aa730fc18d49fa7",
+    "members": 33
+  },
+  "files": {
+    "baseline_cpu/B.csv": {
+      "bytes": 2041,
+      "sha256": "22e61bc7bfd879a68fb6542e7e3731ff232dd115b99a64c4f5ac47490d768b83"
+    },
+    "baseline_cpu/environment.json": {
+      "bytes": 2066,
+      "sha256": "e29380d810bc55a69716cf83a98f5a7e39416803815ca0992748d03081fb594a"
+    },
+    "baseline_cpu/logits.json": {
+      "bytes": 5621,
+      "sha256": "58f3b5a2d5b95b0dfbce670b474cb20be61c00f642b18260adf49ce54e06cd7c"
+    },
+    "baseline_cpu/result.json": {
+      "bytes": 700,
+      "sha256": "e1447c4afa77bd4638204732d822f83885341d223ea594b8160b357a2e9e6798"
+    },
+    "baseline_cpu/token_fingerprints.json": {
+      "bytes": 2765,
+      "sha256": "70761cb10b90566307bfc3d1972e7741fd0573544a75bb333b4b7914ea5640f2"
+    },
+    "baseline_cuda/B.csv": {
+      "bytes": 2045,
+      "sha256": "41201f136a5543729a69108ee15dae9be49d0aa36d4d3412cba7a37526343917"
+    },
+    "baseline_cuda/environment.json": {
+      "bytes": 2068,
+      "sha256": "efd6c82cb2d2fb70538c51cdb9e7149cb15eb719738107103e2287bd8c885579"
+    },
+    "baseline_cuda/logits.json": {
+      "bytes": 5613,
+      "sha256": "c4104748654fb91c3e694635e8fab8e657e743b9177bd925db3a58139bf047d7"
+    },
+    "baseline_cuda/result.json": {
+      "bytes": 688,
+      "sha256": "47e242e2b64001b6388fe446ea4398517d37a9eaaad2433f8efdee6dca719cdc"
+    },
+    "baseline_cuda/token_fingerprints.json": {
+      "bytes": 2765,
+      "sha256": "70761cb10b90566307bfc3d1972e7741fd0573544a75bb333b4b7914ea5640f2"
+    },
+    "eager_cpu/B.csv": {
+      "bytes": 2048,
+      "sha256": "97325eabd49a641c4398b33b267485ff0e5d8900705874fe9c33ba863a7d8453"
+    },
+    "eager_cpu/environment.json": {
+      "bytes": 2064,
+      "sha256": "89bfe1091268d27aa8205ee1e79604e8b3b54efb61df0bf4bf537ca12d8b97b5"
+    },
+    "eager_cpu/logits.json": {
+      "bytes": 5625,
+      "sha256": "cf969d337ff79a97617c322dc3e90dd5ebe696bccffc956479bc38ee513d642c"
+    },
+    "eager_cpu/result.json": {
+      "bytes": 716,
+      "sha256": "ca280d67d05c49c3794e2bfe2af10dbde461c6248f469110e48a4eaec3ad4d3f"
+    },
+    "eager_cpu/token_fingerprints.json": {
+      "bytes": 2765,
+      "sha256": "70761cb10b90566307bfc3d1972e7741fd0573544a75bb333b4b7914ea5640f2"
+    },
+    "execution_provenance.json": {
+      "bytes": 10700,
+      "sha256": "824b6856ac4fcf990ed95f5b7de5432b212e6154ef38791434ed91141c8991ac"
+    },
+    "layer_trace/trace.json": {
+      "bytes": 28803,
+      "sha256": "19ee9ea2f28f4cc9a7c3fbf2007e6b574a438d8a31def5c2b705b520eb149153"
+    },
+    "math_cpu/B.csv": {
+      "bytes": 2039,
+      "sha256": "6733d672f1032fdadd720ef7ee3da9ce3c5cfcae3674387a0cd719738242aaea"
+    },
+    "math_cpu/environment.json": {
+      "bytes": 2062,
+      "sha256": "b80878fc73d1de65d104e40673c68992b3b00cd73c92d8cc9f29c0b2d607c9f2"
+    },
+    "math_cpu/logits.json": {
+      "bytes": 5622,
+      "sha256": "81e6fd7b6185da66d3d739f3852d03a34f3eaa33a7648a2a2f71a4f490061839"
+    },
+    "math_cpu/result.json": {
+      "bytes": 715,
+      "sha256": "c58b33076d841bc2c919800e61ac95ff2a3557520dc2026ad6c622761f73d1ee"
+    },
+    "math_cpu/token_fingerprints.json": {
+      "bytes": 2765,
+      "sha256": "70761cb10b90566307bfc3d1972e7741fd0573544a75bb333b4b7914ea5640f2"
+    },
+    "nomkldnn_cpu/B.csv": {
+      "bytes": 2045,
+      "sha256": "765d57ae5ec5a6e6901b28b73d209cb288caf683b7f10ea33e7d27e99d877364"
+    },
+    "nomkldnn_cpu/environment.json": {
+      "bytes": 2067,
+      "sha256": "015148c4957bd6cd161f2b3cdd84ec300b18ff9435a055990c996ed74bc9f35f"
+    },
+    "nomkldnn_cpu/logits.json": {
+      "bytes": 5621,
+      "sha256": "69eb8d49a090285b7a934c34a9dd9fa3a9e685d76f90afb49cc424de9767b5a1"
+    },
+    "nomkldnn_cpu/result.json": {
+      "bytes": 719,
+      "sha256": "15a49e73e129b8f437a70254af11e76d78c682e4d507aeb70df8b40aad64205d"
+    },
+    "nomkldnn_cpu/token_fingerprints.json": {
+      "bytes": 2765,
+      "sha256": "70761cb10b90566307bfc3d1972e7741fd0573544a75bb333b4b7914ea5640f2"
+    },
+    "strict_cuda/B.csv": {
+      "bytes": 2045,
+      "sha256": "41201f136a5543729a69108ee15dae9be49d0aa36d4d3412cba7a37526343917"
+    },
+    "strict_cuda/environment.json": {
+      "bytes": 2066,
+      "sha256": "e0b410f101550a0bd1953c7996c72bd19adfdf93c3ed9f6bf020a68924c84e09"
+    },
+    "strict_cuda/logits.json": {
+      "bytes": 5613,
+      "sha256": "c4104748654fb91c3e694635e8fab8e657e743b9177bd925db3a58139bf047d7"
+    },
+    "strict_cuda/result.json": {
+      "bytes": 687,
+      "sha256": "46e3b533178a7bac2cb7e7c0832d0a8d0f70e8f46c4f76ab082e4298941b9310"
+    },
+    "strict_cuda/token_fingerprints.json": {
+      "bytes": 2765,
+      "sha256": "70761cb10b90566307bfc3d1972e7741fd0573544a75bb333b4b7914ea5640f2"
+    },
+    "summary.json": {
+      "bytes": 11632,
+      "sha256": "fc605d960dd9c9f108658d2a338ec562b810d5ec056ebcd43e69d0e9802f3abd"
+    }
+  },
+  "notes": [
+    "All member bytes preserved from B run, including CSV precision and JSON newlines",
+    "No weights, raw text, token values or D42 files",
+    "execution_provenance.json records prior stdin source; do not execute for this offline review",
+    "summary.json contains the original 32-payload manifest; this outer manifest also covers summary.json itself",
+    "Original strict numeric acceptance remains failed"
+  ]
+}

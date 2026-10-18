@@ -269,3 +269,10 @@ git push
 | 2026-10-16 | CE2000与第二seed | `handoffs/B/b_v2_training_round2/`；训练`421c9f9`/`1bcff6f` | 两项2000步、完整dev重载、候选独立打包与图表/指纹PASS；临时S候选seed43=0.907691 | 经PR #4交A/C同版预测/图；下一轮长度对照和扩大覆盖，B06仍未完成 |
 
 本轮交接：[PR #4](https://github.com/Cyrus-0704/nlp1-ai-text-detection/pull/4)于2026-10-16核对仍OPEN，本轮提交补充2000步/第二seed及最终比较图。A修复已通过PR #3进入main `7231172`；B本轮验收、小样、先导和2000步结果仍由该PR交接，尚未进入main。合并后A/C从main拉取同一v2预测；权重与完整个人runs留本机，最终模型包及跨机器复现另按H05交接。
+
+
+## 第一版数值诊断数据交A离线分析（2026-10-19）
+
+B完成64条原批次CPU/GPU及单因素诊断（包含全部4个融合超限样本）和32条逐层对照；CPU精确复现A旧结果，GPU精确复现旧参考。CPU math/eager/关闭MKLDNN均未通过原标准，不宣称已修复或A验收通过。
+
+按用户要求将33项运行产物原字节打包至`handoffs/B/v1_numeric_diagnosis_20261019/v1_numeric_diagnostics.zip`，同目录manifest.json记录ZIP与逐文件字节/SHA。包含六组预测、logits、环境配置、输入张量指纹、逐层差异及执行来源；不含权重、正文、token值或D42文件，无新增说明文档。通过B分支PR交付A，PR合并前不称main已收到。A先核哈希，用已保存数据离线比较，在原issue #5回传本地分析；不授权加载模型、重新推理、训练、test或修改容差。
