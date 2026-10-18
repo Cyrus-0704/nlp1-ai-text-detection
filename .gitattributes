@@ -17,3 +17,6 @@
 *.bin filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 *.7z filter=lfs diff=lfs merge=lfs -text
+# A: V1 运行证据(JSON/CSV)须字节保真, 禁止任何换行/编码转换; CSV 走 LFS 但 -text 保证不转字节
+handoffs/A/v1_runs_*/** -text
+handoffs/A/v1_runs_*/**/*.csv filter=lfs diff=lfs merge=lfs -text
