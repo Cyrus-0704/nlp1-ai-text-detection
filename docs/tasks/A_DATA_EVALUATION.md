@@ -48,6 +48,11 @@ manifest.json / cleaning_audit.md
 - **未决口径（待官方最终确认）**：多语言计词细节、概率转类别阈值、官方提交 CSV 模板/列名/概率方向、真实截止时间。
 - **H05 证据归档**：`handoffs/A/h05_numerical_check/`（复算脚本 `recheck.py`、smoke/dev 检查 JSON、C/B/融合轻量预测 CSV（仅 sample_id,p_machine）、含全部 SHA-256 的 `manifest.json` 与 README）；本目录即为 C 报告引用的评估证据路径。
 
+## Issue 与分支交付规范（队长 2026-10-18 更新）
+
+- **Issue 使用**：每个版本共用一个主 Issue；较长的独立任务再拆子 Issue，结论汇总回主 Issue（例如 V1 数值闭环、D42/7500 校准包验收各在主 Issue 下汇总）。
+- **交付路径**：本人记录只维护在本文档；代码与证据一律通过本人分支 `work/a-data` 提交，经 PR 合入 main 后才算全队收到。
+
 ## 下一步与交接记录
 
 下一步：核实官方短文本计词、阈值与预测 CSV 口径（A03）；等待 C 的基线与融合预测后按 A04 统一复评；H03 冻结后执行官方最终推理与承诺书整理（A05 剩余部分）；H05 数值差异（full-dev B 分量原判据超限 274 条、融合 4 条，0.5 决策差异均 0）保持「待共同闭环」，不强制标记 PASS。
@@ -59,3 +64,4 @@ manifest.json / cleaning_audit.md
 | 2026-10-16 | A03/A04 | 按团队统一 Word 口径（`--short-by word --short-threshold 100`）复评 B 第二轮 dev 预测 CE2000_s42（S=0.9047）与 CE2000_s43（S=0.9077）；完成格式校验（15086 行、表头、编号顺序、概率范围） | 与 B 自评逐项一致 | 待 C 基线与融合预测 |
 | 2026-10-16 | A04 | PR#4 合入 main 后复评 B 512 两 seed 交付：7 个预测 CSV 全部通过格式与 manifest SHA 核验；Word 口径下 L512_s42_u2000 S=0.9210、L512_s43_u2000 S=0.9490、固定融合 C07_B03_L512_s43_u2000 S=0.9639（当前最优候选）；与 B 自评一致。全队冻结前不运行内部 test 或官方验证集 | 通过 | 回执已出；待 C 分支 PR 合入与 H03 冻结 |
 | 2026-10-17 | A05 | H05 独立复现完成并按队长要求归档：`handoffs/A/h05_numerical_check/`（复算脚本、smoke/dev 检查 JSON、C/B/融合轻量预测 CSV 仅两列、含 SHA-256 的 manifest）；原判据复算 full-dev B 超限 274 条、融合 4 条、决策差异 0；状态字段来源已澄清为 A 侧归纳标注 | 数值差异待与 B 共同闭环，不标 PASS | 证据 PR 已发；internal test 继续封存 |
+| 2026-10-18 | A05 | V1 数值闭环收尾：换行符统一 LF（哈希与队出口径一致）、recheck.py 改读交付 CSV 并加严格异常断言、CPU/CUDA 表述改「可能原因，尚未证实」；V1 原包 CPU 重复推理与存档逐字节一致（B 4 条超限/决策差 0，形态稳定）。D42/7500 校准包：ZIP/bundle/calibrator 哈希核验通过，smoke accept 原判据失败即停（raw 超限 1/200、calibrated 5/200、决策差 0），full-dev 未执行，现场证据保留于 `runs/a_d42_calibrated_*`，证据回执已发主 Issue | V1 差异待共同闭环；D42 smoke 验收未通过待 B 指示 | 回执已发 issue #14；后续按「每版本一个主 Issue」汇总 |
