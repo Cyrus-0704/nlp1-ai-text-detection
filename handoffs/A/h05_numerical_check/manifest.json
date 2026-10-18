@@ -1,8 +1,13 @@
 {
-  "version": "h05-numerical-check-v1",
+  "version": "h05-numerical-check-v1.1",
   "owner": "A",
-  "date": "2026-10-17",
+  "date": "2026-10-18",
+  "note": "JSON 统一 LF 换行; recheck.py 默认读取本目录交付 CSV",
   "files": {
+    "README.md": {
+      "bytes": 2350,
+      "sha256": "daae8df77544099d6ab4e91949ec007cb7d5f032c7a48eec91ef06071555eb4a"
+    },
     "dev_B.csv": {
       "bytes": 474285,
       "sha256": "263b6618a78222018ae845aaa12ea62d49267883ba4d50203e2fe8360e40b18f"
@@ -12,16 +17,16 @@
       "sha256": "a8d52d1d558496e0dc4a8595fdc1e5482dedd80f1beb3f409cfb5969e4664fd9"
     },
     "dev_check.json": {
-      "bytes": 1064,
-      "sha256": "fe3659a87151239e9a64b04f83afe97aa8ee7a14268ab5e929da34ea3daedeab"
+      "bytes": 1034,
+      "sha256": "b2c00fe79602ae08517d766dea3a734b54fa3d268bc93b9ef32e051c794700c0"
     },
     "dev_predictions.csv": {
       "bytes": 472056,
       "sha256": "310687adb155431d70640b9c84858951d0be4302ee044ab82c668a39ff0020c5"
     },
     "recheck.py": {
-      "bytes": 2011,
-      "sha256": "1703c2939ece46641f3d6bd5f4b711eee70ba3acc7f50667b77dbfaa19e0f881"
+      "bytes": 4164,
+      "sha256": "9c34f942fd3d8ea0e84bf5a4abd6160ed9784999ab81a4a280c9c4dd0d95dd34"
     },
     "smoke_B.csv": {
       "bytes": 6310,
@@ -32,8 +37,8 @@
       "sha256": "bef7aa31365557129cb7e495e0dd22244a1a83c18960fdaa6b9c31a046169964"
     },
     "smoke_check.json": {
-      "bytes": 1110,
-      "sha256": "80b5219b9a846bae11fd411f92beb8d688552ab3cfd9c457b5b1744121b4daca"
+      "bytes": 1080,
+      "sha256": "36ff17af6efedd7d204298c8df89389b7d01bb80003f125787997164550e9c0e"
     },
     "smoke_predictions.csv": {
       "bytes": 6287,
