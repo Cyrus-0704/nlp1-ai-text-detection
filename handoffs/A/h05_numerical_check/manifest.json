@@ -2,11 +2,11 @@
   "version": "h05-numerical-check-v1.1",
   "owner": "A",
   "date": "2026-10-18",
-  "note": "JSON 统一 LF 换行; recheck.py 默认读取本目录交付 CSV",
+  "note": "JSON 统一 LF 换行; recheck.py 默认读取本目录交付 CSV; README.md 条目记录仓库 index(LF)口径值(本地 CRLF 工作副本 2350B/daae8df7 非仓库实际)",
   "files": {
     "README.md": {
-      "bytes": 2350,
-      "sha256": "daae8df77544099d6ab4e91949ec007cb7d5f032c7a48eec91ef06071555eb4a"
+      "bytes": 2317,
+      "sha256": "a5597e778202dd834f1cf85a24083ba7b98e681e2c5b2cfa0b668641b833f028"
     },
     "dev_B.csv": {
       "bytes": 474285,
