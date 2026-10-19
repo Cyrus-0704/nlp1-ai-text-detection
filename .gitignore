@@ -77,3 +77,5 @@ preprocess_log.txt
 
 # A: D42 smoke 证据包内的原始日志是交接证据, 需入库(覆盖上方 *.log 规则)。
 !handoffs/A/d42_calibrated_smoke_evidence/*.log
+# A: D42 CUDA 验收证据包内的日志是交接证据, 需入库(覆盖上方 *.log 规则)。
+!handoffs/A/d42_calibrated_cuda_evidence/**/*.log

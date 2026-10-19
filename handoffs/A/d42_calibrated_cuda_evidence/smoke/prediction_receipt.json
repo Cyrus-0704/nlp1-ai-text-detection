@@ -1,0 +1,61 @@
+{
+  "status": "MODEL_RELOAD_EXECUTED_NOT_YET_ACCEPTED",
+  "kind": "ACTUAL_MODEL_RELOAD",
+  "bundle_sha256": "67dcc44cde3e43e1111b8fece850e48f34e94db8079c214358cf767dfe539e6a",
+  "input_sha256": "218b56ed0f19e59351853c13e2f11f1598c172decbc97b60fa1682e6e9d2883c",
+  "model_sha256": "058b86efb0bca8748e609e3d24fb1d5bc8e91ef64b97e29c9a3b1f3eac899100",
+  "calibrator_sha256": "0e637f964f55f119d8ddd34a47944a1a610f1e0eba7267be50236ebf6d5e42b9",
+  "source_sha256": {
+    "d_calibration.py": "59d2c2bf0cac93c477e038ccd056f0dfe088492aba6580b229d5e8fc60de0e56",
+    "d_calibrated_deploy.py": "563a8bfb03d978ed160475510c6caf7fa4ea7d60c970b9d7a9ec8c09b701ba10",
+    "common.py": "51b8b44987222d0979b14638a210bf02df9e3ed3cf6126332408ce07aa73459e",
+    "check_inference_io.py": "04d69b43703382ea53a622894dbc0a45635c3a4b20ce46b9aed41ddc2d921630",
+    "gpu_guard.py": "ea506123bbc060c23be9a2a03dc6100d685759a1ec4458b29b399b542b66c0b9"
+  },
+  "rows": 200,
+  "inference": {
+    "max_length": 512,
+    "precision": "fp32",
+    "batch_size": 8,
+    "model_eval": true,
+    "local_files_only": true,
+    "calibration_dtype": "float64",
+    "attention": "sdpa",
+    "deterministic": true,
+    "threads": 4
+  },
+  "device": "cuda",
+  "runtime": {
+    "torch": "2.13.0+cu130",
+    "transformers": "4.57.6",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1"
+  },
+  "python": "3.11.17",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "pid": 59152,
+  "cuda_version": "13.0",
+  "seconds": 7.375635899996269,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "at_utc": "2026-10-19T16:11:04.764735+00:00",
+  "command": [
+    "handoffs/shared_models/b_d42_calibrated_7500/bundle/d_calibrated_deploy.py",
+    "predict",
+    "--bundle",
+    "handoffs/shared_models/b_d42_calibrated_7500/bundle",
+    "--expected-sha",
+    "67dcc44cde3e43e1111b8fece850e48f34e94db8079c214358cf767dfe539e6a",
+    "--input",
+    "data/processed/v2/smoke_dev.jsonl",
+    "--output",
+    "runs/a_d42_calibrated_cuda_smoke/attempt-001",
+    "--device",
+    "cuda"
+  ],
+  "files": {
+    "raw.csv": "29aa4f72718aeb7c1f7751ac7234614391fa973685097dac335e4e76e70d6520",
+    "predictions.csv": "899d8d68a6148c01938b9cf095e82219f5e890123dc6dc7bfd8b1b67702e703e"
+  },
+  "independent_effect_validation": "NOT_RUN"
+}

@@ -1,0 +1,10 @@
+{
+  "python": "3.11.17",
+  "torch": "2.13.0+cu130",
+  "torch_cuda": "13.0",
+  "cuda_available": true,
+  "transformers": "4.57.6",
+  "numpy": "2.4.6",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "device_requested": "cuda"
+}

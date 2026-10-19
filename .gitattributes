@@ -26,3 +26,6 @@ handoffs/A/d42_calibrated_smoke_evidence/**/*.csv filter=lfs diff=lfs merge=lfs 
 # A: V1 CUDA 证据包(JSON/CSV/ZIP)须字节保真, 禁止任何换行/编码转换; CSV/ZIP 走 LFS 但 -text 保证不转字节
 handoffs/A/v1_cuda_evidence/** -text
 handoffs/A/v1_cuda_evidence/**/*.csv filter=lfs diff=lfs merge=lfs -text
+# A: D42 CUDA 验收证据包(JSON/CSV/ZIP)须字节保真, 禁止任何换行/编码转换; CSV/ZIP 走 LFS 但 -text 保证不转字节
+handoffs/A/d42_calibrated_cuda_evidence/** -text
+handoffs/A/d42_calibrated_cuda_evidence/**/*.csv filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,76 @@
+{
+  "archive": "d42_cuda_evidence_for_B.zip",
+  "note": "原字节复制, 未做换行符/编码转换; 未重跑推理",
+  "files": {
+    "logs/verify_bundle.log": {
+      "bytes": 51,
+      "sha256": "0584bb473f0d28aea0777ab88e2fa525036d1d02fd127c1a8afc48a63752f221",
+      "source": "runs/a_d42_calibrated_cuda_logs/attempt-001/verify_bundle.log"
+    },
+    "logs/smoke_predict.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "runs/a_d42_calibrated_cuda_logs/attempt-001/smoke_predict.log"
+    },
+    "logs/smoke_accept.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "runs/a_d42_calibrated_cuda_logs/attempt-001/smoke_accept.log"
+    },
+    "logs/dev_predict.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "runs/a_d42_calibrated_cuda_logs/attempt-001/dev_predict.log"
+    },
+    "logs/dev_accept.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "runs/a_d42_calibrated_cuda_logs/attempt-001/dev_accept.log"
+    },
+    "logs/environment.json": {
+      "bytes": 236,
+      "sha256": "253fe6e22e4e195790fee66f8cf3c657e9a84531b55a6d649e08593e37f8ae97",
+      "source": "runs/a_d42_calibrated_cuda_logs/attempt-001/environment.json"
+    },
+    "smoke/raw.csv": {
+      "bytes": 6419,
+      "sha256": "29aa4f72718aeb7c1f7751ac7234614391fa973685097dac335e4e76e70d6520",
+      "source": "runs/a_d42_calibrated_cuda_smoke/attempt-001/raw.csv"
+    },
+    "smoke/predictions.csv": {
+      "bytes": 6420,
+      "sha256": "899d8d68a6148c01938b9cf095e82219f5e890123dc6dc7bfd8b1b67702e703e",
+      "source": "runs/a_d42_calibrated_cuda_smoke/attempt-001/predictions.csv"
+    },
+    "smoke/prediction_receipt.json": {
+      "bytes": 2332,
+      "sha256": "87276b617a44e878bc0aba8204f44fe9828ef0384f0874ea92e357f5f5dbfed9",
+      "source": "runs/a_d42_calibrated_cuda_smoke/attempt-001/prediction_receipt.json"
+    },
+    "smoke/acceptance.json": {
+      "bytes": 4299,
+      "sha256": "ad4025c999d7f4a6887274f615ed2768f34e5c80cdc32a1ef7a39201b471168c",
+      "source": "runs/a_d42_calibrated_cuda_smoke/attempt-001/acceptance.json"
+    },
+    "dev/raw.csv": {
+      "bytes": 480771,
+      "sha256": "4d053b992e98a05ed95d69a88e4a9b3ce19996154b5f454c57ef2bf4f2019290",
+      "source": "runs/a_d42_calibrated_cuda_dev/attempt-001/raw.csv"
+    },
+    "dev/predictions.csv": {
+      "bytes": 483027,
+      "sha256": "ae29f7cb18bfd7aea6e85e06ec9daf3cbd43f9aecab164239b32be493ae16ded",
+      "source": "runs/a_d42_calibrated_cuda_dev/attempt-001/predictions.csv"
+    },
+    "dev/prediction_receipt.json": {
+      "bytes": 2327,
+      "sha256": "4f6cf374c2b2d9bd50a075c8733bc3d617060e80e1b7bd81a946d6eea4ed7d15",
+      "source": "runs/a_d42_calibrated_cuda_dev/attempt-001/prediction_receipt.json"
+    },
+    "dev/acceptance.json": {
+      "bytes": 4189,
+      "sha256": "955040c127bbef491c7cf9ea2233b26b1c5da16fbcd34debb8263342a9149fdc",
+      "source": "runs/a_d42_calibrated_cuda_dev/attempt-001/acceptance.json"
+    }
+  }
+}
