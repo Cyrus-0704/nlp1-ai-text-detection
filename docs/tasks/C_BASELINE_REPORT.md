@@ -41,7 +41,7 @@
 
 ## 下一步与交接记录
 
-下一步：第一版报告已由PR #13合并main `67624a6`，冻结记录main `1d0063a`；当前从main继续，报告版本`V1-20261019`，冻结候选报告稿已更新。待A归档核对同一V1包的既有test结果及数据条款后，C导出最终匿名PDF并通过C分支新PR交付；不追加融合权重/阈值/校准搜索，不重复H04，不运行test或官方验证集。
+下一步：第一版报告已由PR #13合并main `67624a6`，冻结记录main `1d0063a`；当前从main继续，报告版本`V1-20261019`，冻结候选报告稿已更新。待A归档核对同一V1包的既有test结果及数据条款后，C导出最终匿名PDF并通过C分支PR #17（报告提交 `760129f`）交付；不追加融合权重/阈值/校准搜索，不重复H04，不运行test或官方验证集。
 
 | 日期 | 任务编号 | 状态/产物与commit | 验收结果 | 已交给谁/下一步 |
 | --- | --- | --- | --- | --- |
@@ -53,3 +53,4 @@
 | 2026-10-17 | C03跨环境复核 | B本地统一融合验收、`handoffs/B/b_fusion_local_acceptance/`；A独立复现回执 | B Python3.11加载C模型成功，完整dev最大差4.9996e-11、classes_=[0,1]；统一包0.5决策一致。A报告B分量274条、融合4条超原逐点容差，分类决策全一致；原核验程序未数值PASS，原因待闭环 | 不重复H04；在报告中写“分类决策一致、数值验收差异待A/B闭环” |
 | 2026-10-18 | C04第一版收尾 | 从main接收B08材料、冻结草案（PR #11合并head `1bb48c8`）；更新`reports/technical_report_draft.md`；新增`reports/release_checklist.md`、`reports/build_technical_report.py`、`reports/check_report_anonymity.py`、`reports/release_anonymity_check.json`、10页可审阅`technical_report_v1_review.pdf/.docx`及`requirements/report.txt`；`work/c-baseline`提交`ce64d4f`，PR #13 | 报告数字与B `metrics.csv`/`resources.csv`、C H04和A回执逐项对照；来源/许可证与匿名机械检查通过（`PASS_REVIEW_PDF_PENDING_FINAL_FREEZE`）；未新增训练/融合搜索，未运行test/官方val | 在issue #6回执；等待A/B数值闭环与冻结，之后补test结果与最终匿名PDF |
 | 2026-10-19 | C04/C05 | B PR #15 `01f4e04` 冻结记录：CUDA数值验收通过；同一报告版本`v1-review-20261019`，4.5/摘要/局限/结论更新并重导出DOCX/PDF，匿名检查更新；候选确认internal-v2/B512s43/2000/Dropout0.1/0.7C+0.3B/0.5/machine=1；报告提交`3872561`，PR #13 | CUDA smoke/dev零超限、零决策差；CPU历史274/4保留；全队冻结、test适用性、数据条款、最终匿名PDF未完成 | PR #13回执；等全队冻结与同候选test依据 |
+| 2026-10-19 | C04/C05冻结归档 | 从main `1d0063a`接收；三方冻结V1-20261019（2026-10-19）；PR #13已合main `67624a6`；报告版本`V1-20261019`，更新冻结标识、既有test待归档、数据条款缺口；DOCX/PDF重导出，XMP元数据检查；报告提交`760129f`，PR #17 | 候选冻结、CUDA通过、CPU历史保留；既有test待A归档；最终PDF待test口径/数据条款 | PR #17回执；A归档既有test与数据条款后导出最终PDF |
