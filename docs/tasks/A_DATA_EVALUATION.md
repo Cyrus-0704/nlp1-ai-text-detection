@@ -55,7 +55,7 @@ manifest.json / cleaning_audit.md
 
 ## 下一步与交接记录
 
-下一步：核实官方短文本计词、阈值与预测 CSV 口径（A03）；等待 C 的基线与融合预测后按 A04 统一复评；H03 冻结后执行官方最终推理与承诺书整理（A05 剩余部分）；H05 数值差异（full-dev B 分量原判据超限 274 条、融合 4 条，0.5 决策差异均 0）保持「待共同闭环」，不强制标记 PASS；PR #15 诊断包离线分析已完成（33/33 成员校验通过、64 条多环境对齐复算与 B `summary.json` 逐项一致），结论汇总后待 B 综合复核。
+下一步：核实官方短文本计词、阈值与预测 CSV 口径（A03）；等待 C 的基线与融合预测后按 A04 统一复评；H03 冻结后执行官方最终推理与承诺书整理（A05 剩余部分）；H05 数值差异（full-dev B 分量原判据超限 274 条、融合 4 条，0.5 决策差异均 0）——2026-10-19 已在独立 CUDA 环境复跑 V1 smoke+dev，对 B 参考逐位一致，设备浮点差异假设获本机复现证据，仍保持「待共同闭环」待 B 确认归因，不强制标记 PASS；PR #15 诊断包离线分析已完成（33/33 成员校验通过、64 条多环境对齐复算与 B `summary.json` 逐项一致），结论汇总后待 B 综合复核。
 
 | 日期 | 任务编号 | 状态/产物与commit | 验收结果 | 已交给谁/下一步 |
 | --- | --- | --- | --- | --- |
@@ -67,3 +67,4 @@ manifest.json / cleaning_audit.md
 | 2026-10-18 | A05 | V1 数值闭环收尾：换行符统一 LF（哈希与队出口径一致）、recheck.py 改读交付 CSV 并加严格异常断言、CPU/CUDA 表述改「可能原因，尚未证实」；V1 原包 CPU 重复推理与存档逐字节一致（B 4 条超限/决策差 0，形态稳定）。D42/7500 校准包：ZIP/bundle/calibrator 哈希核验通过，smoke accept 原判据失败即停（raw 超限 1/200、calibrated 5/200、决策差 0），full-dev 未执行，现场证据保留于 `runs/a_d42_calibrated_*`，证据回执已发主 Issue | V1 差异待共同闭环；D42 smoke 验收未通过待 B 指示 | 回执已发 issue #14；后续按「每版本一个主 Issue」汇总 |
 | 2026-10-19 | A05 | PR #15 V1 诊断包离线分析：LFS 载荷 39600 字节/SHA-256 校验通过，解压至独立目录 `runs/v1_diag_analysis_20261019/`，33 项成员 CRC+SHA-256 全部通过；64 条多环境对齐复算（6 模式 B、0.7C+0.3B 融合、决策差异）与 B `summary.json` 逐项一致；环境三分类比对与逐层差异分析完成（本地无独立 CUDA 环境） | 离线诊断，不改判 PASS；差异待 B 综合复核 | 离线分析回执待发主 Issue |
 | 2026-10-19 | A05 | D42 smoke 物理证据补交（B 指出此前仅有哈希/路径）：归档 `raw.csv`、`predictions.csv`、`prediction_receipt.json`、`acceptance.json`、`verify_bundle.log`、`accept_smoke.log` 及新生成 `evidence_manifest.json` 至 `handoffs/A/d42_calibrated_smoke_evidence/`（原字节复制，复制后逐文件 SHA 复核一致）；打包 `d42_smoke_evidence_for_B.zip`（10217 B，SHA-256 `2f58f53cc0ed4b3521f504eb0b89a91ebc0abfd2aecabebfeaa2e92925bc37e3`） | 仅补交物理文件，不重跑推理、不改 D42 流程与容差 | 分支 work/a-data 推送，待 B 独立复算 |
+| 2026-10-19 | A05 | V1 CUDA 复跑（用户指示：确认 CUDA 不可用根因为 torch CPU 版后换装 GPU 版重跑 V1 issue #14 数据）：根因证实为 `torch 2.14.0+cpu`；新建 Python 3.11 独立环境 `zyy-gpu`（对齐 B 验证环境与包 requirements：torch 2.13.0+cu130、transformers 4.57.6、scikit-learn 1.9.1、numpy 2.4.6 等，RTX 4060 sm_89），CUDA 驱动验证通过；重跑 V1 smoke（200）与全量 dev（15086）输出 `runs/v1_cuda_check_20261019/`、`runs/v1_cuda_dev_check_20261019/`（attempt-001 环境失败现场保留） | smoke：对 B 包内参考 PASS_REFERENCE_CHECK（B max 4.17e-7 < atol 1e-6），决策差 0；dev：对 B 参考逐位全等（B diff=0.0、融合 3.5e-11），对 A 本地 CPU 的差异模式与 H05 历史完全吻合（B 超限 274、融合 4、决策差 0）；C 分量两数据集均与 CPU 逐字节一致。设备相关浮点差异假设获本机复现证据，最终归因待 B 确认参考生成环境 | 原容差/口径未改，未读内部 test；回执待发 issue #14 |
