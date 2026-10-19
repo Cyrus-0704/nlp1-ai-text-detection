@@ -182,6 +182,8 @@ def add_table(doc: Document, rows: list[list[str]]) -> None:
         widths = [4.6, 2.0, 2.0, 1.9, 2.4, 1.8, 1.8]
     elif ncols == 5 and "SHA-256" in header_text:
         widths = [3.0, 2.6, 2.6, 2.6, 5.8]
+    elif ncols == 5 and "验收环境" in header_text:
+        widths = [3.0, 3.2, 3.5, 3.2, 2.1]
     elif ncols == 5 and "检查范围" in header_text:
         widths = [4.6, 3.2, 3.2, 3.0, 2.6]
     elif ncols == 4 and "SHA-256" in header_text:

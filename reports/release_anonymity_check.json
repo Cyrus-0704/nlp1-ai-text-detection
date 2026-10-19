@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-10-18T06:05:30+00:00",
+  "checked_at": "2026-10-19T12:43:12+00:00",
   "inputs": {
-    "reports\\technical_report_draft.md": "038d32d5cb0473b52234b70bf9af74cd91c49cb5b79b62942786bc7e110175ed",
-    "reports\\technical_report_v1_review.docx": "30f0d9be99a53f1f150bedcb346fdb558900d1a552e3ea28b118bbf89360984b",
-    "reports\\technical_report_v1_review.pdf": "44d82e5e74e638ec1121a772ed90d126c1bac17fa9daa36c010f3eb4cec8a8d9"
+    "reports\\technical_report_draft.md": "6a1404072ed4fa0260ad39298641427d831c37f27a4658bd4f3075775ec596fd",
+    "reports\\technical_report_v1_review.docx": "76f1511240f61b769667cfd54b3e04783cfe3e3ddcabf7a4155089ad05bf5efd",
+    "reports\\technical_report_v1_review.pdf": "6f25ca09d9d72bae80c5d9839ffb76ac17c5891f6247402cbdf9b35771353fa9"
   },
   "banned_tokens": [
     "Cyrus",
@@ -14,7 +14,15 @@
     "Lenovo",
     "F:\\",
     "C:\\",
-    "github.com/Cyrus-0704"
+    "github.com/Cyrus-0704",
+    "PR #",
+    "PR#",
+    "issue #",
+    "commit",
+    "H04",
+    "H05",
+    "B08",
+    "handoffs/"
   ],
   "markdown": {
     "hits": []
@@ -27,7 +35,7 @@
     "last_modified_by": ""
   },
   "pdf": {
-    "bytes": 539647,
+    "bytes": 549951,
     "header": "%PDF-",
     "hits": [],
     "metadata": {

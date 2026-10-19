@@ -30,6 +30,15 @@ BANNED = [
     "F:\\",
     "C:\\",
     "github.com/Cyrus-0704",
+    # Internal workflow locators that must not appear in the external PDF.
+    "PR #",
+    "PR#",
+    "issue #",
+    "commit",
+    "H04",
+    "H05",
+    "B08",
+    "handoffs/",
 ]
 
 
