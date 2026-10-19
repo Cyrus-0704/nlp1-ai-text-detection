@@ -40,5 +40,764 @@
     "handoffs/B/INFERENCE_RUNBOOK_20261017.md": "68238d1a79c3297274e6cfbf566bde2977d3fb76a4c28e727a7b2029a07871e8",
     "handoffs/B/B08_REPORT_MATERIALS_FOR_C_20261017.md": "ea14850e86dd7c3c2d944201419865911ccf42a86a8c867beaa6967fa8ad393d"
   },
-  "delivery": "B branch PR; no merge or recipient acceptance implied"
+  "delivery": "B branch PR; no merge or recipient acceptance implied",
+  "closeout_review": {
+    "date": "2026-10-17",
+    "status": "LOCAL_STATIC_CHECK_PASS_ACCEPTANCE_PENDING",
+    "bundle_identity_sha256_verified": true,
+    "payload_sizes_verified": 17,
+    "payload_sha256_verified_this_review": 16,
+    "metadata_only": [
+      "B/model.safetensors"
+    ],
+    "large_archive_rehashed": false,
+    "local_links_checked_before_text_updates": 20,
+    "io_and_test_sources_match_original_snapshot": true,
+    "tests_rerun": false,
+    "model_execution": false,
+    "second_version_modified": false,
+    "pr_10_state_observed": "MERGED",
+    "pr_11_state_observed": "MERGED",
+    "A_original_tolerance_violations": {
+      "smoke": {
+        "C": 0,
+        "B": 4,
+        "fusion": 0
+      },
+      "dev": {
+        "C": 0,
+        "B": 274,
+        "fusion": 4
+      }
+    },
+    "A_raw_predictions_independently_reviewed": false,
+    "prior_fields_are_original_preparation_snapshot": true
+  },
+  "AC_receipt_review_20261018": {
+    "status": "EVIDENCE_RECOMPUTED_REPORT_CORRECTIONS_PENDING_NOT_FROZEN",
+    "A_commit": "36f4fe76508167b6cdc72078ea13783c1540b61c",
+    "A_csv_sha_size_ids_order_finite_range": "PASS",
+    "A_saved_fusion_formula_max_abs": {
+      "smoke": 0.0,
+      "dev": 0.0
+    },
+    "original_tolerance_violations": {
+      "smoke": {
+        "C": 0,
+        "B": 4,
+        "fusion": 0
+      },
+      "dev": {
+        "C": 0,
+        "B": 274,
+        "fusion": 4
+      }
+    },
+    "decision_differences_all_components": 0,
+    "A_json_CRLF_reconstruction_matches_manifest": true,
+    "A_issues_pending": [
+      "manifest byte convention",
+      "portable archived CSV paths",
+      "unproven CPU CUDA attribution wording"
+    ],
+    "C_head_reviewed": "36cdfb5b2168124f279fd574136f4f9a5a4ac188",
+    "C_issues_pending": [
+      "section 4.1 baseline macro F1 comparison reversed",
+      "section 4.5 raw predictions availability stale"
+    ],
+    "C_pdf_visually_reviewed_by_B": false,
+    "PR12_state": "OPEN",
+    "PR13_state": "OPEN",
+    "training_or_inference_started": false,
+    "second_version_modified": false
+  },
+  "PR13_acceptance_review": {
+    "head": "427f5df091836cee3a862fd22babced19dbfe43d",
+    "review": "APPROVED",
+    "PR_state": "OPEN",
+    "scope": "INTERNAL_REVIEW_REPORT_ONLY_NOT_FINAL_FREEZE",
+    "md_docx_pdf_sha_match": true,
+    "pdf_pages_rendered_and_visually_reviewed": 10,
+    "pdf_text_docx_xml_identity_scan": "PASS_KNOWN_TOKENS",
+    "author_fields_empty": true,
+    "pdf_metadata_creator": "Writer",
+    "pdf_metadata_producer": "LibreOfficeDev 26.8.0.3 (X86_64)",
+    "C_regex_metadata_incomplete": true,
+    "licenses_independently_rechecked": false,
+    "final_anonymous_report_remove_internal_PR_commit": true
+  },
+  "V1_numeric_diagnostics": {
+    "smoke": {
+      "C": {
+        "violations": 0,
+        "max_abs": 4.9509840671646543e-11,
+        "p50_p95_p99_abs": [
+          1.9057894151686128e-11,
+          4.47291995109289e-11,
+          4.895865046705694e-11
+        ],
+        "decision_diffs": 0,
+        "minimum_reference_threshold_margin": 0.010732401200000019,
+        "max_error_over_reference_margin": 3.3272136080263705e-09,
+        "logloss_delta_A_minus_reference": -1.8821333380714123e-12,
+        "brier_delta_A_minus_reference": -7.960646031257568e-13,
+        "violating_ids": []
+      },
+      "B": {
+        "violations": 4,
+        "max_abs": 7.68899917602539e-06,
+        "p50_p95_p99_abs": [
+          0.0,
+          1.2587755918502783e-06,
+          3.1775236129760574e-06
+        ],
+        "decision_diffs": 0,
+        "minimum_reference_threshold_margin": 0.041925668716430664,
+        "max_error_over_reference_margin": 6.275448402679471e-05,
+        "logloss_delta_A_minus_reference": -3.1984300959131406e-07,
+        "brier_delta_A_minus_reference": -8.560287792155896e-08,
+        "violating_ids": []
+      },
+      "predictions": {
+        "violations": 0,
+        "max_abs": 2.306697705234395e-06,
+        "p50_p95_p99_abs": [
+          2.8317570510694168e-11,
+          3.7764602280748664e-07,
+          9.532676496715136e-07
+        ],
+        "decision_diffs": 0,
+        "minimum_reference_threshold_margin": 0.055006313479077806,
+        "max_error_over_reference_margin": 8.142050745515972e-06,
+        "logloss_delta_A_minus_reference": -5.300881872338792e-08,
+        "brier_delta_A_minus_reference": -1.4595839949865796e-08,
+        "violating_ids": []
+      },
+      "formula_max_abs": 0.0
+    },
+    "dev": {
+      "C": {
+        "violations": 0,
+        "max_abs": 4.99960073341299e-11,
+        "p50_p95_p99_abs": [
+          1.876373362241779e-11,
+          4.670472342205301e-11,
+          4.939186282193475e-11
+        ],
+        "decision_diffs": 0,
+        "minimum_reference_threshold_margin": 0.00010233720000002444,
+        "max_error_over_reference_margin": 4.1163453065209563e-07,
+        "logloss_delta_A_minus_reference": 6.063483048990292e-13,
+        "brier_delta_A_minus_reference": 1.1962653090336062e-13,
+        "violating_ids": []
+      },
+      "B": {
+        "violations": 274,
+        "max_abs": 2.5570392608642578e-05,
+        "p50_p95_p99_abs": [
+          0.0,
+          1.1157244443893433e-06,
+          6.258487701416016e-06
+        ],
+        "decision_diffs": 0,
+        "minimum_reference_threshold_margin": 0.0002270340919494629,
+        "max_error_over_reference_margin": 0.026253609871357313,
+        "logloss_delta_A_minus_reference": -4.434405098674432e-07,
+        "brier_delta_A_minus_reference": -1.0114909750058576e-07,
+        "violating_ids": []
+      },
+      "predictions": {
+        "violations": 4,
+        "max_abs": 7.671143219201149e-06,
+        "p50_p95_p99_abs": [
+          2.882083460775675e-11,
+          3.3470563454152114e-07,
+          1.8775446489788239e-06
+        ],
+        "decision_diffs": 0,
+        "minimum_reference_threshold_margin": 0.0002517850527483656,
+        "max_error_over_reference_margin": 0.0005300014001669447,
+        "logloss_delta_A_minus_reference": -4.715488635675946e-08,
+        "brier_delta_A_minus_reference": -1.7040715706573284e-08,
+        "violating_ids": [
+          "s_00020245",
+          "s_00041028",
+          "s_00050707",
+          "s_00054492"
+        ]
+      },
+      "formula_max_abs": 0.0
+    },
+    "A_same_input_different_batch_context": {
+      "C": {
+        "same_id_smoke_vs_dev_max_abs": 0.0,
+        "nonidentical_count": 0
+      },
+      "B": {
+        "same_id_smoke_vs_dev_max_abs": 1.7881393432617188e-07,
+        "nonidentical_count": 15
+      },
+      "predictions": {
+        "same_id_smoke_vs_dev_max_abs": 5.364418029230045e-08,
+        "nonidentical_count": 15
+      }
+    }
+  },
+  "V1_numeric_next_step": {
+    "A_issue": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/issues/5#issuecomment-6248180198",
+    "original_tolerance_changed": false,
+    "model_inference_run_by_B": true,
+    "A_repeat_smoke_only_when_D42_idle": false,
+    "D42_files_or_processes_modified": false,
+    "test_accessed": false,
+    "current_instruction": "B controlled diagnosis authorized and completed; no passing CPU repair. A rerun still awaits explicit authorization. Preserve original reference/tolerance."
+  },
+  "A_revision_a183247_review": {
+    "commit": "a183247e517733b42881e54470bd564600ac2846",
+    "nine_csv_json_script_hashes": "PASS",
+    "recheck_saved_csv_exit_code": 1,
+    "recheck_original_counts_unchanged": true,
+    "readme_raw_bytes": 2317,
+    "readme_raw_sha": "a5597e778202dd834f1cf85a24083ba7b98e681e2c5b2cfa0b668641b833f028",
+    "readme_manifest_matches_CRLF_reconstruction": true,
+    "CPU_repeat": "A_REPORTED_IDENTICAL_RAW_FILES_PENDING",
+    "thread_count": "A_reports_24_bundle_sets_4_measurement_timing_pending",
+    "deleted_failed_attempt": "A_disclosed_CUDA_unavailable_attempt_deleted_not_reconstructed",
+    "model_execution_authorized_now": false,
+    "model_loaded_this_review": false,
+    "D42_modified": false
+  },
+  "V1_repeat_evidence_inventory": {
+    "reviewed_PR12_head": "1ad27afc338ffa07b9ef9ab3cc0bcaa1d64a19f9",
+    "missing_existing_files": [],
+    "code_sets_threads": 4,
+    "runtime_threads_recorded_in_manifest_or_stages": false,
+    "A_reported_24_origin": "Separate Python process default; historical inference runtime count not measured",
+    "repeat_status": "PASS_ARCHIVED_SMOKE_BYTES_IDENTICAL_B_VERIFIED",
+    "model_execution": false,
+    "D42_modified": false,
+    "issue_comment": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/issues/5#issuecomment-6252737469",
+    "review_date": "2026-10-19",
+    "evidence_files": {
+      "handoffs\\A\\v1_runs_smoke\\prediction_manifest.json": {
+        "bytes": 754,
+        "sha256": "2157c1c888312d243392f2baf621be0ba34db2c5c82a72ecdbccf772e4ce5782"
+      },
+      "handoffs\\A\\v1_runs_smoke\\stages.json": {
+        "bytes": 251,
+        "sha256": "fc55f398f355b788a5f684075c591b84ac32eda5e669a3586b16377464b17467"
+      },
+      "handoffs\\A\\v1_runs_dev\\prediction_manifest.json": {
+        "bytes": 762,
+        "sha256": "bda2c604818a6f5f728479134a5de41d886b12c8732e583370c92354c18614cc"
+      },
+      "handoffs\\A\\v1_runs_dev\\stages.json": {
+        "bytes": 250,
+        "sha256": "f7e8549132fd64752078d00996d9491bc27ef4cfc541e325f8a17a07ce65846c"
+      },
+      "handoffs\\A\\v1_runs_smoke_repeat\\prediction_manifest.json": {
+        "bytes": 754,
+        "sha256": "2157c1c888312d243392f2baf621be0ba34db2c5c82a72ecdbccf772e4ce5782"
+      },
+      "handoffs\\A\\v1_runs_smoke_repeat\\stages.json": {
+        "bytes": 249,
+        "sha256": "5c0b80f0127f2917f6cebb374210fb3d29e84fc4b015a1fdf9264155d88b88dd"
+      },
+      "handoffs\\A\\v1_runs_smoke_repeat\\C.csv": {
+        "bytes": 6275,
+        "sha256": "bef7aa31365557129cb7e495e0dd22244a1a83c18960fdaa6b9c31a046169964"
+      },
+      "handoffs\\A\\v1_runs_smoke_repeat\\B.csv": {
+        "bytes": 6310,
+        "sha256": "a04b5b2b6d3dcc3e02fc124f98702171cad729d72d85e8e78dd72b56d3bbcfd3"
+      },
+      "handoffs\\A\\v1_runs_smoke_repeat\\predictions.csv": {
+        "bytes": 6287,
+        "sha256": "99113f9fdc7abd4208e2c5c4c23b9481373cdb1f06f1547dff081458f2a8d9c2"
+      }
+    },
+    "run_checks": {
+      "smoke": {
+        "identity_and_output_hashes": "PASS",
+        "stages": {
+          "C_prediction": {
+            "status": "PASS",
+            "seconds": 5.2623726000019815
+          },
+          "B_prediction": {
+            "status": "PASS",
+            "seconds": 61.541110800011666,
+            "peak_allocated_mib": null
+          },
+          "fusion": {
+            "status": "PASS"
+          }
+        }
+      },
+      "dev": {
+        "identity_and_output_hashes": "PASS",
+        "stages": {
+          "C_prediction": {
+            "status": "PASS",
+            "seconds": 42.60470399999758
+          },
+          "B_prediction": {
+            "status": "PASS",
+            "seconds": 3874.0213360999915,
+            "peak_allocated_mib": null
+          },
+          "fusion": {
+            "status": "PASS"
+          }
+        }
+      },
+      "smoke_repeat": {
+        "identity_and_output_hashes": "PASS",
+        "stages": {
+          "C_prediction": {
+            "status": "PASS",
+            "seconds": 4.513524599999073
+          },
+          "B_prediction": {
+            "status": "PASS",
+            "seconds": 104.8196287000028,
+            "peak_allocated_mib": null
+          },
+          "fusion": {
+            "status": "PASS"
+          }
+        }
+      }
+    },
+    "repeat_comparison": {
+      "C": {
+        "byte_equal_to_first_smoke": true,
+        "violations_against_original_reference": 0,
+        "max_abs_reference": 4.9509840671646543e-11,
+        "decision_diffs": 0
+      },
+      "B": {
+        "byte_equal_to_first_smoke": true,
+        "violations_against_original_reference": 4,
+        "max_abs_reference": 7.68899917602539e-06,
+        "decision_diffs": 0
+      },
+      "predictions": {
+        "byte_equal_to_first_smoke": true,
+        "violations_against_original_reference": 0,
+        "max_abs_reference": 2.306697705234395e-06,
+        "decision_diffs": 0
+      }
+    },
+    "original_numeric_acceptance": "FAIL_UNCHANGED",
+    "minor_PR_corrections": [
+      "A task summary and runtime-thread claims",
+      "README manifest LF bytes and SHA"
+    ],
+    "final_freeze": false
+  },
+  "V1_numeric_diagnosis_20261019": {
+    "date": "2026-10-19",
+    "status": "CAUSE_LOCALIZED_ON_FIXED_PANEL_NO_PASSING_CPU_FIX",
+    "sample_count": 64,
+    "original_dev_batches": [
+      0,
+      1,
+      2,
+      3,
+      263,
+      528,
+      648,
+      696
+    ],
+    "all_four_original_fusion_violations_covered": true,
+    "all_274_B_violations_rerun": false,
+    "results": {
+      "baseline_cpu": {
+        "status": "DIAGNOSTIC_COMPLETE_NOT_ACCEPTANCE",
+        "mode": "baseline_cpu",
+        "rows": 64,
+        "seconds": 37.546999999991385,
+        "elapsed": 73.76500000001397,
+        "checks": {
+          "vs_original_reference": {
+            "violations": 4,
+            "max_abs": 1.3470649719238281e-05,
+            "nonidentical": 34,
+            "decision_diffs": 0
+          },
+          "vs_A_saved_cpu": {
+            "violations": 0,
+            "max_abs": 0.0,
+            "nonidentical": 0,
+            "decision_diffs": 0
+          },
+          "fusion_using_saved_A_C": {
+            "violations": 4,
+            "max_abs": 4.041189528125599e-06,
+            "decision_diffs": 0
+          }
+        },
+        "prediction_sha": "22e61bc7bfd879a68fb6542e7e3731ff232dd115b99a64c4f5ac47490d768b83"
+      },
+      "baseline_cuda": {
+        "status": "DIAGNOSTIC_COMPLETE_NOT_ACCEPTANCE",
+        "mode": "baseline_cuda",
+        "rows": 64,
+        "seconds": 1.312999999994645,
+        "elapsed": 14.25,
+        "checks": {
+          "vs_original_reference": {
+            "violations": 0,
+            "max_abs": 0.0,
+            "nonidentical": 0,
+            "decision_diffs": 0
+          },
+          "vs_A_saved_cpu": {
+            "violations": 4,
+            "max_abs": 1.3470649719238281e-05,
+            "nonidentical": 34,
+            "decision_diffs": 0
+          },
+          "fusion_using_saved_A_C": {
+            "violations": 0,
+            "max_abs": 3.469562137592419e-11,
+            "decision_diffs": 0
+          }
+        },
+        "prediction_sha": "41201f136a5543729a69108ee15dae9be49d0aa36d4d3412cba7a37526343917"
+      },
+      "math_cpu": {
+        "status": "DIAGNOSTIC_COMPLETE_NOT_ACCEPTANCE",
+        "mode": "math_cpu",
+        "rows": 64,
+        "seconds": 41.78200000000652,
+        "elapsed": 53.57799999997951,
+        "checks": {
+          "vs_original_reference": {
+            "violations": 4,
+            "max_abs": 1.4662742614746094e-05,
+            "nonidentical": 35,
+            "decision_diffs": 0
+          },
+          "vs_A_saved_cpu": {
+            "violations": 0,
+            "max_abs": 1.1920928955078125e-06,
+            "nonidentical": 29,
+            "decision_diffs": 0
+          },
+          "fusion_using_saved_A_C": {
+            "violations": 3,
+            "max_abs": 4.398817396777943e-06,
+            "decision_diffs": 0
+          }
+        },
+        "prediction_sha": "6733d672f1032fdadd720ef7ee3da9ce3c5cfcae3674387a0cd719738242aaea"
+      },
+      "eager_cpu": {
+        "status": "DIAGNOSTIC_COMPLETE_NOT_ACCEPTANCE",
+        "mode": "eager_cpu",
+        "rows": 64,
+        "seconds": 40.655999999988126,
+        "elapsed": 52.23499999998603,
+        "checks": {
+          "vs_original_reference": {
+            "violations": 4,
+            "max_abs": 1.385807991027832e-05,
+            "nonidentical": 35,
+            "decision_diffs": 0
+          },
+          "vs_A_saved_cpu": {
+            "violations": 0,
+            "max_abs": 1.6689300537109375e-06,
+            "nonidentical": 24,
+            "decision_diffs": 0
+          },
+          "fusion_using_saved_A_C": {
+            "violations": 3,
+            "max_abs": 4.157395523257668e-06,
+            "decision_diffs": 0
+          }
+        },
+        "prediction_sha": "97325eabd49a641c4398b33b267485ff0e5d8900705874fe9c33ba863a7d8453"
+      },
+      "nomkldnn_cpu": {
+        "status": "DIAGNOSTIC_COMPLETE_NOT_ACCEPTANCE",
+        "mode": "nomkldnn_cpu",
+        "rows": 64,
+        "seconds": 37.53200000000652,
+        "elapsed": 49.844000000011874,
+        "checks": {
+          "vs_original_reference": {
+            "violations": 4,
+            "max_abs": 1.3232231140136719e-05,
+            "nonidentical": 35,
+            "decision_diffs": 0
+          },
+          "vs_A_saved_cpu": {
+            "violations": 0,
+            "max_abs": 8.940696716308594e-07,
+            "nonidentical": 22,
+            "decision_diffs": 0
+          },
+          "fusion_using_saved_A_C": {
+            "violations": 3,
+            "max_abs": 3.969663954328517e-06,
+            "decision_diffs": 0
+          }
+        },
+        "prediction_sha": "765d57ae5ec5a6e6901b28b73d209cb288caf683b7f10ea33e7d27e99d877364"
+      },
+      "strict_cuda": {
+        "status": "DIAGNOSTIC_COMPLETE_NOT_ACCEPTANCE",
+        "mode": "strict_cuda",
+        "rows": 64,
+        "seconds": 1.2179999999934807,
+        "elapsed": 14.25,
+        "checks": {
+          "vs_original_reference": {
+            "violations": 0,
+            "max_abs": 0.0,
+            "nonidentical": 0,
+            "decision_diffs": 0
+          },
+          "vs_A_saved_cpu": {
+            "violations": 4,
+            "max_abs": 1.3470649719238281e-05,
+            "nonidentical": 34,
+            "decision_diffs": 0
+          },
+          "fusion_using_saved_A_C": {
+            "violations": 0,
+            "max_abs": 3.469562137592419e-11,
+            "decision_diffs": 0
+          }
+        },
+        "prediction_sha": "41201f136a5543729a69108ee15dae9be49d0aa36d4d3412cba7a37526343917"
+      }
+    },
+    "token_fingerprints_equal": true,
+    "strict_cuda_identical_to_baseline": true,
+    "layer_trace_summary": {
+      "batch_count": 4,
+      "rows": 32,
+      "max_first_layernorm_input_difference": 0.0,
+      "max_first_layernorm_output_difference": 7.152557373046875e-07,
+      "max_final_cls_difference": 5.14984130859375e-05,
+      "max_logits_difference": 2.7641654014587402e-05,
+      "operators": {
+        "cpu": [
+          "aten::layer_norm",
+          "aten::native_layer_norm",
+          "aten::addmm",
+          "aten::scaled_dot_product_attention",
+          "aten::_scaled_dot_product_flash_attention_for_cpu",
+          "aten::gelu"
+        ],
+        "cuda": [
+          "aten::layer_norm",
+          "aten::native_layer_norm",
+          "aten::addmm",
+          "aten::scaled_dot_product_attention",
+          "aten::_scaled_dot_product_efficient_attention",
+          "aten::gelu"
+        ]
+      }
+    },
+    "limitations": [
+      "Cause established for fixed panel, not a proof about every dev row",
+      "First LayerNorm difference is not proven sole contributor",
+      "No CPU variant passed; no full-dev rerun or corrected package",
+      "A fresh acceptance is not authorized by this diagnostic"
+    ],
+    "original_package_modified": false,
+    "original_reference_modified": false,
+    "original_tolerance_modified": false,
+    "D42_modified": false,
+    "training_or_test_run": false,
+    "diagnostic_inference_seconds": 160.04799999998068,
+    "phase_elapsed_seconds_including_setup_and_trace": 291.2819999999774,
+    "artifact_path": "runs/b_v1_numeric_diagnosis/attempt-001",
+    "issue_handoff": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/issues/5#issuecomment-6253121980",
+    "issue_readback_verified": true
+  },
+  "V1_CUDA_A_acceptance_20261019": {
+    "status": "PASS_V1_CUDA_NUMERICAL_ACCEPTANCE_B_RECHECK",
+    "date": "2026-10-19",
+    "commit": "46aec69144b6c2c69e10d90c434de35657733bd9",
+    "source_issue": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/issues/5#issuecomment-6266508268",
+    "zip_sha256": "ca44d8ddc855288c6ab5e95244c756d6c667d1ee68afe75fe61000d61d521aa1",
+    "zip_members_verified": 15,
+    "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+    "bundle_payload_files_verified": 17,
+    "missing_logs": [
+      {
+        "item": "运行命令与会话输出日志",
+        "status": "缺失",
+        "reason": "V1 CUDA 运行未落盘独立命令/console 日志"
+      },
+      {
+        "item": "运行设备与环境日志",
+        "status": "缺失",
+        "reason": "运行时的 device/env 清单未单独留存文件"
+      }
+    ],
+    "scope": "Offline recheck of A CUDA outputs, not a new model run; CPU historical failures retained; not team freeze or D42 acceptance.",
+    "results": {
+      "smoke": {
+        "rows": 200,
+        "input_sha256": "218b56ed0f19e59351853c13e2f11f1598c172decbc97b60fa1682e6e9d2883c",
+        "runtime_manifest": {
+          "status": "PASS",
+          "input_sha256": "218b56ed0f19e59351853c13e2f11f1598c172decbc97b60fa1682e6e9d2883c",
+          "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+          "rows": 200,
+          "device": "cuda",
+          "precision": "fp32",
+          "batch": 8,
+          "length": 512,
+          "probability_direction": "machine=1",
+          "files": {
+            "C.csv": {
+              "bytes": 6275,
+              "sha256": "bef7aa31365557129cb7e495e0dd22244a1a83c18960fdaa6b9c31a046169964"
+            },
+            "B.csv": {
+              "bytes": 6309,
+              "sha256": "588d39e924faca18a10ac3faf2213c2fc186da79cafcbe4bc068fdcbfda96669"
+            },
+            "predictions.csv": {
+              "bytes": 6285,
+              "sha256": "5e65c86f8f20f6db393742ac4b60268fe1708ca5c20576cb9bc63b4e24ec5d02"
+            }
+          }
+        },
+        "vs_reference": {
+          "C": {
+            "max_abs_difference": 4.9509840671646543e-11,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-06,
+            "atol": 1e-08
+          },
+          "B": {
+            "max_abs_difference": 4.172325134277344e-07,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          },
+          "predictions": {
+            "max_abs_difference": 1.2515390268585946e-07,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          }
+        },
+        "vs_saved_A_cpu": {
+          "C": {
+            "max_abs_difference": 0.0,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-06,
+            "atol": 1e-08
+          },
+          "B": {
+            "max_abs_difference": 7.68899917602539e-06,
+            "exceeded_count": 5,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          },
+          "predictions": {
+            "max_abs_difference": 2.306699752790964e-06,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          }
+        },
+        "fusion_formula_max_abs": 0.0,
+        "dev_B_bytes_identical_to_original_reference": null
+      },
+      "dev": {
+        "rows": 15086,
+        "input_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+        "runtime_manifest": {
+          "status": "PASS",
+          "input_sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+          "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+          "rows": 15086,
+          "device": "cuda",
+          "precision": "fp32",
+          "batch": 8,
+          "length": 512,
+          "probability_direction": "machine=1",
+          "files": {
+            "C.csv": {
+              "bytes": 472223,
+              "sha256": "a8d52d1d558496e0dc4a8595fdc1e5482dedd80f1beb3f409cfb5969e4664fd9"
+            },
+            "B.csv": {
+              "bytes": 474285,
+              "sha256": "36179ab16a91967cb04f3a12503d2f06751115e4d6838fa35ab6fc914dc591e4"
+            },
+            "predictions.csv": {
+              "bytes": 472056,
+              "sha256": "5e905c1fd6a2c9328ba9521b813fe3cb655625bb4378657192b4d1fca0ff7fca"
+            }
+          }
+        },
+        "vs_reference": {
+          "C": {
+            "max_abs_difference": 4.99960073341299e-11,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-06,
+            "atol": 1e-08
+          },
+          "B": {
+            "max_abs_difference": 0.0,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          },
+          "predictions": {
+            "max_abs_difference": 3.4997338360653885e-11,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          }
+        },
+        "vs_saved_A_cpu": {
+          "C": {
+            "max_abs_difference": 0.0,
+            "exceeded_count": 0,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-06,
+            "atol": 1e-08
+          },
+          "B": {
+            "max_abs_difference": 2.5570392608642578e-05,
+            "exceeded_count": 274,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          },
+          "predictions": {
+            "max_abs_difference": 7.671117782548365e-06,
+            "exceeded_count": 4,
+            "threshold_decisions_differ": 0,
+            "rtol": 1e-05,
+            "atol": 1e-06
+          }
+        },
+        "fusion_formula_max_abs": 0.0,
+        "dev_B_bytes_identical_to_original_reference": true
+      }
+    }
+  }
 }
