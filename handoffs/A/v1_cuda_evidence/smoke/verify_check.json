@@ -1,0 +1,24 @@
+{
+  "status": "PASS_REFERENCE_CHECK",
+  "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+  "input_sha256": "218b56ed0f19e59351853c13e2f11f1598c172decbc97b60fa1682e6e9d2883c",
+  "rows": 200,
+  "checks": {
+    "C": {
+      "max_abs_difference": 4.9509840671646543e-11,
+      "rtol": 1e-06,
+      "atol": 1e-08
+    },
+    "B": {
+      "max_abs_difference": 4.172325134277344e-07,
+      "rtol": 1e-05,
+      "atol": 1e-06
+    },
+    "predictions": {
+      "max_abs_difference": 1.2515390268585946e-07,
+      "rtol": 1e-05,
+      "atol": 1e-06
+    }
+  },
+  "reviewer_receipt": "This numeric check alone is not a signed A acceptance receipt"
+}
