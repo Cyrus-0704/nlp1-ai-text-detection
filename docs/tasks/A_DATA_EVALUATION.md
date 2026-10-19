@@ -46,7 +46,7 @@ manifest.json / cleaning_audit.md
 - **数据冻结版本**：internal-v2（PR #3 已合入 main），划分与哈希见 `data/processed/v2/manifest.json`。
 - **统一评估口径**：固定 **Word/.5/100**（word 分词、阈值 0.5、短文本 <100 words），`evaluate.py` 须显式传 `--threshold 0.5 --short-by word --short-threshold 100`。
 - **未决口径（待官方最终确认）**：多语言计词细节、概率转类别阈值、官方提交 CSV 模板/列名/概率方向、真实截止时间。
-- **数据使用/再分发条款**：当前仅有「原始数据从已授权官方渠道获取并对照 manifest 校验」的既有口径，**暂无赛题方关于数据使用/再分发的最终明确授权依据**——已列为待赛题方或老师确认的最终交付待办项（**不阻止固定现有模型方案**）。
+- **数据使用/再分发条款**：当前仅有「原始数据从已授权官方渠道获取并对照 manifest 校验」的既有口径，**暂无赛题方关于数据使用/再分发的最终明确授权依据**——**待赛题方或老师最终确认（作为发行待办项，不阻塞当前模型方案冻结）**。
 - **H05 证据归档**：`handoffs/A/h05_numerical_check/`（复算脚本 `recheck.py`、smoke/dev 检查 JSON、C/B/融合轻量预测 CSV（仅 sample_id,p_machine）、含全部 SHA-256 的 `manifest.json` 与 README）；本目录即为 C 报告引用的评估证据路径。
 
 ## Issue 与分支交付规范（队长 2026-10-18 更新）
@@ -56,7 +56,7 @@ manifest.json / cleaning_audit.md
 
 ## 下一步与交接记录
 
-下一步：核实官方短文本计词、阈值与预测 CSV 口径（A03）；等待 C 的基线与融合预测后按 A04 统一复评；H03 冻结后执行官方最终推理与承诺书整理（A05 剩余部分）；**V1 数值闭环已终态：A侧同意冻结此候选，当前状态统一为「CUDA原容差验收通过，CPU历史超限保留」**（CUDA 复跑证据 commit `46aec69`，冻结确认见进度表当日行及对应提交；内部 test **A侧未执行**——知悉 B 侧历史窗口记录 `runs/b_internal_test_joint/attempt-001/` 先于本次全队冻结，不作本次新验收替代、不与本次冻结混同；PR #12 中 D42 材料与本冻结结论严格隔离，不一起改判）；D42/7500 校准包维持「smoke 验收未通过待 B 指示」状态不变；PR #15 诊断包离线分析已完成，结论汇总后待 B 综合复核。
+下一步：核实官方短文本计词、阈值与预测 CSV 口径（A03）；等待 C 的基线与融合预测后按 A04 统一复评；H03 冻结后执行官方最终推理与承诺书整理（A05 剩余部分）；**V1 已正式冻结，冻结标识 V1-20261019（PR #16 已合并）**，A 侧清单状态为「CUDA原容差验收通过，CPU历史超限保留」；**知悉 B 侧已收录历史 test 证据（existing_V1_test_evidence_20261019，宏 F1=0.9681 等），A 侧不重复运行 test**；PR #12 剩余收尾（manifest README 条目修正、再分发条款缺口说明）已提交待合入；D42/7500 校准包维持「smoke 验收未通过待 B 指示」独立状态不变。
 
 | 日期 | 任务编号 | 状态/产物与commit | 验收结果 | 已交给谁/下一步 |
 | --- | --- | --- | --- | --- |
@@ -71,3 +71,4 @@ manifest.json / cleaning_audit.md
 | 2026-10-19 | A05 | V1 CUDA 证据补交（B 要求补物理文件）：归档 smoke 与 dev 两套 CUDA 运行证据（各含 C/B/predictions CSV、prediction_manifest、stages、verify_check、cuda_vs_cpu_compare）至 `handoffs/A/v1_cuda_evidence/`，原字节复制并逐文件 SHA 复核；打包 `v1_cuda_evidence_for_B.zip`（540557 B，SHA-256 `ca44d8ddc855288c6ab5e95244c756d6c667d1ee68afe75fe61000d61d521aa1`，15 成员）。运行命令/环境日志从未落盘，清单中如实登记为「缺失」 | 暂存字节保真核验 ALL_BYTES_FAITHFUL；未重跑推理、未训练、未触碰 D42 | 分支 work/a-data 推送，含两处文字澄清（torch 版本检测时点、逐位全等适用范围） |
 | 2026-10-19 | A05 | V1 CUDA 复跑（用户指示：确认 CUDA 不可用根因为 torch CPU 版后换装 GPU 版重跑 V1 issue #14 数据）：根因证实为 `torch 2.14.0+cpu`；新建 Python 3.11 独立环境 `zyy-gpu`（对齐 B 验证环境与包 requirements：torch 2.13.0+cu130、transformers 4.57.6、scikit-learn 1.9.1、numpy 2.4.6 等，RTX 4060 sm_89），CUDA 驱动验证通过；重跑 V1 smoke（200）与全量 dev（15086）输出 `runs/v1_cuda_check_20261019/`、`runs/v1_cuda_dev_check_20261019/`（attempt-001 环境失败现场保留） | smoke：对 B 包内参考 PASS_REFERENCE_CHECK（B max 4.17e-7 < atol 1e-6），决策差 0；dev：对 B 参考逐位全等（B diff=0.0、融合 3.5e-11），对 A 本地 CPU 的差异模式与 H05 历史完全吻合（B 超限 274、融合 4、决策差 0）；C 分量两数据集均与 CPU 逐字节一致。设备相关浮点差异假设获本机复现证据，最终归因待 B 确认参考生成环境 | 原容差/口径未改，未读内部 test；回执待发 issue #14 |
 | 2026-10-19 | A05 | **V1 候选冻结最终确认（B 最终确认要求，仅更新清单与状态，零推理/零训练/零新文件）**：①A侧同意冻结此候选——Bundle SHA `5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a`（B512/seed43/2000/Dropout0.1，固定 0.7C+0.3B，machine=1，阈值 0.5，临时空白计词 <100）；internal-v2 原 train/dev SHA 不变（本日实测 train `5a5dca9db706e0faadc5c89cbcadc77dc585ce302f5e73b11b82213f40ab7ff6`、dev `1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600` 与 `data/processed/v2/manifest.json` 完全一致，划分依据 manifest、PR #3 合入），沿用既有清洗与隔离依据，无重划数据、无新审计实验；②数据与评测口径沿用 internal-v2 + Word/.5/100；③内部 test（`data/processed/v2/test.jsonl`）**A侧未执行**（知悉 B 侧历史窗口已保存 `runs/b_internal_test_joint/attempt-001/` 记录，该记录先于本次全队冻结，不作本次新验收替代、不与本次冻结混同），A 侧严格封存不提前运行；④当前状态统一为「**CUDA原容差验收通过，CPU历史超限保留**」——CUDA 复跑（smoke PASS_REFERENCE_CHECK、dev 对 B 参考逐位一致）见 commit `46aec69` 与 `handoffs/A/v1_cuda_evidence/`，CPU 历史超限记录（full-dev B 274 条、融合 4 条，决策差 0）原样保留不作改写；⑤**隔离声明：PR #12 中涉及的 D42 材料与本次 V1 冻结结论严格隔离，D42 维持「smoke 验收未通过待 B 指示」独立状态，两个版本不一起改判** | 冻结确认完成；本行所在提交即此次确认对应 commit | 回执发主 Issue；后续按 H03 冻结流程推进 |
+| 2026-10-19 | A05 | **PR #12 最终归档收尾（B 通报 V1 正式冻结后）**：①manifest.json README 条目最终修正完成并实测核验——2317 B/SHA `a5597e778202dd834f1cf85a24083ba7b98e681e2c5b2cfa0b668641b833f028`，与仓库 index LF blob 逐项一致，JSON 纯 LF（上一提交 `5970d32` 已完成，本提交复核确认）；②数据使用/再分发条款按 B 最终口径正式补齐：「暂无赛题方最终明确授权依据，待赛题方或老师最终确认（作为发行待办项，不阻塞当前模型方案冻结）」；③**知悉三方候选正式冻结标识 V1-20261019（PR #16 已合并）**；④**知悉 B 侧已收录历史 test 证据（existing_V1_test_evidence_20261019，宏 F1=0.9681 等），A 侧不重复运行 test**，A 侧状态维持「A侧未执行」；⑤D42 材料与 V1 冻结结论维持严格隔离 | 零推理/零训练/零触碰 D42/零新文件 | 本行所在提交即收尾对应 commit；等待 PR #12 后续合入 |
