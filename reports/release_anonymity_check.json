@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-19T12:43:12+00:00",
+  "inputs": {
+    "reports\\technical_report_draft.md": "6a1404072ed4fa0260ad39298641427d831c37f27a4658bd4f3075775ec596fd",
+    "reports\\technical_report_v1_review.docx": "76f1511240f61b769667cfd54b3e04783cfe3e3ddcabf7a4155089ad05bf5efd",
+    "reports\\technical_report_v1_review.pdf": "6f25ca09d9d72bae80c5d9839ffb76ac17c5891f6247402cbdf9b35771353fa9"
+  },
+  "banned_tokens": [
+    "Cyrus",
+    "Cyrus-0704",
+    "cat-dog-good",
+    "qll",
+    "zyj",
+    "Lenovo",
+    "F:\\",
+    "C:\\",
+    "github.com/Cyrus-0704",
+    "PR #",
+    "PR#",
+    "issue #",
+    "commit",
+    "H04",
+    "H05",
+    "B08",
+    "handoffs/"
+  ],
+  "markdown": {
+    "hits": []
+  },
+  "docx": {
+    "parts": 19,
+    "xml_parts": 15,
+    "hits": [],
+    "creator": "",
+    "last_modified_by": ""
+  },
+  "pdf": {
+    "bytes": 549951,
+    "header": "%PDF-",
+    "hits": [],
+    "metadata": {
+      "Author": null,
+      "Title": null,
+      "Creator": null,
+      "Producer": null,
+      "Subject": null
+    }
+  },
+  "status": "PASS_REVIEW_PDF_PENDING_FINAL_FREEZE"
+}
