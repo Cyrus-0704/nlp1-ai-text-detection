@@ -1,4 +1,4 @@
-"""Check the review report for identity leaks and write a small JSON result.
+"""Check the frozen candidate report for identity leaks and write a small JSON result.
 
 Standard library only. This is a mechanical check, not a substitute for reading
 the report: it searches the Markdown source, DOCX package XML, and PDF bytes for
@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import xml.etree.ElementTree as ET
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -79,10 +80,56 @@ def docx_check(path: Path) -> dict:
 def pdf_check(path: Path) -> dict:
     data = path.read_bytes()
     text = data.decode("latin-1", errors="replace")
-    meta = {}
-    for key in ("Author", "Title", "Creator", "Producer", "Subject"):
-        m = re.search(r"/" + key + r"\s*\(([^)]*)\)", text)
-        meta[key] = m.group(1) if m else None
+
+    # LibreOffice stores document metadata in XMP, not only in a PDF /Info
+    # dictionary. Parse the XMP packet when present; fall back to /Info.
+    meta = {
+        "Author": None,
+        "Title": None,
+        "CreatorTool": None,
+        "Producer": None,
+        "Subject": None,
+        "source": None,
+    }
+    xmp_match = re.search(rb"<x:xmpmeta\b.*?</x:xmpmeta>", data, re.S)
+    if xmp_match:
+        try:
+            root = ET.fromstring(xmp_match.group(0))
+        except ET.ParseError:
+            root = None
+        if root is not None:
+            def local_text(name: str):
+                for elem in root.iter():
+                    if elem.tag.split("}")[-1] == name and elem.text and elem.text.strip():
+                        return elem.text.strip()
+                return None
+
+            def local_list(name: str):
+                values = []
+                for elem in root.iter():
+                    if elem.tag.split("}")[-1] != name:
+                        continue
+                    for child in elem.iter():
+                        if child.tag.split("}")[-1] == "li" and child.text and child.text.strip():
+                            values.append(child.text.strip())
+                return values
+
+            meta["CreatorTool"] = local_text("CreatorTool")
+            meta["Producer"] = local_text("Producer")
+            authors = local_list("creator")
+            titles = local_list("title")
+            meta["Author"] = "; ".join(authors) if authors else local_text("creator")
+            meta["Title"] = "; ".join(titles) if titles else local_text("title")
+            meta["source"] = "XMP"
+
+    if meta["source"] is None:
+        for key in ("Author", "Title", "Creator", "Producer", "Subject"):
+            m = re.search(r"/" + key + r"\s*\(([^)]*)\)", text)
+            if m:
+                mapped = "CreatorTool" if key == "Creator" else key
+                meta[mapped] = m.group(1)
+        meta["source"] = "PDF Info"
+
     return {
         "bytes": len(data),
         "header": text[:5],
@@ -114,14 +161,14 @@ def main() -> None:
               and result["pdf"]["header"] == "%PDF-"
               and not result["pdf"]["metadata"].get("Author"))
     result["status"] = (
-        "PASS_REVIEW_PDF_PENDING_FINAL_FREEZE"
+        "PASS_FROZEN_REPORT_PENDING_FINAL_RELEASE"
         if md_ok and docx_ok and pdf_ok
         else "FAIL_NEEDS_FIX"
     )
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n",
                    encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    if result["status"] != "PASS_REVIEW_PDF_PENDING_FINAL_FREEZE":
+    if result["status"] != "PASS_FROZEN_REPORT_PENDING_FINAL_RELEASE":
         raise SystemExit(1)
 
 

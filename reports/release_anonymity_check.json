@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-10-19T12:43:12+00:00",
+  "checked_at": "2026-10-19T13:50:56+00:00",
   "inputs": {
-    "reports\\technical_report_draft.md": "6a1404072ed4fa0260ad39298641427d831c37f27a4658bd4f3075775ec596fd",
-    "reports\\technical_report_v1_review.docx": "76f1511240f61b769667cfd54b3e04783cfe3e3ddcabf7a4155089ad05bf5efd",
-    "reports\\technical_report_v1_review.pdf": "6f25ca09d9d72bae80c5d9839ffb76ac17c5891f6247402cbdf9b35771353fa9"
+    "reports\\technical_report_draft.md": "ba5cd62716e308702e9208aae9074e54d058de3ff9e84a5e4b42487f468c43ac",
+    "reports\\technical_report_v1_review.docx": "77a4fe57e6a482865afceb2e59c2a815d196e19d1e0fce1a8102fe076dc837c4",
+    "reports\\technical_report_v1_review.pdf": "5e49d52680d18af1e959b627fff184771bc123e9b494b686020e4092a4b00039"
   },
   "banned_tokens": [
     "Cyrus",
@@ -35,16 +35,17 @@
     "last_modified_by": ""
   },
   "pdf": {
-    "bytes": 549951,
+    "bytes": 554449,
     "header": "%PDF-",
     "hits": [],
     "metadata": {
       "Author": null,
-      "Title": null,
-      "Creator": null,
-      "Producer": null,
-      "Subject": null
+      "Title": "大模型生成文本检测技术报告",
+      "CreatorTool": "Writer",
+      "Producer": "LibreOfficeDev 26.8.0.3 (X86_64)",
+      "Subject": null,
+      "source": "XMP"
     }
   },
-  "status": "PASS_REVIEW_PDF_PENDING_FINAL_FREEZE"
+  "status": "PASS_FROZEN_REPORT_PENDING_FINAL_RELEASE"
 }
