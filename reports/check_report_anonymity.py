@@ -34,7 +34,7 @@ BANNED = [
     # Internal workflow locators that must not appear in the external PDF.
     "PR #",
     "PR#",
-    "issue #",
+    "issue",
     "commit",
     "H04",
     "H05",
