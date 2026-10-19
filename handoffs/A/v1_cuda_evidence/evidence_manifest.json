@@ -1,0 +1,98 @@
+{
+  "archive": "v1_cuda_evidence_for_B.zip",
+  "note": "原字节复制, 未做换行符/编码转换; 未重跑推理",
+  "groups": {
+    "smoke": {
+      "source": "runs/v1_cuda_check_20261019/attempt-002",
+      "files": {
+        "C.csv": {
+          "bytes": 6275,
+          "sha256": "bef7aa31365557129cb7e495e0dd22244a1a83c18960fdaa6b9c31a046169964",
+          "source": "runs/v1_cuda_check_20261019/attempt-002/C.csv"
+        },
+        "B.csv": {
+          "bytes": 6309,
+          "sha256": "588d39e924faca18a10ac3faf2213c2fc186da79cafcbe4bc068fdcbfda96669",
+          "source": "runs/v1_cuda_check_20261019/attempt-002/B.csv"
+        },
+        "predictions.csv": {
+          "bytes": 6285,
+          "sha256": "5e65c86f8f20f6db393742ac4b60268fe1708ca5c20576cb9bc63b4e24ec5d02",
+          "source": "runs/v1_cuda_check_20261019/attempt-002/predictions.csv"
+        },
+        "prediction_manifest.json": {
+          "bytes": 755,
+          "sha256": "b922e547b4abe2539ec90d7f757b73bff4aa1b4ec5e25e9d58765d014bc01674",
+          "source": "runs/v1_cuda_check_20261019/attempt-002/prediction_manifest.json"
+        },
+        "stages.json": {
+          "bytes": 256,
+          "sha256": "b2ce63b948873a66a6c84de2a554c208908d5d28643ace466bda82f8d618a641",
+          "source": "runs/v1_cuda_check_20261019/attempt-002/stages.json"
+        },
+        "verify_check.json": {
+          "bytes": 698,
+          "sha256": "21fb5d8db5f995d400099c7a68b56fe7f163ef801744f9e1628e0cfdc2dcf1e5",
+          "source": "runs/v1_cuda_check_20261019/attempt-002/verify_check.json"
+        },
+        "cuda_vs_cpu_compare.json": {
+          "bytes": 1575,
+          "sha256": "6db52b5f1fb9f63160e20efa841c2f6aada4ed21985e7752d2eb1b9c2785feb9",
+          "source": "runs/v1_cuda_check_20261019/attempt-002/cuda_vs_cpu_compare.json"
+        }
+      }
+    },
+    "dev": {
+      "source": "runs/v1_cuda_dev_check_20261019",
+      "files": {
+        "C.csv": {
+          "bytes": 472223,
+          "sha256": "a8d52d1d558496e0dc4a8595fdc1e5482dedd80f1beb3f409cfb5969e4664fd9",
+          "source": "runs/v1_cuda_dev_check_20261019/C.csv"
+        },
+        "B.csv": {
+          "bytes": 474285,
+          "sha256": "36179ab16a91967cb04f3a12503d2f06751115e4d6838fa35ab6fc914dc591e4",
+          "source": "runs/v1_cuda_dev_check_20261019/B.csv"
+        },
+        "predictions.csv": {
+          "bytes": 472056,
+          "sha256": "5e905c1fd6a2c9328ba9521b813fe3cb655625bb4378657192b4d1fca0ff7fca",
+          "source": "runs/v1_cuda_dev_check_20261019/predictions.csv"
+        },
+        "prediction_manifest.json": {
+          "bytes": 763,
+          "sha256": "6e5ef2004fb46fd07a50c67c18fbfec295a0a1941aedffc2f8bbb1ee3a3f0d37",
+          "source": "runs/v1_cuda_dev_check_20261019/prediction_manifest.json"
+        },
+        "stages.json": {
+          "bytes": 258,
+          "sha256": "1f59478dc66c60f0a4bd1bbd8036274bf937a4c513e26153ed7b6d15d25744ad",
+          "source": "runs/v1_cuda_dev_check_20261019/stages.json"
+        },
+        "verify_check.json": {
+          "bytes": 680,
+          "sha256": "17dd25ee5dffc82779718fe831d8009b56f99f05073ef6ea73cf90f057003e18",
+          "source": "runs/v1_cuda_dev_check_20261019/verify_check.json"
+        },
+        "cuda_vs_cpu_compare.json": {
+          "bytes": 1013,
+          "sha256": "24e9068b9a27a71ab6d7d42fecc4cf00710699a138a5e45f8cafddc8f385e432",
+          "source": "runs/v1_cuda_dev_check_20261019/cuda_vs_cpu_compare.json"
+        }
+      }
+    }
+  },
+  "missing": [
+    {
+      "item": "运行命令与会话输出日志",
+      "status": "缺失",
+      "reason": "V1 CUDA 运行未落盘独立命令/console 日志"
+    },
+    {
+      "item": "运行设备与环境日志",
+      "status": "缺失",
+      "reason": "运行时的 device/env 清单未单独留存文件"
+    }
+  ]
+}

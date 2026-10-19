@@ -74,3 +74,6 @@ data/processed/**/*.jsonl
 # 本机探索/清洗日志, 不作为交付物。
 explore_output.txt
 preprocess_log.txt
+
+# A: D42 smoke 证据包内的原始日志是交接证据, 需入库(覆盖上方 *.log 规则)。
+!handoffs/A/d42_calibrated_smoke_evidence/*.log

@@ -1,0 +1,17 @@
+﻿C:\Users\LENOVO\anaconda3\envs\h05\python.exe : Traceback (most recent call last):
+At line:15 char:3209
++ ... pgrep\bin'; C:\Users\LENOVO\anaconda3\envs\h05\python.exe -B "handoff ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\LENOVO\Desktop\数据挖掘\handoffs\shared_models\b_d42_calibrated_7500\bundle\d_calibrated_deploy.py", line 
+289, in <module>
+    main()
+  File "C:\Users\LENOVO\Desktop\数据挖掘\handoffs\shared_models\b_d42_calibrated_7500\bundle\d_calibrated_deploy.py", line 
+285, in main
+    accept(a.bundle, a.expected_sha, a.input, a.actual_dir, a.output)
+  File "C:\Users\LENOVO\Desktop\数据挖掘\handoffs\shared_models\b_d42_calibrated_7500\bundle\d_calibrated_deploy.py", line 
+240, in accept
+    raise ValueError('Numerical acceptance failed; retain report and diagnose; no automatic tolerance widening')
+ValueError: Numerical acceptance failed; retain report and diagnose; no automatic tolerance widening

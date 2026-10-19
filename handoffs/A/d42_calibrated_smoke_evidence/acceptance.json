@@ -1,0 +1,131 @@
+{
+  "status": "FAIL_MODEL_RELOAD_NUMERICS",
+  "checks": {
+    "raw": {
+      "passed": false,
+      "atol": 1e-06,
+      "rtol": 1e-05,
+      "rows": 200,
+      "max_abs_error": 3.904104232788086e-05,
+      "error_quantiles": {
+        "p50": 0.0,
+        "p95": 7.895287126302647e-08,
+        "p99": 4.903674125671372e-06,
+        "p100": 3.904104232788086e-05
+      },
+      "numeric_failures": 1,
+      "decision_mismatches": 0,
+      "numeric_failure_ids": [
+        "s_00019180"
+      ],
+      "decision_failure_ids": []
+    },
+    "calibrated": {
+      "passed": false,
+      "atol": 1e-06,
+      "rtol": 1e-05,
+      "rows": 200,
+      "max_abs_error": 1.476756302898341e-05,
+      "error_quantiles": {
+        "p50": 0.0,
+        "p95": 3.160897448119742e-08,
+        "p99": 7.57183598333096e-06,
+        "p100": 1.476756302898341e-05
+      },
+      "numeric_failures": 5,
+      "decision_mismatches": 0,
+      "numeric_failure_ids": [
+        "s_00019180",
+        "s_00003862",
+        "s_00067975",
+        "s_00095779",
+        "s_00013129"
+      ],
+      "decision_failure_ids": []
+    },
+    "formula": {
+      "passed": true,
+      "atol": 1e-12,
+      "rtol": 0,
+      "rows": 200,
+      "max_abs_error": 0.0,
+      "error_quantiles": {
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "p100": 0.0
+      },
+      "numeric_failures": 0,
+      "decision_mismatches": 0,
+      "numeric_failure_ids": [],
+      "decision_failure_ids": []
+    }
+  },
+  "bundle_sha256": "67dcc44cde3e43e1111b8fece850e48f34e94db8079c214358cf767dfe539e6a",
+  "input_sha256": "218b56ed0f19e59351853c13e2f11f1598c172decbc97b60fa1682e6e9d2883c",
+  "input_kind": "smoke",
+  "prediction_receipt_sha256": "bd61963fd73d992ad20c0c83e358abc8cb9dffe0ebc8064b66513b87f117324e",
+  "runtime": {
+    "status": "MODEL_RELOAD_EXECUTED_NOT_YET_ACCEPTED",
+    "kind": "ACTUAL_MODEL_RELOAD",
+    "bundle_sha256": "67dcc44cde3e43e1111b8fece850e48f34e94db8079c214358cf767dfe539e6a",
+    "input_sha256": "218b56ed0f19e59351853c13e2f11f1598c172decbc97b60fa1682e6e9d2883c",
+    "model_sha256": "058b86efb0bca8748e609e3d24fb1d5bc8e91ef64b97e29c9a3b1f3eac899100",
+    "calibrator_sha256": "0e637f964f55f119d8ddd34a47944a1a610f1e0eba7267be50236ebf6d5e42b9",
+    "source_sha256": {
+      "d_calibration.py": "59d2c2bf0cac93c477e038ccd056f0dfe088492aba6580b229d5e8fc60de0e56",
+      "d_calibrated_deploy.py": "563a8bfb03d978ed160475510c6caf7fa4ea7d60c970b9d7a9ec8c09b701ba10",
+      "common.py": "51b8b44987222d0979b14638a210bf02df9e3ed3cf6126332408ce07aa73459e",
+      "check_inference_io.py": "04d69b43703382ea53a622894dbc0a45635c3a4b20ce46b9aed41ddc2d921630",
+      "gpu_guard.py": "ea506123bbc060c23be9a2a03dc6100d685759a1ec4458b29b399b542b66c0b9"
+    },
+    "rows": 200,
+    "inference": {
+      "max_length": 512,
+      "precision": "fp32",
+      "batch_size": 8,
+      "model_eval": true,
+      "local_files_only": true,
+      "calibration_dtype": "float64",
+      "attention": "sdpa",
+      "deterministic": true,
+      "threads": 4
+    },
+    "device": "cpu",
+    "runtime": {
+      "torch": "2.13.0",
+      "transformers": "4.57.6",
+      "numpy": "2.4.6",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.9.1"
+    },
+    "python": "3.11.17",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "pid": 39800,
+    "cuda_version": null,
+    "seconds": 95.14794999999867,
+    "gpu": null,
+    "at_utc": "2026-10-18T10:12:02.752211+00:00",
+    "command": [
+      "handoffs/shared_models/b_d42_calibrated_7500/bundle/d_calibrated_deploy.py",
+      "predict",
+      "--bundle",
+      "handoffs/shared_models/b_d42_calibrated_7500/bundle",
+      "--expected-sha",
+      "67dcc44cde3e43e1111b8fece850e48f34e94db8079c214358cf767dfe539e6a",
+      "--input",
+      "data/processed/v2/smoke_dev.jsonl",
+      "--output",
+      "runs/a_d42_calibrated_smoke/attempt-001",
+      "--device",
+      "cpu"
+    ],
+    "files": {
+      "raw.csv": "7828a662e9619e78ddf06c351d4943f7a0eea7879a5e69496c44bf90791289e0",
+      "predictions.csv": "8af048b799ee3d3cc79d17a144ea3bda9908a1261f9448b147c9186e34767dff"
+    },
+    "independent_effect_validation": "NOT_RUN"
+  },
+  "independent_effect_validation": "NOT_RUN",
+  "receiver_attestation": "A must confirm own environment and actual execution; this report is not a signed receiver receipt"
+}
