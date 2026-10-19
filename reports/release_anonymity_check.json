@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-10-19T12:43:12+00:00",
+  "checked_at": "2026-10-19T13:54:26+00:00",
   "inputs": {
-    "reports\\technical_report_draft.md": "6a1404072ed4fa0260ad39298641427d831c37f27a4658bd4f3075775ec596fd",
-    "reports\\technical_report_v1_review.docx": "76f1511240f61b769667cfd54b3e04783cfe3e3ddcabf7a4155089ad05bf5efd",
-    "reports\\technical_report_v1_review.pdf": "6f25ca09d9d72bae80c5d9839ffb76ac17c5891f6247402cbdf9b35771353fa9"
+    "reports\\technical_report_draft.md": "0d3452b157138632174d2658b9fb3f1cff7edbcd09b80ea4623cead83c09ab23",
+    "reports\\technical_report_v1_review.docx": "3da501eb63a2bd843c79ce96b56de45e62e545cde8ac187dcc239cf81b4dcfcc",
+    "reports\\technical_report_v1_review.pdf": "5e1c6777a1f71189659d09ccdbf5c44c305e428b7f695ce8023511ac7516e106"
   },
   "banned_tokens": [
     "Cyrus",
@@ -17,7 +17,7 @@
     "github.com/Cyrus-0704",
     "PR #",
     "PR#",
-    "issue #",
+    "issue",
     "commit",
     "H04",
     "H05",
@@ -35,16 +35,17 @@
     "last_modified_by": ""
   },
   "pdf": {
-    "bytes": 549951,
+    "bytes": 554435,
     "header": "%PDF-",
     "hits": [],
     "metadata": {
       "Author": null,
-      "Title": null,
-      "Creator": null,
-      "Producer": null,
-      "Subject": null
+      "Title": "大模型生成文本检测技术报告",
+      "CreatorTool": "Writer",
+      "Producer": "LibreOfficeDev 26.8.0.3 (X86_64)",
+      "Subject": null,
+      "source": "XMP"
     }
   },
-  "status": "PASS_REVIEW_PDF_PENDING_FINAL_FREEZE"
+  "status": "PASS_FROZEN_REPORT_PENDING_FINAL_RELEASE"
 }
