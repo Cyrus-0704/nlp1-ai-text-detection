@@ -799,5 +799,110 @@
         "dev_B_bytes_identical_to_original_reference": true
       }
     }
+  },
+  "current_release_status": "TEAM_FROZEN_CANDIDATE_PENDING_FINAL_RELEASE",
+  "team_freeze_20261019": {
+    "id": "V1-20261019",
+    "date": "2026-10-19",
+    "scope": "Fixed V1 candidate, data, fusion and internal evaluation protocol; final release remains pending.",
+    "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+    "confirmations": {
+      "A": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/issues/5#issuecomment-6267136566",
+      "B_commit": "01f4e04a4e141d9e24bac7a0fe09e732f2a66a99",
+      "C": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/issues/6#issuecomment-6267504851"
+    },
+    "archive_merges": {
+      "PR15": "947e7bd1e5828e6be92ba9518e3a73bce5abb41c",
+      "PR13": "67624a650de0b17997aa5d4ab5050490c1f7d005"
+    },
+    "A_PR12": "OPEN_PENDING_HISTORICAL_README_MANIFEST_FIX",
+    "C_review": {
+      "head": "bd3ee36378a822bfbb11a5e78f3b37173f355bf8",
+      "hashes": {
+        "technical_report_draft.md": "6a1404072ed4fa0260ad39298641427d831c37f27a4658bd4f3075775ec596fd",
+        "technical_report_v1_review.docx": "76f1511240f61b769667cfd54b3e04783cfe3e3ddcabf7a4155089ad05bf5efd",
+        "technical_report_v1_review.pdf": "6f25ca09d9d72bae80c5d9839ffb76ac17c5891f6247402cbdf9b35771353fa9"
+      },
+      "pages": 10,
+      "pdf_metadata": {
+        "format": "PDF 1.7",
+        "title": "大模型生成文本检测技术报告",
+        "author": "",
+        "subject": "初赛第一版候选内部审阅稿",
+        "keywords": "",
+        "creator": "Writer",
+        "producer": "LibreOfficeDev 26.8.0.3 (X86_64)",
+        "creationDate": "D:20261019204135+08'00'",
+        "modDate": "",
+        "trapped": "",
+        "encryption": null
+      },
+      "anonymous_hits": [],
+      "docx_creator": "",
+      "docx_last_modified": "",
+      "visual_review": "PASS_ALL_10_PAGES",
+      "acceptance_scope": "Internal development review snapshot, not final release. Final report must update team freeze and existing test status."
+    },
+    "remaining": [
+      "A historical README manifest correction and PR12 archive",
+      "A receipt/report scope for existing V1 test evidence",
+      "Dataset use and redistribution terms",
+      "Final anonymous PDF"
+    ],
+    "new_model_runs": false,
+    "new_test_evaluation": false
+  },
+  "existing_V1_test_evidence_20261019": {
+    "status": "EXISTING_V1_TEST_IDENTITY_AND_FORMULA_CHECKED_NOT_NEW_TEST",
+    "source_directory": "runs/b_internal_test_joint/attempt-001",
+    "source_context": "V1 fixed comparator in a separately planned test comparison; occurred before this team-freeze receipt. Not a new post-team-freeze evaluation.",
+    "plan_sha256": "3d5e0a979d03b880b380af5cfb11cca93e7e2694596768cb249d084d59926abf",
+    "results_sha256": "09a3ca9ddf5f7a9427f602769fe2356e61b3e66aab2b50740dc18c9e922c397e",
+    "prediction_manifest_sha256": "ebb65fe15d13468ae8ffa4d13e82fc28e7296a307bbeb244a19c8df6d4c26b62",
+    "bundle_sha256": "5775334edda46069d45f7eaade2222bea2c7393d19c6faae44a3ed4a256ab50a",
+    "source_test_sha256": "49a0525da0f6a918f5bea2d722339f0eac13182bca581a6a84a0e234e8967378",
+    "inference_input_sha256": "3c68d70d713701a0879210902a3541a348e93bb851718002d1076a101dff4e5c",
+    "rows": 14967,
+    "threshold": 0.5,
+    "short_rule": "len(text.split()) < 100",
+    "metrics_saved_not_recomputed_from_labels": {
+      "macro_f1_all": 0.9681052018374215,
+      "macro_f1_short": 0.9429927075542259,
+      "score_s": 0.9605714535524628,
+      "human_recall": 0.9568384629393553,
+      "machine_recall": 0.9782608695652174,
+      "n": 14967,
+      "human": 5491,
+      "machine": 9476,
+      "fp": 237,
+      "fn": 206,
+      "errors": 443,
+      "fpr": 0.04316153706064469,
+      "fnr": 0.021739130434782608,
+      "logloss": 0.15111741544650734,
+      "brier": 0.03507827665569187,
+      "ece10": 0.08303417896054328,
+      "auc": 0.9936039663968339,
+      "confident_fp": 0,
+      "confident_fn": 0
+    },
+    "prediction_files": {
+      "C.csv": {
+        "bytes": 468353,
+        "sha256": "5ea6ef63b258a96be219f4a9cf21a0f5b689f8d641eeeb8bbe42dc910441b2ac"
+      },
+      "B.csv": {
+        "bytes": 470833,
+        "sha256": "8534f3bceb3bd76c82d8f73f23ff89e9d2d20a1990c6b509d6299d9f620f9003"
+      },
+      "predictions.csv": {
+        "bytes": 468329,
+        "sha256": "3f7462d75a5ca75f04291623dc8f3e3a00d10e69ddcc8b7789bea5333a0f3e48"
+      }
+    },
+    "fusion_formula_max_abs": 0.0,
+    "A_independent_test_receipt": "PENDING",
+    "not_an_official_score": true,
+    "no_new_inference_or_test_evaluation": true
   }
 }
