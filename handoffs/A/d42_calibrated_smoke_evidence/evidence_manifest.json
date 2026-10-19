@@ -1,0 +1,36 @@
+{
+  "archive": "d42_smoke_evidence_for_B.zip",
+  "note": "原字节复制, 未做换行符/编码转换",
+  "files": {
+    "raw.csv": {
+      "bytes": 6407,
+      "sha256": "7828a662e9619e78ddf06c351d4943f7a0eea7879a5e69496c44bf90791289e0",
+      "source": "runs/a_d42_calibrated_smoke/attempt-001/raw.csv"
+    },
+    "predictions.csv": {
+      "bytes": 6434,
+      "sha256": "8af048b799ee3d3cc79d17a144ea3bda9908a1261f9448b147c9186e34767dff",
+      "source": "runs/a_d42_calibrated_smoke/attempt-001/predictions.csv"
+    },
+    "prediction_receipt.json": {
+      "bytes": 2285,
+      "sha256": "bd61963fd73d992ad20c0c83e358abc8cb9dffe0ebc8064b66513b87f117324e",
+      "source": "runs/a_d42_calibrated_smoke/attempt-001/prediction_receipt.json"
+    },
+    "acceptance.json": {
+      "bytes": 4440,
+      "sha256": "166b3c6345630f052447035f7aa2809675afccdf6a180e930231868a8dfad2a3",
+      "source": "runs/a_d42_calibrated_smoke/attempt-001/acceptance.json"
+    },
+    "verify_bundle.log": {
+      "bytes": 51,
+      "sha256": "0584bb473f0d28aea0777ab88e2fa525036d1d02fd127c1a8afc48a63752f221",
+      "source": "runs/a_d42_calibrated_logs/attempt-001/verify_bundle.log"
+    },
+    "accept_smoke.log": {
+      "bytes": 1163,
+      "sha256": "e0da2fcf593a2ad491ce41798b2d2e215dc61b46b0b7a9d701ffb2b44e799842",
+      "source": "runs/a_d42_calibrated_logs/attempt-001/accept_smoke.log"
+    }
+  }
+}
