@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-20",
+  "status": "DELIVERY_FILES_PREPARED_NO_TRAINING_STARTED",
+  "release_url": "https://github.com/Cyrus-0704/nlp1-ai-text-detection/releases/tag/v3-a-seed43-takeover-20261020",
+  "logical_owner": "A",
+  "seed": 43,
+  "assignment": {
+    "C": {
+      "after": "C/seed44 T0,T1,T2 complete",
+      "arms": [
+        "T0"
+      ]
+    },
+    "B": {
+      "after": "B/seed42 T0,T1,T2 complete",
+      "arms": [
+        "T1",
+        "T2"
+      ]
+    }
+  },
+  "formal_budget_hours": 10,
+  "pilot_budget_hours_per_new_host_and_arm": 1,
+  "evaluation_budget_hours": 0.5,
+  "default_action": "PLAN_ONLY",
+  "training_source_modified": false,
+  "runtime_code_files_verified_unchanged": 20,
+  "frozen_code_members_verified": 37,
+  "cpu_tests_passed": 10,
+  "assets": {
+    "run_takeover.py": {
+      "bytes": 10350,
+      "sha256": "3bc75b92c031dbaf1b04cc6d781b6f99752bc5fc3876d1241f6aefc06355f736"
+    },
+    "README.md": {
+      "bytes": 8110,
+      "sha256": "2e37a2d0d6f926cad2f8e8fbbfb0d5c97033a9f44365fef4775807ac5e5518a3"
+    },
+    "v3-code-20261020.zip": {
+      "bytes": 239474,
+      "sha256": "67d98d34411215c3a91b1c781e344c913e80eaf8ffd7e2cb2f4a9b0e968ac4b7"
+    },
+    "v3-code-20261020.zip.sha256": {
+      "bytes": 88,
+      "sha256": "b180f7dd20f2e1b5cc954396d42f54ddcde4d185644652b79a5388d34e2ffc17"
+    },
+    "v3-code-20261020.zip.manifest.json": {
+      "bytes": 5823,
+      "sha256": "a486d89bb1fcd8a9b8da22fffc0d9b730883527dfada0f63a43d4dfd32c9a977"
+    }
+  },
+  "historical_A_failures_preserved": {
+    "commit": "6d28d84",
+    "T1_pilot_spent_seconds": 25.085621000001993
+  },
+  "actual_receiver_download_or_execution_verified": false
+}
