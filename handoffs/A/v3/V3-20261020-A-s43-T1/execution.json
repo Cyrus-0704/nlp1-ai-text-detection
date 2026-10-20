@@ -1,0 +1,8 @@
+{
+  "experiment_id": "V3-20261020-A-s43-T1",
+  "owner": "A",
+  "seed": 43,
+  "arm": "T1",
+  "status": "PILOT_FAILED_FORMAL_NOT_STARTED",
+  "protocol_sha256": "55540238b691b3019e00165492e2c66a22fe7a2434f21f65f74b039086476fda"
+}

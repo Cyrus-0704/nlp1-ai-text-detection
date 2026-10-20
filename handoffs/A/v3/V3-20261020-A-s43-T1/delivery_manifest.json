@@ -1,0 +1,72 @@
+{
+  "version": "V3-20261020",
+  "experiment_id": "V3-20261020-A-s43-T1",
+  "files": {
+    "execution.json": {
+      "bytes": 235,
+      "sha256": "ef661908ed0a50ca8a4c9545fc957842f1f835b00c6acde0a662c8ff5437d273"
+    },
+    "failure.json": {
+      "bytes": 1312,
+      "sha256": "86d05e8707cd4816f860cc6ffe743dfde76d0c329abc49c62aaa7e3593b26979"
+    },
+    "ledger.json": {
+      "bytes": 1409,
+      "sha256": "be1b7dea7a4d695cc57f8a56622cecfe07343bcf919febd20757e75e5898983a"
+    },
+    "progress_30min.jsonl": {
+      "bytes": 270,
+      "sha256": "2269027eac10200e4929d3d4708b325249a334187015dc3d38b0a5b57281a3a6"
+    },
+    "protocol.json": {
+      "bytes": 11414,
+      "sha256": "55540238b691b3019e00165492e2c66a22fe7a2434f21f65f74b039086476fda"
+    },
+    "resource50/attempt-001/arguments.json": {
+      "bytes": 9966,
+      "sha256": "5ecadce161346b6ee6c703fd50508ce9c1e4494114ef41d5b8dcc552d5152be7"
+    },
+    "resource50/attempt-001/console.log": {
+      "bytes": 2285,
+      "sha256": "ecbc8ea0861e9df3077fd39569dcecd1ab96f34881b2782962a3c99e0db6c167"
+    },
+    "resource50/attempt-001/data_manifest.json": {
+      "bytes": 5685,
+      "sha256": "fc8c0b909e132ab8380c6dcb420c4adffc0eee4016c252e41895bc99136f2a1e"
+    },
+    "resource50/attempt-001/failure.json": {
+      "bytes": 1222,
+      "sha256": "d7151e8e2430a80d6b7b5ff5b98cf41ea3f2795f3fde78510b1fd401c138e810"
+    },
+    "resource50/attempt-001/loading_report.json": {
+      "bytes": 840,
+      "sha256": "0978ec39f3477f82a28ac6a119aba7b0cc1da3734076d5cfe2e48a09614f90f6"
+    },
+    "resource50/attempt-001/resource_summary.json": {
+      "bytes": 406,
+      "sha256": "403cf5bff02dcb815f3bcb174b10f44f24fdbabb704229c68b7a9ebcea5f7a76"
+    },
+    "resource50/attempt-001/source_manifest.json": {
+      "bytes": 832,
+      "sha256": "713d8b7a728fe427562820bb53465fde87d8f9c88699c15beab540a19d5ae11f"
+    },
+    "resource50/attempt-001/training_log.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "resource50/attempt-001/plots/chart_source.json": {
+      "bytes": 972,
+      "sha256": "bad2d49bcb32372de40f29bd0e5e1bd309834e41de8968a4046b548a8614e4d1"
+    },
+    "resource50/attempt-001/plots/training_progress.html": {
+      "bytes": 10858,
+      "sha256": "157ed9df5620c7239692851c31ff5320f87187c98f4858ef65b732e8db12d902"
+    },
+    "resource50/attempt-001/plots/training_progress.svg": {
+      "bytes": 10631,
+      "sha256": "5c77e27e8514ff531d7bee9dcac07ecc887402f9fb0826d4533457318c409324"
+    }
+  },
+  "final_weights": "SEPARATE_LOCAL_ARCHIVE_NOT_UPLOADED",
+  "all_results_including_failures": true
+}

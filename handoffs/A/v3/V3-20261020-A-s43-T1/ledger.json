@@ -1,0 +1,37 @@
+{
+  "protocol_sha256": "55540238b691b3019e00165492e2c66a22fe7a2434f21f65f74b039086476fda",
+  "budget_seconds": 3600.0,
+  "spent_seconds": 25.085621000001993,
+  "active": null,
+  "events": [
+    {
+      "command": [
+        "C:\\Users\\LENOVO\\anaconda3\\envs\\zyy-gpu\\python.exe",
+        "-B",
+        "E:\\数据挖掘\\.local\\workspaces\\nlp1-v3-A\\v3-code-runtimefix1\\main_model\\v3_run.py",
+        "_stage",
+        "--run-dir",
+        "E:\\数据挖掘\\.local\\workspaces\\nlp1-v3-A\\v3-code-runtimefix1\\runs\\v3\\V3-20261020-A-s43-T1\\pilot",
+        "--kind",
+        "train",
+        "--output",
+        "E:\\数据挖掘\\.local\\workspaces\\nlp1-v3-A\\v3-code-runtimefix1\\runs\\v3\\V3-20261020-A-s43-T1\\pilot\\resource50\\attempt-001",
+        "--target",
+        "50"
+      ],
+      "owner_pid": 5556,
+      "owner_created": 1792499844.405974,
+      "started_unix": 1792499860.6710663,
+      "log": "E:\\数据挖掘\\.local\\workspaces\\nlp1-v3-A\\v3-code-runtimefix1\\runs\\v3\\V3-20261020-A-s43-T1\\pilot\\resource50\\attempt-001\\console.log",
+      "token": "1a2ca06e193569cd1197e6c25cd0b985c706ad1f39e76689",
+      "child_pid": 17352,
+      "child_created": 1792499860.6863267,
+      "seconds": 25.039562999998452,
+      "status": "FAILED"
+    },
+    {
+      "status": "ORCHESTRATION_OVERHEAD",
+      "seconds": 0.046058000003540656
+    }
+  ]
+}

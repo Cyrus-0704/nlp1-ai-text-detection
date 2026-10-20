@@ -42,3 +42,43 @@ RuntimeError: Another CUDA workload exists; preserve it and stop: ['2748, C:\Win
 ## 边界声明
 
 本次未执行 7500 步正式长训练、未触碰内部 test / 官方 val / 外部封存集；configure/preflight 均为只读校验+本地配置写入；除 `.local/v3/` 本机配置与失败现场外无其他写入。
+
+---
+
+# 后续（同日）：runtimefix1 部署通过，T0/T1 pilot 被 RAM 底线停止（均零训练），T2 槽位保留干净
+
+## runtimefix1 领取与重验（全部退出 0）
+
+- 收到 B 的 `packages-runtimefix1/v3-code-20261020.zip`（232813 B，SHA-256 `4821e8a2e1c54341422fe397141da9cd74df02ef8ccb8082d1f72c1dc9d95977`，与 `delivery.json` 冻结记录一致；随附 `.sha256` 与 `delivery.json` 现存仓库根目录，属 B 的分发产物，A 未纳入本人分支提交）。
+- 按 RUNTIME_FIX 要求**旧目录 `v3-code` 原样保留（含首轮 T0 失败证据），修正版在新隔离目录 `v3-code-runtimefix1` 领取**；模型/数据经本机配置复用 E 盘同 SHA 原件。
+- `verify-code` PASS（36 文件，manifest `1162db643c1e985adb698e177bd83666e553ca92777b7d6033abfb5751fceab4` = delivery.json 记录）；`configure` PASS（同 E 盘路径）；`preflight --cuda` = **PASS_LOCAL_CUDA_PREFLIGHT**（新代码身份链完整）。
+- 新 `require_idle_cuda()` WDDM 分支**实测通过**：桌面/浏览器等非 Python GPU 进程不再误判，pilot 得以进入训练子阶段。
+
+## T0（runtimefix1 工作区）：RAM 底线停止（父监控，零训练）
+
+- 启动前 `psutil.virtual_memory().available` = 5.88 GiB，低于进入训练所需水位；父级 `ProgressMonitor.check`（30s 周期）在第一个子 stage 启动前判定 `disk<20GiB 或 ram<4GiB` 越线（磁盘 103.2 GiB 充足，实为 RAM）。`runs/v3/V3-20261020-A-s43-T0/pilot/` 留有 protocol/ledger/failure.json，**零更新、零 checkpoint**。
+
+## T1（runtimefix1 工作区）：RAM 底线停止（子监控，零更新）
+
+- 用户释放内存至启动前 available=5.88 GiB 后启动；通过 GPU 检查与父监控，`resource50` 子进程启动。子进程资源监控（0.2s 采样，冻结门槛 `minimum_ram_gib=4`，见 matrix.json `_limits`）记录：
+  - 首个采样：子进程 RSS 1.17 GB、available 4.67 GiB；
+  - 28 个采样后（RSS 涨至 1.85 GB，**模型尚未加载完**）：available 跌至 3.59 GiB < 4 GiB → `Resource floor breached; preserve checkpoint and propose an explicit change` → 训练未开始即停。
+- 全链证据：`runs/v3/V3-20261020-A-s43-T1/pilot/`（protocol/ledger/failure + `resource50/attempt-001/resources.jsonl` 28 行采样、console.log）；控制台本机留存 `.local/v3_pilot_T1_console.log`。
+- 已按协议打包：本工作区 `handoffs/A/v3/V3-20261020-A-s43-T1/` + `-evidence.zip`（10631 B，SHA `5c77e27e8514ff531d7bee9dcac07ecc887402f9fb0826d4533457318c409324`），状态 `PILOT_FAILED_FORMAL_NOT_STARTED`。
+
+## 量化结论（供预算/方案决策）
+
+- 本机总物理内存 15.7 GB；pilot 子进程（torch + mDeBERTa 权重加载 + 父进程本体 + 系统波动）从启动到越线实测消耗 ≈2.29 GiB 且未到峰（估峰值 ≈3.1 GiB）。要在全程稳住 4 GiB 底线，**启动前 available 需 ≥7.5 GiB**；实测多次清理后最高只到 7.22 GiB（差 0.28 GiB）。
+- **T0/T1 pilot 目录均已烧毁（两次失败均零训练更新）**；冻结 `pilot()` 为一次性（`exist_ok=False`，无 attempt 参数）。**T2 目录保持干净未动**——用户选定留给 B 决定后使用。
+- 结合 B 在 RUNTIME_FIX 中登记的 T0 实测（0.1133 有效更新/s → 7500 步 ≈18.4h > 10h 上限），A 机（同为 4060 Laptop）大概率触发同一预算门槛；**预算是否调整属用户决定权，A 不改任何冻结参数**。
+
+## 请 B 决定的事项（合并更新）
+
+1. **RAM 底线方案**：`minimum_ram_gib=4` 对 16 GB 内存笔记本是否放宽/改为按 commit 或按进程 RSS 判定，或提供低内存机器的替代门槛；如出包需同步 bump 版本以生成新 experiment 目录。
+2. **已烧毁的 T0/T1 pilot 目录重领方式**（两次均零训练）：attempt 机制、目录清理约定或版本 bump，由 B 明确；A 不自行清理或重开目录。
+3. **T2 槽位**：A 机保持干净，等待 1-2 落定后一次性使用；启动前 A 将确保 available ≥7.5 GiB。
+4. **10h 预算**：B 机已实测 18.4h 估值；是否由用户调整预算后设计新 attempt，与 1-3 一并定。
+
+## 边界声明（追加）
+
+runtimefix1 回合同样零推理/零训练（T1 子进程在加载权重阶段即停，未执行任何优化器更新）、未触碰内部 test / 官方 val / 外部封存集；未修改任何冻结文件；所有失败现场原样保留。

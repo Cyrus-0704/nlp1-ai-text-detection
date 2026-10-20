@@ -1,0 +1,25 @@
+{
+  "route": "mdeberta-original-binary-v1",
+  "repo_id": "microsoft/mdeberta-v3-base",
+  "revision": "a0484667b22365f84929a935b5e50a51f71f159d",
+  "files": {
+    "config.json": {
+      "bytes": 579,
+      "sha256": "bcffcd343dc5efa5ef2d5a58d2b405eed108f01cc45b48d0a907b333ec41801f"
+    },
+    "pytorch_model.bin": {
+      "bytes": 1332809049,
+      "sha256": "6f89419baf0f1aaad5cab7d53901e36a8c1af8f6b4ab58b15db9af32df656ead"
+    },
+    "spm.model": {
+      "bytes": 4305025,
+      "sha256": "13c8d666d62a7bc4ac8f040aab68e942c861f93303156cc28f5c7e885d86d6e3"
+    },
+    "tokenizer_config.json": {
+      "bytes": 52,
+      "sha256": "3f3978e0c036f2c2588cac34a6047cbb0af0b0dc1814254e291028529805496d"
+    }
+  },
+  "source": "https://huggingface.co/microsoft/mdeberta-v3-base",
+  "detector_finetuned": false
+}

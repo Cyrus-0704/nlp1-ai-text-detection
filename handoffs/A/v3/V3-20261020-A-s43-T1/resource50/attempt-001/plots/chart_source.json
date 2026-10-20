@@ -1,0 +1,26 @@
+{
+  "status": "SAVED_RUNTIME_MONITOR_ONLY",
+  "generated_unix": 1792499884.867157,
+  "training_log": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "complete_rows": 0,
+    "incomplete_tail_ignored": false
+  },
+  "resources_log": {
+    "sha256": "8cefbc5062bcd9ccd8f00458155f0f065a9ddf4a958a5f544d84bd4644d2b731",
+    "bytes": 8417,
+    "complete_rows": 28,
+    "incomplete_tail_ignored": false
+  },
+  "unique_training_attempts": 0,
+  "last_successful_update": 0,
+  "loss_window_attempts": 100,
+  "display_extrema_preserved": true,
+  "dev_curve": false,
+  "resume_policy": "Complete saved history; identical duplicate attempts counted once; conflicting duplicates rejected",
+  "outputs": {
+    "training_progress.svg": "5c77e27e8514ff531d7bee9dcac07ecc887402f9fb0826d4533457318c409324",
+    "training_progress.html": "157ed9df5620c7239692851c31ff5320f87187c98f4858ef65b732e8db12d902"
+  }
+}

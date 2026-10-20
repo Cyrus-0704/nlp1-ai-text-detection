@@ -1,0 +1,12 @@
+{
+  "samples": 28,
+  "peak_rss_bytes": 1982107648,
+  "peak_tree_rss_bytes": 1982107648,
+  "min_disk_free_bytes": 110787780608,
+  "min_ram_available_bytes": 3851849728,
+  "peak_allocated_bytes": 0,
+  "peak_reserved_bytes": 0,
+  "elapsed_seconds": 7.425658899999689,
+  "error": "RuntimeError('Resource floor breached; preserve checkpoint and propose an explicit change')",
+  "status": "FAILED"
+}
