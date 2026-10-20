@@ -1,0 +1,374 @@
+{
+  "version": "V3-20261020",
+  "signature": {
+    "settings": {
+      "seed": 43,
+      "max_steps": 7500,
+      "max_length": 512,
+      "batch_size": 1,
+      "gradient_accumulation": 16,
+      "learning_rate": 2e-05,
+      "scheduler": "constant",
+      "warmup_steps": 0,
+      "class_weighting": "none",
+      "precision": "fp16",
+      "inference_precision": "fp32",
+      "attention_backend": "eager",
+      "cls_dropout": 0.1,
+      "pooler_dropout": 0.0,
+      "gradient_checkpointing": true,
+      "use_reentrant": false,
+      "deterministic": true,
+      "num_workers": 0,
+      "optimizer": "AdamW;weight_decay=.01;foreach=False;max_grad_norm=1",
+      "arm": "T0"
+    },
+    "source": {
+      "route": "mdeberta-original-binary-v1",
+      "repo_id": "microsoft/mdeberta-v3-base",
+      "revision": "a0484667b22365f84929a935b5e50a51f71f159d",
+      "files": {
+        "config.json": {
+          "bytes": 579,
+          "sha256": "bcffcd343dc5efa5ef2d5a58d2b405eed108f01cc45b48d0a907b333ec41801f"
+        },
+        "pytorch_model.bin": {
+          "bytes": 1332809049,
+          "sha256": "6f89419baf0f1aaad5cab7d53901e36a8c1af8f6b4ab58b15db9af32df656ead"
+        },
+        "spm.model": {
+          "bytes": 4305025,
+          "sha256": "13c8d666d62a7bc4ac8f040aab68e942c861f93303156cc28f5c7e885d86d6e3"
+        },
+        "tokenizer_config.json": {
+          "bytes": 52,
+          "sha256": "3f3978e0c036f2c2588cac34a6047cbb0af0b0dc1814254e291028529805496d"
+        }
+      },
+      "source": "https://huggingface.co/microsoft/mdeberta-v3-base",
+      "detector_finetuned": false
+    },
+    "code": {
+      "main_model/v3_delivery.py": "122b18369bd0ee08711a49af2edb54b587b2d7197f603a5dd08a6f0b73f5de80",
+      "main_model/v3_run.py": "50918319a72ca77598bd62726fd15028b067c8cbe35a12c873f498536b0b5cb1",
+      "main_model/v3_core.py": "abec1d18ccfaa0ba0bf7ca4aabbb4723d911d309a5545054dd253af4f15c4d31",
+      "main_model/v3_plots.py": "63fed1f4891a5b4ef7911ed8d76b45d2d8c8fd35213d55da337302d9b68991d8",
+      "main_model/mdeberta_adapter.py": "c1e50158e39a677350231bca11f8b98dc340d4291f0d34a0e12a36693fe77eeb",
+      "main_model/mdeberta_resources.py": "5c1af0d49c42ec7214069175a673d92f6e856ae4e8073623552e17878316cf73",
+      "main_model/mdeberta_training.py": "52d7294aa5260a91c0da7d225d7bfe042c5eea09cf6ee8ee0cef16ecf799ec49",
+      "main_model/common.py": "51b8b44987222d0979b14638a210bf02df9e3ed3cf6126332408ce07aa73459e",
+      "main_model/training_engine.py": "47afa6938da2227d9308a1436c72521da3959b4370ef24d901dcbabf73eecfe7",
+      "main_model/verify_resume.py": "162ffeffef303d009fba9aceb8234e56a42480263930b25f728af75937cb68e2",
+      "main_model/gpu_guard.py": "ea506123bbc060c23be9a2a03dc6100d685759a1ec4458b29b399b542b66c0b9",
+      "main_model/round_support.py": "c780d0b1c973bc4975b56347a6934cb716728acabc1bc5fdcc98dba36b9d7e6a",
+      "main_model/check_inference_io.py": "04d69b43703382ea53a622894dbc0a45635c3a4b20ce46b9aed41ddc2d921630",
+      "baseline/analyze.py": "0a5f76b579c70d2aa5943097657e540df172dfc19a63031e919d0e98e6b94688",
+      "baseline/run.py": "ea48ef2c2fa8d088f79c56eebf301f73718d3201d62c2692830ac2371b9ac06b",
+      "baseline/validate_predictions.py": "dc659a81dd038bfef3711c5c71cb00006ec85f36e2307ef9cbaca48379ab6afa",
+      "main_model/configs/v3/matrix.json": "18f7c8c34fe1ce8ee0890c4268ed786baf36d5d314e6d9fe6cc8565b2f9fbeda",
+      "main_model/configs/v3/original_model.json": "713d8b7a728fe427562820bb53465fde87d8f9c88699c15beab540a19d5ae11f",
+      "requirements/v3.txt": "029b929ee90569555405d2a1a2e940f2273f42fd381e0ee59512a70387feaf56",
+      "tools/v3_bootstrap.py": "e0cb75e1b7e26d59df9f2a30b2f47bde2b943e5a31e43afe2e6238ce5e6d6252"
+    },
+    "data": {
+      "status": "PASS_FROZEN_TRAIN_DEV_ONLY",
+      "files": {
+        "train.jsonl": {
+          "bytes": 282022850,
+          "sha256": "5a5dca9db706e0faadc5c89cbcadc77dc585ce302f5e73b11b82213f40ab7ff6",
+          "rows": 119842
+        },
+        "dev.jsonl": {
+          "bytes": 34861480,
+          "sha256": "1d80e7b6045e0914f224dcbc3afe5f56569f5bd995f742607389c26316476600",
+          "rows": 15086
+        },
+        "smoke_dev.jsonl": {
+          "bytes": 513734,
+          "sha256": "218b56ed0f19e59351853c13e2f11f1598c172decbc97b60fa1682e6e9d2883c",
+          "rows": 200
+        }
+      },
+      "manifest_sha256": "fc8c0b909e132ab8380c6dcb420c4adffc0eee4016c252e41895bc99136f2a1e",
+      "test_read": false,
+      "official_val_read": false
+    },
+    "owner": "A",
+    "experiment_id": "V3-20261020-A-s43-T0",
+    "phase": "pilot",
+    "environment": {
+      "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+      "executable": "C:\\Users\\LENOVO\\anaconda3\\envs\\zyy-gpu\\python.exe",
+      "packages": {
+        "torch": "2.13.0+cu126",
+        "transformers": "4.57.6",
+        "sentencepiece": "0.2.2",
+        "numpy": "2.4.6",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.17.1",
+        "safetensors": "0.8.0",
+        "psutil": "7.2.2",
+        "tokenizers": "0.22.2",
+        "huggingface-hub": "0.36.2",
+        "protobuf": "7.36.2"
+      },
+      "torch_cuda_build": "12.6",
+      "machine": "b39551694a784dbfd0b7653730c9329f80c97cd41425f022d70029b20ec7500b",
+      "cuda_probed": true,
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "gpu_total_bytes": 8585216000,
+      "cuda_tensor_probe": 1.0
+    },
+    "weighting": {
+      "mode": "none",
+      "cap": null,
+      "normalization": "mean per training label equals one",
+      "groups": [
+        {
+          "domain": "PeerRead/acl_2017/",
+          "label": 0,
+          "count": 557,
+          "weight": 1.0
+        },
+        {
+          "domain": "PeerRead/acl_2017/",
+          "label": 1,
+          "count": 2574,
+          "weight": 1.0
+        },
+        {
+          "domain": "PeerRead/conll_2016/",
+          "label": 0,
+          "count": 86,
+          "weight": 1.0
+        },
+        {
+          "domain": "PeerRead/conll_2016/",
+          "label": 1,
+          "count": 448,
+          "weight": 1.0
+        },
+        {
+          "domain": "PeerRead/iclr_2017/",
+          "label": 0,
+          "count": 3246,
+          "weight": 1.0
+        },
+        {
+          "domain": "PeerRead/iclr_2017/",
+          "label": 1,
+          "count": 7861,
+          "weight": 1.0
+        },
+        {
+          "domain": "RuATD_2022",
+          "label": 0,
+          "count": 4389,
+          "weight": 1.0
+        },
+        {
+          "domain": "RuATD_2022",
+          "label": 1,
+          "count": 4389,
+          "weight": 1.0
+        },
+        {
+          "domain": "arabic-wikipedia",
+          "label": 0,
+          "count": 2255,
+          "weight": 1.0
+        },
+        {
+          "domain": "arabic-wikipedia",
+          "label": 1,
+          "count": 2255,
+          "weight": 1.0
+        },
+        {
+          "domain": "arxiv",
+          "label": 0,
+          "count": 4622,
+          "weight": 1.0
+        },
+        {
+          "domain": "arxiv",
+          "label": 1,
+          "count": 13329,
+          "weight": 1.0
+        },
+        {
+          "domain": "baike",
+          "label": 0,
+          "count": 1232,
+          "weight": 1.0
+        },
+        {
+          "domain": "baike",
+          "label": 1,
+          "count": 2197,
+          "weight": 1.0
+        },
+        {
+          "domain": "eli5",
+          "label": 0,
+          "count": 2380,
+          "weight": 1.0
+        },
+        {
+          "domain": "eli5",
+          "label": 1,
+          "count": 4417,
+          "weight": 1.0
+        },
+        {
+          "domain": "fake_news_in_bulgarian",
+          "label": 0,
+          "count": 2385,
+          "weight": 1.0
+        },
+        {
+          "domain": "fake_news_in_bulgarian",
+          "label": 1,
+          "count": 4412,
+          "weight": 1.0
+        },
+        {
+          "domain": "id_newspapers_2018",
+          "label": 0,
+          "count": 2208,
+          "weight": 1.0
+        },
+        {
+          "domain": "id_newspapers_2018",
+          "label": 1,
+          "count": 2209,
+          "weight": 1.0
+        },
+        {
+          "domain": "reddit",
+          "label": 0,
+          "count": 2228,
+          "weight": 1.0
+        },
+        {
+          "domain": "reddit",
+          "label": 1,
+          "count": 914,
+          "weight": 1.0
+        },
+        {
+          "domain": "unknown",
+          "label": 0,
+          "count": 4574,
+          "weight": 1.0
+        },
+        {
+          "domain": "unknown",
+          "label": 1,
+          "count": 6622,
+          "weight": 1.0
+        },
+        {
+          "domain": "urdu-news-dataset-1M",
+          "label": 0,
+          "count": 1906,
+          "weight": 1.0
+        },
+        {
+          "domain": "urdu-news-dataset-1M",
+          "label": 1,
+          "count": 1855,
+          "weight": 1.0
+        },
+        {
+          "domain": "web",
+          "label": 0,
+          "count": 1201,
+          "weight": 1.0
+        },
+        {
+          "domain": "web",
+          "label": 1,
+          "count": 2231,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikihow",
+          "label": 0,
+          "count": 4290,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikihow",
+          "label": 1,
+          "count": 9374,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikipedia",
+          "label": 0,
+          "count": 1830,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikipedia",
+          "label": 1,
+          "count": 1830,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikipedia-20220301.en",
+          "label": 0,
+          "count": 2366,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikipedia-20220301.en",
+          "label": 1,
+          "count": 6822,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikipedia-20230616.de",
+          "label": 0,
+          "count": 2167,
+          "weight": 1.0
+        },
+        {
+          "domain": "wikipedia-20230616.de",
+          "label": 1,
+          "count": 2181,
+          "weight": 1.0
+        }
+      ]
+    },
+    "limits": {
+      "budget_seconds": 3600.0,
+      "minimum_free_gib": 20.0,
+      "minimum_ram_gib": 4.0,
+      "max_fp16_skips": 10
+    }
+  },
+  "host": {
+    "owner": "A",
+    "seed": 43,
+    "machine": "b39551694a784dbfd0b7653730c9329f80c97cd41425f022d70029b20ec7500b",
+    "model_dir": "E:\\数据挖掘\\models\\mdeberta-v3-base-a0484667",
+    "data_dir": "E:\\数据挖掘\\data\\processed\\v2"
+  },
+  "limits": {
+    "budget_seconds": 3600.0,
+    "minimum_free_gib": 20.0,
+    "minimum_ram_gib": 4.0,
+    "max_fp16_skips": 10
+  },
+  "evaluation_limits": {
+    "budget_seconds": 1800.0,
+    "minimum_free_gib": 20.0,
+    "minimum_ram_gib": 4.0,
+    "max_fp16_skips": 0
+  },
+  "threshold": 0.5,
+  "short_rule": "len(text.split())<100",
+  "formal_initialization": "ORIGINAL_PRETRAINING_ONLY; never pilot or v2 weights"
+}

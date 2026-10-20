@@ -1,0 +1,24 @@
+{
+  "version": "V3-20261020",
+  "experiment_id": "V3-20261020-A-s43-T0",
+  "files": {
+    "execution.json": {
+      "bytes": 235,
+      "sha256": "af0dc13620c396a3d498b1786371b12a0d465ebb1b9b61dc301dc061b994b952"
+    },
+    "failure.json": {
+      "bytes": 6592,
+      "sha256": "3b47fcaffc17094199939e125ee2a3c8fd15a285fc48cb6992048ca0bfd0141c"
+    },
+    "ledger.json": {
+      "bytes": 185,
+      "sha256": "5233ab90382876f650361c01730fd6a2e5cd87b6dd26df605a7c667750453af8"
+    },
+    "protocol.json": {
+      "bytes": 11414,
+      "sha256": "7b70e2ff36491a05e4c071ce30331eb4ae3cd76d253b5a06e594ceb84782f6f3"
+    }
+  },
+  "final_weights": "SEPARATE_LOCAL_ARCHIVE_NOT_UPLOADED",
+  "all_results_including_failures": true
+}

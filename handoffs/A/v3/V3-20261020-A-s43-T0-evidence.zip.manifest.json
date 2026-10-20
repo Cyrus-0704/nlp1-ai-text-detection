@@ -1,0 +1,27 @@
+{
+  "path": "E:\\数据挖掘\\.local\\workspaces\\nlp1-v3-A\\v3-code\\handoffs\\A\\v3\\V3-20261020-A-s43-T0-evidence.zip",
+  "bytes": 6616,
+  "sha256": "0cb06d58d4acae924ad0ba3b4b7373c29b6f0cbfc5000a9cc8b5c917e57c7163",
+  "files": {
+    "delivery_manifest.json": {
+      "bytes": 748,
+      "sha256": "f3f27a76db896ed6e975cfd3bf4cd21eeb53dacd0a7cc9de4a3d11ffb44ecc8b"
+    },
+    "execution.json": {
+      "bytes": 235,
+      "sha256": "af0dc13620c396a3d498b1786371b12a0d465ebb1b9b61dc301dc061b994b952"
+    },
+    "failure.json": {
+      "bytes": 6592,
+      "sha256": "3b47fcaffc17094199939e125ee2a3c8fd15a285fc48cb6992048ca0bfd0141c"
+    },
+    "ledger.json": {
+      "bytes": 185,
+      "sha256": "5233ab90382876f650361c01730fd6a2e5cd87b6dd26df605a7c667750453af8"
+    },
+    "protocol.json": {
+      "bytes": 11414,
+      "sha256": "7b70e2ff36491a05e4c071ce30331eb4ae3cd76d253b5a06e594ceb84782f6f3"
+    }
+  }
+}
